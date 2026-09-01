@@ -240,7 +240,7 @@ function InquiryForm() {
         <MessageCircle className="w-4 h-4" />
         Kirim via WhatsApp
       </Button>
-      <p className="text-slate-500 text-xs text-center">Pesan akan dikirim ke WhatsApp tim Gustafta. Respons dalam 1×24 jam kerja.</p>
+      <p className="text-slate-500 text-xs text-center">Pesan akan dikirim ke WhatsApp tim Gustafta untuk ditinjau.</p>
     </form>
   );
 }
@@ -446,7 +446,7 @@ export default function LayananSKI() {
             </h2>
             <p className="text-slate-400 mb-8 leading-relaxed">
               Isi form di sebelah kanan atau langsung hubungi kami via WhatsApp.
-              Tim Gustafta akan merespons dalam 1×24 jam kerja.
+              Tim Gustafta akan merespons setelah permintaan ditinjau.
             </p>
 
             <div className="space-y-4 mb-8">

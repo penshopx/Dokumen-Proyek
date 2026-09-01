@@ -171,15 +171,14 @@ export default function LandingPage() {
                 </h1>
                 
                 <p className="text-lg text-slate-300 leading-relaxed max-w-xl">
-                  BUJK, kontraktor, dan tenaga ahli se-Indonesia setiap tahun membutuhkan layanan pengurusan SBU, SKK, ISO, NIB, OSS, dan dokumen proyek lainnya. Didukung Gustafta AI dengan 12 Agen Spesialis — TenderClaw, SBUClaw, MultiClaw, LexCom, dan lainnya — siap memberikan pengalaman pelayanan terbaik.
+                  BUJK, kontraktor, dan tenaga ahli dapat menggunakan layanan pengurusan SBU, SKK, ISO, NIB, OSS, dan dokumen proyek lainnya. Gustafta AI menyediakan 12 agen untuk mendukung pengurusan dan analisis dokumen.
                 </p>
 
                 {/* Key facts bar */}
                 <div className="bg-white/5 border border-white/10 rounded-xl px-5 py-3 backdrop-blur-sm">
                   <p className="text-xs text-slate-400 leading-relaxed">
-                    Industri konstruksi Indonesia menghadapi perubahan regulasi yang masif dan berkesinambungan.
-                    Kegagalan administrasi dokumen menjadi penyebab utama gugurnya BUJK di tender —
-                    bukan karena tidak kompeten, tetapi karena sistem yang belum mendukung.
+                    Industri konstruksi Indonesia menghadapi perubahan regulasi yang berkesinambungan.
+                    Kelengkapan dan kesesuaian administrasi menjadi bagian penting dalam proses tender.
                   </p>
                 </div>
                 
@@ -199,8 +198,8 @@ export default function LandingPage() {
 
                 <div className="flex flex-col gap-2 pt-2 border-t border-white/10">
                   {[
-                    "Klien dari berbagai sektor jasa konstruksi di seluruh Indonesia",
-                    "Legalitas, sertifikasi, dan dokumen proyek selesai tepat waktu",
+                    "Melayani kebutuhan legalitas, sertifikasi, dan dokumen jasa konstruksi",
+                    "Proses mengikuti dokumen, persyaratan, dan jadwal setiap layanan",
                     "Didukung Gustafta AI — kecerdasan buatan khusus konstruksi Indonesia",
                   ].map((text, i) => (
                     <div key={i} className="flex items-start gap-2">
@@ -560,14 +559,14 @@ export default function LandingPage() {
                   "SIUJK/IUJK Konstruksi via Dinas PU",
                   "Izin Lingkungan, AMDAL, & Dokumen K3",
                 ],
-                highlight: "Proses Cepat & Terjadwal Jelas"
+                highlight: "Tahapan Proses Terstruktur"
               },
               {
                 icon: Award,
                 color: "from-amber-500 to-orange-600",
                 tag: "Sertifikasi Wajib",
                 title: "SBU, SKK & ISO",
-                desc: "Sertifikasi yang menentukan nilai tender Anda. SBUClaw AI bantu analisis kelayakan, siapkan dokumen, dan pantau progres real-time hingga sertifikat terbit.",
+                desc: "Sertifikasi yang dapat menjadi persyaratan tender. SBUClaw AI membantu analisis kelayakan, persiapan dokumen, dan pemantauan progres melalui pembaruan status.",
                 items: [
                   "SBU Kontraktor & Konsultan (semua sub)",
                   "SKK Tenaga Ahli & Terampil + Uji BNSP",
@@ -585,10 +584,10 @@ export default function LandingPage() {
                 items: [
                   "TenderaClaw: Go/No-Go → Strategi → Draft",
                   "Compliance Matrix per paket tender",
-                  "MultiClaw Tender Monitor — LPSE real-time",
+                  "MultiClaw Tender Monitor — pemantauan peluang LPSE",
                   "Post-Mortem & analisis tender yang gagal",
                 ],
-                highlight: "Tingkat Lolos Admin Sangat Tinggi"
+                highlight: "Pemeriksaan Kelengkapan Administrasi"
               },
               {
                 icon: ClipboardList,
@@ -602,7 +601,7 @@ export default function LandingPage() {
                   "Berita Acara, Laporan & Submittal Register",
                   "AI Dokumen — tanya jawab isi kontrak/spek",
                 ],
-                highlight: "Risiko Dispute Jauh Lebih Rendah"
+                highlight: "Dokumentasi Proyek Lebih Terstruktur"
               },
               {
                 icon: Bot,
@@ -616,7 +615,7 @@ export default function LandingPage() {
                   "Freelance Board BUJK & SKK",
                   "Brain Project — dashboard intelijen proyek",
                 ],
-                highlight: "Agen Otonom Aktif Non-Stop"
+                highlight: "Dukungan Monitoring Multi-Agen"
               },
               {
                 icon: GraduationCap,
@@ -630,7 +629,7 @@ export default function LandingPage() {
                   "ASKOM Coach — panduan asesor konstruksi",
                   "Klinik Konsultasi — tanya jawab proyek",
                 ],
-                highlight: "Siap uji BNSP dalam 30 hari"
+                highlight: "Persiapan Mengikuti Kebutuhan Peserta"
               },
             ].map((card, idx) => {
               const Icon = card.icon;
@@ -679,7 +678,7 @@ export default function LandingPage() {
           <div className="text-center max-w-2xl mx-auto mb-16">
             <span className="text-accent font-bold tracking-wide uppercase text-sm">Cara Kerja</span>
             <h2 className="mt-2 mb-4">7 Langkah — Dari Konsultasi ke Dokumen Selesai</h2>
-            <p className="text-muted-foreground">Proses yang biasanya tidak transparan dan penuh ketidakpastian kini dapat dipantau real-time oleh Anda.</p>
+            <p className="text-muted-foreground">Tahapan proses dapat diikuti melalui pembaruan status yang tersedia.</p>
           </div>
           <div className="relative">
             <div className="hidden lg:block absolute top-[52px] left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent mx-24" />
@@ -690,7 +689,7 @@ export default function LandingPage() {
                 { step: "03", icon: FolderOpen, title: "Upload Dokumen", desc: "Upload via drag-and-drop atau WhatsApp. AI ekstrak data dan deteksi dokumen yang kurang", color: "bg-violet-500", ai: true },
                 { step: "04", icon: Brain, title: "AI Review & Gap", desc: "OCR + analisis AI mendeteksi data tidak sinkron, masa berlaku habis, dan potensi red flag", color: "bg-purple-600", ai: true },
                 { step: "05", icon: Users, title: "Tim Mendampingi", desc: "Konsultan spesialis kami proses dokumen, koordinasi dengan lembaga, dan update Anda secara proaktif", color: "bg-amber-500", ai: false },
-                { step: "06", icon: Activity, title: "Track Real-Time", desc: "Portal client — pantau status, download draft, dan tanda tangani persetujuan secara digital", color: "bg-orange-500", ai: false },
+                { step: "06", icon: Activity, title: "Pantau Status", desc: "Portal client — lihat pembaruan status, unduh draft, dan tanda tangani persetujuan secara digital", color: "bg-orange-500", ai: false },
                 { step: "07", icon: Bell, title: "Terima + Radar", desc: "Dokumen terbit. Sistem Deadline Radar aktif — reminder renewal otomatis sebelum kedaluwarsa", color: "bg-green-500", ai: true },
               ].map((item, idx) => {
                 const Icon = item.icon;

@@ -55,7 +55,7 @@ export function ConsultationModal({
     mutationFn: async () => apiRequest("POST", "/api/consultations", { serviceType, ...form }),
     onSuccess: () => {
       setSubmitted(true);
-      toast({ title: "Permintaan konsultasi terkirim!", description: "Tim kami akan menghubungi Anda dalam 1x24 jam" });
+      toast({ title: "Permintaan konsultasi terkirim!", description: "Tim kami akan menghubungi Anda setelah permintaan ditinjau" });
     },
     onError: () => {
       toast({ title: "Gagal mengirim", description: "Coba lagi atau hubungi kami via WhatsApp", variant: "destructive" });
@@ -104,7 +104,7 @@ export function ConsultationModal({
             <CheckCircle2 className="w-14 h-14 text-green-500 mx-auto mb-3" />
             <div className="font-bold text-lg mb-1">Permintaan Terkirim!</div>
             <p className="text-sm text-muted-foreground mb-4">
-              Tim konsultan kami akan menghubungi Anda via email atau WhatsApp dalam <strong>1x24 jam kerja</strong>.
+              Tim kami akan menghubungi Anda melalui email atau WhatsApp setelah permintaan ditinjau.
             </p>
             <div className="bg-green-50 rounded-xl p-3 text-xs text-green-700 mb-4">
               Layanan: <strong>{serviceLabel}</strong>

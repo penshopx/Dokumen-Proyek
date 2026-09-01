@@ -20,7 +20,7 @@ export default function KonstruksiAIPage() {
         { value: "Daily",     label: "Update Konten AI" },
         { value: "Publik",    label: "Akses Gratis" },
         { value: "Gustafta",  label: "Powered by AI" },
-        { value: "Real-time", label: "Data Tender & Regulasi" },
+        { value: "Berkala",   label: "Pembaruan Data" },
       ]}
       features={[
         { icon: Bell,         title: "Berita Konstruksi Harian",      desc: "Agregasi dan ringkasan berita konstruksi Indonesia dari PUPR, LPJK, LKPP, dan media nasional — dikurasi AI." },
@@ -29,7 +29,7 @@ export default function KonstruksiAIPage() {
         { icon: FileText,     title: "Peluang Tender Terbuka",        desc: "Daftar tender konstruksi aktif dari seluruh LPSE Indonesia — difilter dan diprioritaskan sesuai kualifikasi." },
         { icon: Cpu,          title: "Digest AI Mingguan",            desc: "Ringkasan mingguan kondisi industri konstruksi yang disusun otomatis oleh Gustafta AI — kirim ke email." },
         { icon: Users,        title: "Direktori BUJK Publik",         desc: "Cari dan verifikasi BUJK aktif, kualifikasi SBU, dan data tenaga ahli berlisensi secara publik." },
-        { icon: RefreshCw,    title: "Monitor Perubahan Regulasi",    desc: "Notifikasi instan saat ada perubahan aturan yang relevan dengan sektor atau kualifikasi Anda." },
+        { icon: RefreshCw,    title: "Monitor Perubahan Regulasi",    desc: "Notifikasi ketika pembaruan aturan yang relevan tersedia." },
         { icon: Zap,          title: "API Data Konstruksi",           desc: "Endpoint API terbuka untuk developer dan peneliti yang ingin mengintegrasikan data konstruksi Indonesia." },
       ]}
       sources={[

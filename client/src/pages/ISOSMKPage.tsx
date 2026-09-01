@@ -45,8 +45,8 @@ const standarSM = [
       { no: "10", judul: "Peningkatan", ket: "Ketidaksesuaian, tindakan korektif, peningkatan berkelanjutan." },
     ],
     manfaat: [
-      "Meningkatkan nilai teknis dalam evaluasi tender (tambah 10–15 poin)",
-      "Mensyaratkan oleh 73% BUMN & kontrak proyek asing > Rp 100M",
+      "Dapat menjadi bagian penilaian teknis jika dipersyaratkan dokumen tender",
+      "Dapat menjadi persyaratan pada tender tertentu; periksa ketentuan setiap pengadaan",
       "Mengurangi pemborosan proses, meningkatkan kepuasan klien",
       "Dasar implementasi sistem ISO lain (14001, 45001, 37001)",
       "Meningkatkan kepercayaan subkontraktor & pemasok",
@@ -301,7 +301,7 @@ const paketLayanan = [
     cocok: "BUJK Besar yang ingin standar terlengkap sekaligus",
     biaya: "Rp 80 – 150 juta",
     waktu: "6 – 12 bulan",
-    fitur: ["IMS 4-in-1 — dokumen terintegrasi", "Efisiensi 40% vs audit terpisah", "CB internasional terakreditasi KAN", "Post-sertifikasi support 1 tahun"],
+    fitur: ["IMS 4-in-1 — dokumen terintegrasi", "Dokumen dan proses audit dikelola dalam satu sistem", "CB internasional terakreditasi KAN", "Pendampingan pascasertifikasi"],
   },
 ];
 
@@ -384,11 +384,10 @@ export default function ISOSMKPage() {
               <span className="text-emerald-600">Konstruksi Indonesia</span>
             </h1>
             <p className="text-slate-600 leading-relaxed mb-4">
-              Sistem Manajemen Usaha (SMU) mencakup seluruh standar manajemen yang wajib dimiliki
-              BUJK (Badan Usaha Jasa Konstruksi) — mulai dari <strong>mutu (ISO 9001)</strong>,
+              Sistem Manajemen Usaha (SMU) mencakup standar yang dapat diterapkan BUJK
+              (Badan Usaha Jasa Konstruksi) sesuai kebutuhan dan persyaratan proyek — mulai dari <strong>mutu (ISO 9001)</strong>,
               <strong> lingkungan (ISO 14001)</strong>, <strong>K3 internasional (ISO 45001)</strong>,
-              <strong> K3 nasional (SMK3 PP 50/2012)</strong>, hingga <strong>SMKK Permen PUPR 10/2021</strong>
-              untuk proyek konstruksi APBN/APBD.
+              <strong> K3 nasional (SMK3 PP 50/2012)</strong>, hingga <strong>SMKK Permen PUPR 10/2021</strong>.
             </p>
             <div className="flex flex-wrap gap-2">
               {[
@@ -435,10 +434,10 @@ export default function ISOSMKPage() {
         {/* Pentingnya SMU */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {[
-            { icon: TrendingUp, title: "Nilai Tender Lebih Tinggi", desc: "ISO 9001 menambah 10–15 poin dalam evaluasi teknis lelang konstruksi", color: "text-blue-600" },
+            { icon: TrendingUp, title: "Dukungan Persyaratan Tender", desc: "ISO 9001 dapat menjadi bagian penilaian teknis jika dipersyaratkan dokumen tender", color: "text-blue-600" },
             { icon: Shield, title: "Kewajiban Hukum K3", desc: "SMK3 WAJIB untuk perusahaan >100 karyawan atau risiko tinggi", color: "text-red-600" },
-            { icon: Globe, title: "Syarat Proyek Internasional", desc: "JO/joint venture asing mensyaratkan ISO 45001 dan IMS lengkap", color: "text-green-600" },
-            { icon: Award, title: "Nilai SBU & Kualifikasi", desc: "SMK3 & ISO mendukung kenaikan gred kualifikasi BUJK di LPJK", color: "text-amber-600" },
+            { icon: Globe, title: "Kebutuhan Proyek Internasional", desc: "Persyaratan ISO untuk joint venture mengikuti ketentuan setiap proyek", color: "text-green-600" },
+            { icon: Award, title: "Dukungan Tata Kelola", desc: "SMK3 dan ISO membantu membangun proses usaha yang lebih terstruktur", color: "text-amber-600" },
           ].map(f => (
             <Card key={f.title} className="border-0 shadow-sm">
               <CardContent className="pt-5 pb-4">

@@ -30,7 +30,7 @@ const regulasiTerbaru = [
     ringkasan: "Peraturan Pemerintah terbaru yang memperbarui ketentuan penyelenggaraan jasa konstruksi, termasuk persyaratan kualifikasi BUJK, tata cara sertifikasi SBU, dan integrasi sistem data SIKI-OSS.",
     perubahan: [
       "Pembaruan struktur kualifikasi BUJK — penyederhanaan klasifikasi subklasifikasi sesuai kebutuhan pasar",
-      "Integrasi data SIKI (Sistem Informasi Konstruksi Indonesia) dengan OSS-RBA secara real-time",
+      "Integrasi data SIKI (Sistem Informasi Konstruksi Indonesia) dengan OSS-RBA sesuai ketentuan sistem",
       "Persyaratan modal disetor per gred diperbarui sesuai indeks harga konstruksi 2025",
       "Ketentuan minimum SDM bersertifikat (SKK) per gred diperketat untuk kualitas konstruksi nasional",
       "Masa berlaku SBU tetap 3 tahun dengan proses renewal yang lebih ringkas secara digital",

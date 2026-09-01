@@ -514,10 +514,10 @@ Saya bantu identifikasi jabatan kerja & jenjang yang tepat berdasarkan latar bel
       role: "agent", agentId: "iso",
       content: `Saya siap lakukan gap analysis ISO 9001:2015 untuk perusahaan konstruksi Anda.
 
-**MENGAPA ISO MAKIN PENTING DI INDONESIA 2024:**
-• 73% BUMN/BHMN besar mensyaratkan ISO 9001 di evaluasi teknis
-• Proyek nilai > Rp 100M dari swasta asing mensyaratkan ISO 9001 + 14001
-• ISO menambah 10–15 poin dalam penilaian kualifikasi tender
+**PERAN ISO DALAM PERSYARATAN PROYEK:**
+• ISO 9001 dapat menjadi persyaratan dalam evaluasi teknis tertentu
+• Kebutuhan ISO 9001 atau 14001 mengikuti dokumen setiap pengadaan
+• Dampak ISO pada penilaian mengikuti ketentuan dokumen tender
 • SMK3 PP 50/2012 WAJIB untuk perusahaan risiko tinggi atau > 100 karyawan
 
 **GAP ANALYSIS ISO 9001:2015 — 10 Klausul Utama:**
