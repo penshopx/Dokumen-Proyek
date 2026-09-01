@@ -28,7 +28,7 @@ const aiTools = [
   { name: "SBUClaw", label: "Screening kelayakan SBU", icon: ScanSearch, color: "text-amber-300" },
   { name: "TenderaClaw", label: "Scan kepatuhan tender", icon: FileSearch, color: "text-cyan-300" },
   { name: "KompetensiHub", label: "Tracker kompetensi SKK", icon: Network, color: "text-emerald-300" },
-  { name: "AI Dokumen", label: "Analisis dokumen instan", icon: BrainCircuit, color: "text-violet-300" },
+  { name: "AI Dokumen", label: "Analisis dokumen berbantuan AI", icon: BrainCircuit, color: "text-violet-300" },
 ];
 
 const reveal = { hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } };
@@ -56,7 +56,7 @@ export default function JasaDokumenSKI() {
               menggugurkan tender Anda.
             </h1>
             <motion.p variants={reveal} className="mt-7 max-w-2xl text-lg leading-relaxed text-slate-300">
-              Kami mengurus SBU, SKK, ISO, SMK3, hingga KBLI dengan disiplin dokumen tingkat tender. Tim berpengalaman bertemu AI yang memeriksa celah sebelum panitia menemukannya.
+              Kami membantu pengurusan SBU, SKK, ISO, SMK3, hingga KBLI dengan proses yang tertata. Tim pendamping menggunakan AI untuk membantu meninjau kelengkapan dan potensi risiko dokumen.
             </motion.p>
             <motion.div variants={reveal} className="mt-9 flex flex-col gap-3 sm:flex-row">
               <a href={wa} target="_blank" rel="noreferrer"><Button size="lg" className="h-13 w-full bg-[#d9aa42] px-7 font-bold text-[#071a31] hover:bg-[#f0c867] sm:w-auto">Cek Risiko Dokumen Gratis <ArrowRight className="ml-2 h-5 w-5" /></Button></a>

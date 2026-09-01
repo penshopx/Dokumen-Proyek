@@ -23,7 +23,7 @@ const CATEGORIES = [
       {
         title: "SBU LPJK",
         desc: "Pengurusan Sertifikat Badan Usaha Jasa Konstruksi (LPJK) — baru, perpanjangan, & naik kualifikasi. Semua subklasifikasi BUJK.",
-        tag: "Paling Dicari",
+        tag: "SBU",
         aiTool: "SBUClaw",
       },
       {
@@ -66,7 +66,7 @@ const CATEGORIES = [
       },
       {
         title: "Bedah Dokumen Tender",
-        desc: "AI membaca seluruh RKS, RAB, dan persyaratan tender dalam 30 detik — ringkasan eksekutif, risiko tersembunyi, dan Q&A interaktif.",
+        desc: "AI membantu membaca RKS, RAB, dan persyaratan tender untuk menyusun ringkasan, menandai potensi risiko, dan mendukung Q&A interaktif.",
         tag: "AI",
         aiTool: "AI Dokumen",
       },
@@ -270,13 +270,13 @@ export default function LayananSKI() {
           <h1 className="text-4xl sm:text-6xl font-extrabold mb-5 leading-tight">
             Jasa Administrasi<br />
             <span className="text-amber-400">Konstruksi & Energi</span><br />
-            <span className="text-2xl sm:text-3xl font-bold text-slate-400">Dipercepat Teknologi AI</span>
+            <span className="text-2xl sm:text-3xl font-bold text-slate-400">Didukung Teknologi AI</span>
           </h1>
 
           <p className="text-slate-400 text-lg max-w-2xl mx-auto mb-10">
             Dari SBU LPJK, SKK ESDM, hingga ISO dan analisis tender — Gustafta
             menyelesaikan urusan sertifikasi dan administrasi konstruksi Anda
-            dengan tim ahli yang diperkuat AI Gustafta.
+            dengan tim pendamping dan dukungan AI Gustafta.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -317,7 +317,7 @@ export default function LayananSKI() {
           <div>
             <div className="text-amber-400 text-xs font-bold uppercase tracking-widest mb-3">Tentang Gustafta</div>
             <h2 className="text-2xl sm:text-3xl font-extrabold mb-4 leading-snug">
-              Mitra Terpercaya BUJK<br />di Seluruh Indonesia
+              Mitra Kebutuhan Dokumen BUJK<br />di Seluruh Indonesia
             </h2>
             <p className="text-slate-400 leading-relaxed mb-4">
               Gustafta menghadirkan layanan konsultasi
@@ -360,8 +360,8 @@ export default function LayananSKI() {
           <div className="text-amber-400 text-xs font-bold uppercase tracking-widest mb-3">Layanan</div>
           <h2 className="text-3xl font-extrabold mb-3">Semua Layanan Gustafta</h2>
           <p className="text-slate-400 max-w-xl mx-auto">
-            Setiap layanan didukung tim ahli berpengalaman dan, di mana relevan,
-            dipercepat dengan teknologi AI Gustafta.
+              Setiap layanan didukung tim pendamping dan, di mana relevan,
+              dilengkapi teknologi AI Gustafta.
           </p>
         </div>
 
