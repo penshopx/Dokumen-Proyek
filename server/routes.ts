@@ -59,7 +59,7 @@ async function seedDatabase() {
   const existingHero = await storage.getHeroContent();
   if (!existingHero) {
     await storage.createHeroContent({
-      badge: "Platform Layanan Dokumen & Konsultasi Usaha #1",
+      badge: "Platform Layanan Dokumen & Konsultasi Usaha",
       title: "Jasa & Konsultasi Dokumen Legalitas, Perizinan, Sertifikasi & Tender",
       subtitle: "Kami membantu badan usaha dan tenaga ahli dalam pengurusan dokumen legalitas usaha, perizinan, sertifikasi SBU & SKK, dokumen tender, hingga dokumen proyek — cepat, tepat, dan terverifikasi.",
       primaryButtonText: "Lihat Layanan Kami",
@@ -156,9 +156,9 @@ async function seedDatabase() {
   const existingBenefits = await storage.getBenefits();
   if (existingBenefits.length === 0) {
     const benefitsData = [
-      { text: "Tim konsultan berpengalaman di bidang hukum konstruksi & perizinan.", sortOrder: 1 },
-      { text: "Proses terdigitalisasi — pantau status dokumen secara real-time.", sortOrder: 2 },
-      { text: "Jaminan dokumen sesuai regulasi terbaru (UUJK, Perpres, Permen PUPR).", sortOrder: 3 },
+      { text: "Pendampingan kebutuhan dokumen konstruksi dan perizinan.", sortOrder: 1 },
+      { text: "Proses terdigitalisasi dengan pembaruan status yang lebih transparan.", sortOrder: 2 },
+      { text: "Dokumen disiapkan dengan mengacu pada regulasi yang berlaku.", sortOrder: 3 },
       { text: "AI-powered: generate draft dokumen lebih cepat dengan OpenClaw.", sortOrder: 4 },
       { text: "Layanan end-to-end: dari pengumpulan data hingga dokumen jadi & terverifikasi.", sortOrder: 5 },
       { text: "Reminder otomatis masa berlaku sertifikat dan izin usaha.", sortOrder: 6 },

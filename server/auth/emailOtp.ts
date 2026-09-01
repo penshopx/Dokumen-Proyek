@@ -49,7 +49,7 @@ async function sendOtpEmail(toEmail: string, otp: string) {
             <p style="margin:0;font-size:22px;font-weight:700;color:#f8fafc;">
               Dokumen<span style="color:#f59e0b;">Proyek</span><span style="color:#f8fafc;">.com</span>
             </p>
-            <p style="margin:4px 0 0;font-size:12px;color:#64748b;">Platform Dokumen Usaha Konstruksi #1 Indonesia</p>
+            <p style="margin:4px 0 0;font-size:12px;color:#64748b;">Platform Dokumen Usaha Konstruksi Indonesia</p>
           </td>
         </tr>
       </table>

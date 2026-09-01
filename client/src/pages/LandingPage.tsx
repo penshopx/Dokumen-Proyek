@@ -112,7 +112,15 @@ export default function LandingPage() {
   const hero = data?.hero;
   const modules = data?.modules || [];
   const userRoles = data?.userRoles || [];
-  const benefits = data?.benefits || [];
+  const safeBenefitText: Record<string, string> = {
+    "Tim konsultan berpengalaman di bidang hukum konstruksi & perizinan.": "Pendampingan kebutuhan dokumen konstruksi dan perizinan.",
+    "Proses terdigitalisasi — pantau status dokumen secara real-time.": "Proses terdigitalisasi dengan pembaruan status yang lebih transparan.",
+    "Jaminan dokumen sesuai regulasi terbaru (UUJK, Perpres, Permen PUPR).": "Dokumen disiapkan dengan mengacu pada regulasi yang berlaku.",
+  };
+  const benefits = (data?.benefits || []).map((benefit) => ({
+    ...benefit,
+    text: safeBenefitText[benefit.text] || benefit.text,
+  }));
   const cta = data?.cta;
 
   return (
@@ -150,7 +158,7 @@ export default function LandingPage() {
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent"></span>
                     </span>
-                    Platform Dokumen Usaha Konstruksi #1 Indonesia
+                    Platform Dokumen Usaha Konstruksi Indonesia
                   </div>
                   <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 font-semibold text-xs backdrop-blur-sm">
                     <Cpu className="w-3 h-3" />
@@ -315,7 +323,7 @@ export default function LandingPage() {
                 icon: FileText,
                 color: "orange",
                 title: "Tender & Dokumen",
-                items: ["Analisis & strategi tender AI 4-tahap", "Bedah dokumen RKS & RAB dalam 30 detik", "Konsultasi hukum kontrak konstruksi", "Monitoring peluang tender LPSE real-time"],
+                items: ["Analisis & strategi tender AI 4-tahap", "Bedah dokumen RKS & RAB berbantuan AI", "Konsultasi hukum kontrak konstruksi", "Monitoring peluang tender LPSE"],
                 tag: "Unggulan",
               },
               {
@@ -448,7 +456,7 @@ export default function LandingPage() {
         <div className="container">
           <div className="text-center max-w-3xl mx-auto mb-14">
             <span className="text-red-500 font-bold tracking-wide uppercase text-sm">Masalah yang Terjadi di Lapangan</span>
-            <h2 className="mt-2 mb-4">Mengapa Ribuan BUJK Gagal di Urusan Dokumen?</h2>
+            <h2 className="mt-2 mb-4">Mengapa Urusan Dokumen Sering Menjadi Kendala BUJK?</h2>
             <p className="text-muted-foreground leading-relaxed">Bukan karena tidak kompeten — tetapi karena regulasi yang terus berubah, proses yang tidak transparan, dan keterbatasan sumber daya manusia untuk urusan administrasi legal. Kami hadir untuk mengubah ini.</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -788,7 +796,7 @@ export default function LandingPage() {
               {[
                 { 
                   icon: Shield, label: "ISO 9001:2015", desc: "Sistem Manajemen Mutu",
-                  detail: "Paling banyak disyaratkan tender BUMN & swasta. Meningkatkan nilai evaluasi teknis hingga 15 poin.",
+                detail: "Banyak disyaratkan dalam tender BUMN dan swasta serta mendukung kesiapan evaluasi teknis.",
                   tag: "Paling Diminati"
                 },
                 { 
@@ -2596,7 +2604,7 @@ export default function LandingPage() {
               {cta?.subtitle || "Tim konsultan dan AI kami siap membantu dari legalitas, perizinan, SBU, SKK, ISO/SMK3, hingga dokumen tender dan proyek. Tidak perlu bayar untuk konsultasi pertama."}
             </p>
             <div className="flex flex-wrap gap-2 justify-center text-xs text-slate-400 mb-10">
-              {["✓ Tidak ada biaya tersembunyi", "✓ Estimasi waktu & biaya transparan", "✓ Update status real-time", "✓ Jaminan sesuai regulasi"].map((t, i) => (
+              {["✓ Rincian biaya disampaikan di awal", "✓ Estimasi waktu & biaya transparan", "✓ Pembaruan status proses", "✓ Mengacu pada regulasi yang berlaku"].map((t, i) => (
                 <span key={i} className="bg-white/10 px-3 py-1 rounded-full">{t}</span>
               ))}
             </div>
