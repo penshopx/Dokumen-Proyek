@@ -8,11 +8,11 @@ import {
 
 const PRODUCTS = [
   { icon: BookOpen,       title: "eBook Regulasi",    desc: "Panduan praktis UUJK, Perpres, dan Permen PUPR dalam format digital siap pakai." },
-  { icon: FileSpreadsheet,title: "Template Dokumen",  desc: "Template RAB, SPK, Berita Acara, dan dokumen tender yang sudah tervalidasi." },
+  { icon: FileSpreadsheet,title: "Template Dokumen",  desc: "Template RAB, SPK, Berita Acara, dan dokumen tender dalam format yang siap disesuaikan." },
   { icon: PlayCircle,     title: "Kursus Online",     desc: "Video pembelajaran SBU, SKK, LKUT, dan manajemen proyek konstruksi." },
   { icon: Package,        title: "Paket Bundling",    desc: "Paket hemat template + ebook + konsultasi untuk BUJK dan tenaga ahli." },
-  { icon: Tag,            title: "Harga Terjangkau",  desc: "Produk digital mulai dari Rp 50.000 — investasi kecil, manfaat besar." },
-  { icon: Star,           title: "Sudah Dipakai",     desc: "Ribuan BUJK dan tenaga ahli konstruksi telah menggunakan produk Gaia Store." },
+  { icon: Tag,            title: "Pilihan Produk",     desc: "Beragam produk digital untuk mendukung kebutuhan BUJK dan tenaga ahli." },
+  { icon: Star,           title: "Akses Digital",      desc: "Produk tersedia secara digital melalui Gaia Store." },
 ];
 
 export default function GaiaStorePage() {
@@ -81,10 +81,10 @@ export default function GaiaStorePage() {
         <div className="container max-w-4xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {[
-              { value: "100+",   label: "Produk Digital" },
-              { value: "Rp 50rb",label: "Harga Mulai" },
-              { value: "⭐ 4.9", label: "Rating Rata-rata" },
-              { value: "Instan", label: "Akses Setelah Bayar" },
+              { value: "eBook",    label: "Panduan Regulasi" },
+              { value: "Template", label: "Dokumen Siap Edit" },
+              { value: "Kursus",   label: "Materi Online" },
+              { value: "Digital",  label: "Akses Produk" },
             ].map((h, i) => (
               <div key={i}>
                 <div className="text-2xl font-extrabold text-amber-400">{h.value}</div>

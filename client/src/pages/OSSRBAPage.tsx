@@ -625,10 +625,10 @@ export default function OSSRBAPage() {
               </p>
               <div className="flex flex-wrap gap-3 mt-3">
                 {[
-                  { icon: Users, text: "Konsultan Berpengalaman" },
+                  { icon: Users, text: "Pendampingan Pengurusan" },
                   { icon: Clock, text: "SLA Terukur per Level" },
                   { icon: RefreshCw, text: "Pembaruan Izin Berkala" },
-                  { icon: Star, text: "Tracking Real-time" },
+                  { icon: Star, text: "Pembaruan Status" },
                 ].map(f => (
                   <div key={f.text} className="flex items-center gap-1.5 text-xs text-slate-600">
                     <f.icon className="w-3.5 h-3.5 text-primary" />

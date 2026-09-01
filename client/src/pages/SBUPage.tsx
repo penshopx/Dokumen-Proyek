@@ -756,7 +756,7 @@ export default function SBUPage() {
                   { icon: TrendingUp, text: "SLA Terukur per Gred" },
                   { icon: Shield, text: "Sesuai Regulasi Terbaru" },
                   { icon: RefreshCw, text: "Perpanjangan Berkala" },
-                  { icon: Star, text: "Konsultan Berpengalaman" },
+                  { icon: Star, text: "Pendampingan Pengurusan" },
                 ].map(f => (
                   <div key={f.text} className="flex items-center gap-1.5 text-xs text-slate-600">
                     <f.icon className="w-3.5 h-3.5 text-amber-600" />

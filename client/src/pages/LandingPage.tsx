@@ -304,7 +304,7 @@ export default function LandingPage() {
             </div>
             <h2 className="mt-2 mb-4">Siapa di Balik Platform Ini?</h2>
             <p className="text-muted-foreground leading-relaxed">
-                DokumenProyek.com dikembangkan untuk menghadirkan layanan dokumen konstruksi yang lebih mudah, cepat, dan terpercaya — <strong>by Gustafta</strong>, didukung teknologi AI dengan agen-agen spesialis.
+                DokumenProyek.com dikembangkan untuk membantu kebutuhan dokumen konstruksi melalui layanan <strong>by Gustafta</strong> dan dukungan teknologi AI.
             </p>
           </div>
 
@@ -316,7 +316,7 @@ export default function LandingPage() {
                 color: "amber",
                 title: "Sertifikasi & Kompetensi",
                 items: ["SBU LPJK — baru, perpanjang, naik kualifikasi", "SKK Konstruksi semua jenjang KKNI", "SBU & SKK ESDM / Migas / EBT", "Bimtek SKK & pendampingan uji BNSP"],
-                tag: "Paling Dicari",
+                tag: "Sertifikasi",
               },
               {
                 id: "tender",
@@ -332,7 +332,7 @@ export default function LandingPage() {
                 color: "blue",
                 title: "ISO & SMAP",
                 items: ["ISO 9001 — Sistem Manajemen Mutu", "ISO 37001 SMAP — wajib tender pemerintah", "ISO 45001 — K3 Konstruksi", "ISO 14001 — Manajemen Lingkungan"],
-                tag: "Wajib BUJK",
+                tag: "Sistem Manajemen",
               },
               {
                 id: "keuangan",
@@ -544,7 +544,7 @@ export default function LandingPage() {
           <div className="text-center max-w-3xl mx-auto mb-14">
             <span className="text-accent font-bold tracking-wide uppercase text-sm">Solusi Terintegrasi</span>
             <h2 className="mt-2 mb-4">Satu Platform, Semua Kebutuhan Dokumen Usaha Konstruksi</h2>
-            <p className="text-muted-foreground leading-relaxed">Kami menggabungkan tim konsultan berpengalaman, teknologi AI generatif, dan sistem otomasi berbasis regulasi Indonesia — bukan sekadar jasa pengurusan biasa.</p>
+            <p className="text-muted-foreground leading-relaxed">Kami menggabungkan pendampingan layanan, teknologi AI generatif, dan sistem otomasi yang mengacu pada regulasi Indonesia.</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
@@ -835,9 +835,9 @@ export default function LandingPage() {
             </div>
             <div className="mt-6 flex flex-col gap-2">
               {[
-                "Proses sertifikasi ISO didampingi konsultan berpengalaman dari awal hingga audit selesai",
-                "Klien yang mengikuti proses kami memiliki persiapan dokumen yang matang sebelum audit",
-                "Sertifikat ISO meningkatkan nilai evaluasi teknis secara nyata di pengadaan pemerintah",
+                "Pendampingan proses sertifikasi ISO tersedia dari tahap persiapan hingga audit",
+                "Peninjauan dokumen membantu tim mempersiapkan kebutuhan sebelum audit",
+                "Persyaratan ISO dapat berbeda sesuai dokumen dan ketentuan setiap pengadaan",
               ].map((text, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="text-amber-400 font-bold mt-0.5 flex-shrink-0">✓</span>

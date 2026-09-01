@@ -102,7 +102,7 @@ export function PWAInstallPrompt() {
               </div>
             </div>
             <p className="text-slate-500 text-xs leading-snug">
-              Platform Dokumen Konstruksi & AI #1
+              Platform Dokumen Konstruksi & AI
             </p>
           </div>
           <button

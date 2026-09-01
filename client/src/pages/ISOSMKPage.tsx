@@ -698,14 +698,14 @@ export default function ISOSMKPage() {
             <div className="flex-1">
               <h3 className="text-lg font-bold mb-1">Bantu Implementasi & Sertifikasi Sistem Manajemen</h3>
               <p className="text-sm text-muted-foreground mb-3">
-                Tim konsultan kami berpengalaman mendampingi BUJK dalam implementasi ISO, SMK3, dan SMKK —
-                dari gap analysis hingga sertifikat terbit dari CB terakreditasi KAN.
+                Tim kami membantu BUJK dalam implementasi ISO, SMK3, dan SMKK —
+                dari gap analysis hingga proses sertifikasi melalui lembaga yang sesuai.
               </p>
               <div className="flex flex-wrap gap-3">
                 {[
                   { icon: ShieldCheck, text: "CB Terakreditasi KAN" },
                   { icon: Clock, text: "Timeline Terstruktur" },
-                  { icon: Users, text: "Konsultan Berpengalaman" },
+                  { icon: Users, text: "Pendampingan Implementasi" },
                   { icon: RefreshCw, text: "Support Surveillance" },
                 ].map(f => (
                   <div key={f.text} className="flex items-center gap-1.5 text-xs text-slate-600">
