@@ -27,7 +27,6 @@ import MultiClaw from "@/pages/MultiClaw";
 import BusinessMemory from "@/pages/BusinessMemory";
 import NotFound from "@/pages/not-found";
 import { FloatingChatButton } from "@/components/FloatingChatButton";
-import { Chatbot } from "@/components/Chatbot";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import JasaDokumenSKI from "@/pages/JasaDokumenSKI";
 import LayananSKI from "@/pages/LayananSKI";
@@ -116,7 +115,6 @@ function AppInner() {
       <Toaster />
       <AppRouter />
       <FloatingChatButton />
-      <Chatbot />
       <PWAInstallPrompt />
     </>
   );

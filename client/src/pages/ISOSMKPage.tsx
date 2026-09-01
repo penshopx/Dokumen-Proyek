@@ -740,7 +740,7 @@ export default function ISOSMKPage() {
             { href: "/tender-generator", icon: FileText, label: "Generator Dokumen Tender", desc: "Buat dokumen penawaran, RK3K & metode pelaksanaan pekerjaan", color: "bg-green-600", badge: "Rekomendasi" },
             { href: "/sbu", icon: Award, label: "SBU Konstruksi", desc: "Sertifikasi badan usaha LPJK — syarat wajib ikut tender pemerintah", color: "bg-amber-600" },
             { href: "/mini-apps", icon: Zap, label: "Kalkulator & Tools", desc: "Hitung biaya sertifikasi, audit gap & jadwal re-sertifikasi ISO", color: "bg-teal-600" },
-            { href: "/ai-chat", icon: Cpu, label: "Konsultasi AI", desc: "Tanya strategi implementasi ISO 9001/14001 dan audit internal", color: "bg-indigo-600", badge: "AI" },
+            { href: "https://gustafta.my.id/klinik-konsultasi", icon: Cpu, label: "Konsultasi AI Gustafta", desc: "Tanya strategi implementasi ISO 9001/14001 dan audit internal", color: "bg-indigo-600", badge: "AI" },
           ]}
           nextStep={{ href: "/tender-generator", label: "Mulai Buat Dokumen Tender →", icon: FileText }}
         />

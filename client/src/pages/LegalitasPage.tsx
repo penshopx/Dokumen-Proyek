@@ -782,7 +782,7 @@ export default function LegalitasPage() {
             { href: "/oss-rba", icon: Globe, label: "Perizinan OSS-RBA", desc: "Urus NIB, SBUJK & izin usaha konstruksi via OSS-RBA", color: "bg-blue-600", badge: "Wajib" },
             { href: "/sbu", icon: Award, label: "SBU Konstruksi", desc: "Sertifikasi Badan Usaha LPJK — syarat ikut tender pemerintah", color: "bg-amber-600", badge: "LPJK" },
             { href: "/doc-generator", icon: FileText, label: "Generator Dokumen", desc: "Buat akta, surat kuasa, PKS & dokumen legalitas lainnya", color: "bg-rose-600" },
-            { href: "/ai-chat", icon: Zap, label: "Konsultasi AI", desc: "Tanya langsung ke OpenClaw soal jenis badan usaha yang tepat", color: "bg-indigo-600", badge: "AI" },
+            { href: "https://gustafta.my.id/klinik-konsultasi", icon: Zap, label: "Konsultasi AI Gustafta", desc: "Tanya langsung ke Gustafta soal jenis badan usaha yang tepat", color: "bg-indigo-600", badge: "AI" },
           ]}
           nextStep={{ href: "/oss-rba", label: "Lanjut ke Perizinan OSS-RBA →", icon: Globe }}
         />

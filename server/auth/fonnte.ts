@@ -3,17 +3,24 @@ import { authStorage } from "../replit_integrations/auth/storage";
 import { db } from "../db";
 import { users } from "../../shared/models/auth";
 import { eq } from "drizzle-orm";
+import { randomInt } from "node:crypto";
 
-// In-memory OTP store: phone → { otp, expires }
-const otpStore = new Map<string, { otp: string; expires: number }>();
+// In-memory OTP store: phone → { otp, expires, attempts }
+const otpStore = new Map<string, { otp: string; expires: number; attempts: number }>();
+const sendRateLimit = new Map<string, { count: number; reset: number }>();
 
 setInterval(() => {
   const now = Date.now();
-  for (const [k, v] of otpStore) if (now > v.expires) otpStore.delete(k);
+  otpStore.forEach((entry, key) => {
+    if (now > entry.expires) otpStore.delete(key);
+  });
+  sendRateLimit.forEach((entry, ip) => {
+    if (now > entry.reset) sendRateLimit.delete(ip);
+  });
 }, 15 * 60_000);
 
 function generateOTP(): string {
-  return Math.floor(100000 + Math.random() * 900000).toString();
+  return randomInt(100000, 1000000).toString();
 }
 
 function normalisePhone(raw: string): string {
@@ -65,6 +72,17 @@ export function setupFonnte(app: Express) {
     }
 
     const normalised = normalisePhone(phone.trim());
+    const ip = req.ip || req.socket.remoteAddress || "unknown";
+    const now = Date.now();
+    const ipLimit = sendRateLimit.get(ip);
+    if (ipLimit && now <= ipLimit.reset && ipLimit.count >= 5) {
+      return res.status(429).json({ error: "Terlalu banyak permintaan OTP. Coba lagi beberapa saat." });
+    }
+    if (!ipLimit || now > ipLimit.reset) {
+      sendRateLimit.set(ip, { count: 1, reset: now + 10 * 60_000 });
+    } else {
+      ipLimit.count++;
+    }
 
     const existing = otpStore.get(normalised);
     if (existing && existing.expires > Date.now() + 9 * 60_000) {
@@ -72,7 +90,7 @@ export function setupFonnte(app: Express) {
     }
 
     const otp = generateOTP();
-    otpStore.set(normalised, { otp, expires: Date.now() + 10 * 60_000 });
+    otpStore.set(normalised, { otp, expires: Date.now() + 10 * 60_000, attempts: 0 });
 
     try {
       await sendWaOtp(normalised, otp);
@@ -99,6 +117,11 @@ export function setupFonnte(app: Express) {
       return res.status(400).json({ error: "Kode OTP tidak valid atau sudah kedaluwarsa." });
     }
     if (entry.otp !== String(otp).trim()) {
+      entry.attempts++;
+      if (entry.attempts >= 5) {
+        otpStore.delete(normalised);
+        return res.status(429).json({ error: "Terlalu banyak percobaan. Minta kode OTP baru." });
+      }
       return res.status(400).json({ error: "Kode OTP salah. Periksa kembali pesan WhatsApp Anda." });
     }
 

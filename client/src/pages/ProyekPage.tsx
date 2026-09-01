@@ -870,7 +870,7 @@ export default function ProyekPage() {
             { href: "/tender-generator", icon: FileText, label: "Generator Dokumen Tender", desc: "Buat dokumen penawaran, HPS, SPK & kontrak proyek", color: "bg-green-600", badge: "Tools" },
             { href: "/doc-generator", icon: Archive, label: "Generator Dokumen Hukum", desc: "Buat addendum kontrak, surat kuasa, PKS & MOU proyek", color: "bg-rose-600" },
             { href: "/mini-apps", icon: Zap, label: "Mini Apps Konstruksi", desc: "Kalkulator TKDN, hitung jaminan tender, & tools RAB lapangan", color: "bg-teal-600" },
-            { href: "/ai-chat", icon: Award, label: "Konsultasi Sengketa Proyek", desc: "Tanya AI soal force majeure, addendum, klaim & arbitrase kontrak", color: "bg-amber-600", badge: "AI" },
+            { href: "https://gustafta.my.id/klinik-konsultasi", icon: Award, label: "Konsultasi Sengketa Proyek", desc: "Tanya AI soal force majeure, addendum, klaim & arbitrase kontrak", color: "bg-amber-600", badge: "AI" },
           ]}
           nextStep={{ href: "/tender-generator", label: "Buat Dokumen Tender Sekarang →", icon: FileText }}
         />

@@ -67,29 +67,21 @@ app.use((req, res, next) => {
 // Clean up stale rate-limit entries every 5 minutes
 setInterval(() => {
   const now = Date.now();
-  for (const [k, v] of _rl) if (now > v.reset) _rl.delete(k);
+  _rl.forEach((entry, key) => {
+    if (now > entry.reset) _rl.delete(key);
+  });
 }, 5 * 60_000);
 
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
-  let capturedJsonResponse: Record<string, any> | undefined = undefined;
-
-  const originalResJson = res.json;
-  res.json = function (bodyJson, ...args) {
-    capturedJsonResponse = bodyJson;
-    return originalResJson.apply(res, [bodyJson, ...args]);
-  };
 
   res.on("finish", () => {
     const duration = Date.now() - start;
     if (path.startsWith("/api")) {
-      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (capturedJsonResponse) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
-      }
-
-      log(logLine);
+      // Never log API response bodies: they may contain PII, document
+      // contents, account data, or AI conversations.
+      log(`${req.method} ${path} ${res.statusCode} in ${duration}ms`);
     }
   });
 

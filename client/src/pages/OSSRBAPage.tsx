@@ -657,7 +657,7 @@ export default function OSSRBAPage() {
             { href: "/legalitas", icon: Building2, label: "Legalitas Badan Usaha", desc: "Pastikan legalitas PT/CV/Koperasi sudah lengkap sebelum OSS-RBA", color: "bg-slate-700" },
             { href: "/sbu", icon: Award, label: "SBU Konstruksi", desc: "Sertifikasi Badan Usaha LPJK — wajib untuk ikut tender", color: "bg-amber-600", badge: "Wajib Tender" },
             { href: "/skk", icon: GraduationCap, label: "SKK Tenaga Ahli", desc: "Sertifikasi Kompetensi Kerja untuk tenaga ahli & terampil", color: "bg-purple-600" },
-            { href: "/ai-chat", icon: Zap, label: "Konsultasi AI OpenClaw", desc: "Tanya strategi perizinan, KBLI, dan risiko usaha konstruksi", color: "bg-indigo-600", badge: "AI" },
+            { href: "https://gustafta.my.id/klinik-konsultasi", icon: Zap, label: "Konsultasi AI Gustafta", desc: "Tanya strategi perizinan, KBLI, dan risiko usaha konstruksi", color: "bg-indigo-600", badge: "AI" },
           ]}
           nextStep={{ href: "/sbu", label: "Lanjut ke SBU Konstruksi →", icon: Award }}
         />

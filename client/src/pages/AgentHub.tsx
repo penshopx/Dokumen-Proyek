@@ -118,7 +118,7 @@ const AGENTS: Agent[] = [
     description: "Tender eligibility, compliance matrix, review administrasi/teknis/harga, pendampingan submit.",
     capabilities: ["Go / No-Go Scoring", "Compliance Matrix Builder", "Review Adm, Teknis, Harga", "Final Submission Checklist"],
     status: "idle",
-    pageLink: "/tender-generator",
+    pageLink: "/tendera-claw",
   },
   {
     id: "proyek",
@@ -144,7 +144,7 @@ const AGENTS: Agent[] = [
     description: "Tanya jawab regulasi, FAQ layanan, drafting surat/checklist/email, penjelasan persyaratan.",
     capabilities: ["Tanya jawab regulasi konstruksi", "Draft surat & email bisnis", "FAQ & panduan persyaratan", "Penjelasan istilah teknis"],
     status: "idle",
-    pageLink: "/ai-chat",
+    pageLink: "https://gustafta.my.id/klinik-konsultasi",
   },
   {
     id: "docreview",
@@ -170,7 +170,7 @@ const AGENTS: Agent[] = [
     description: "Lead qualification, konsultasi awal, rekomendasi layanan, estimasi biaya & waktu pengurusan.",
     capabilities: ["Chatbot konsultasi awal & FAQ layanan", "Lead qualification & scoring", "Rekomendasi paket layanan", "Estimasi biaya & timeline proses"],
     status: "idle",
-    pageLink: "/ai-chat",
+    pageLink: "https://gustafta.my.id/klinik-konsultasi",
   },
   {
     id: "docgen",
@@ -243,11 +243,19 @@ function AgentCard({ agent, isActive }: { agent: Agent; isActive: boolean }) {
       </div>
       {agent.pageLink && (
         <div className="mt-2 pt-2 border-t border-current/10">
-          <Link href={agent.pageLink}>
-            <div className={cn("flex items-center gap-1 text-[10px] font-semibold cursor-pointer hover:underline", agent.color)} data-testid={`link-agent-page-${agent.id}`}>
-              <ChevronRight className="w-3 h-3" /> Buka Halaman Layanan
-            </div>
-          </Link>
+          {agent.pageLink.startsWith("http") ? (
+            <a href={agent.pageLink} target="_blank" rel="noopener noreferrer">
+              <div className={cn("flex items-center gap-1 text-[10px] font-semibold cursor-pointer hover:underline", agent.color)} data-testid={`link-agent-page-${agent.id}`}>
+                <ChevronRight className="w-3 h-3" /> Buka Halaman Layanan
+              </div>
+            </a>
+          ) : (
+            <Link href={agent.pageLink}>
+              <div className={cn("flex items-center gap-1 text-[10px] font-semibold cursor-pointer hover:underline", agent.color)} data-testid={`link-agent-page-${agent.id}`}>
+                <ChevronRight className="w-3 h-3" /> Buka Halaman Layanan
+              </div>
+            </Link>
+          )}
         </div>
       )}
     </motion.div>

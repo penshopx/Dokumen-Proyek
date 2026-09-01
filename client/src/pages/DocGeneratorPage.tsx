@@ -1226,7 +1226,7 @@ export default function DocGeneratorPage() {
           { href: "/tender-generator", icon: FileText, label: "Generator Dokumen Tender", desc: "Buat dokumen penawaran, spesifikasi teknis & RK3K lengkap", color: "bg-green-600", badge: "Tools" },
           { href: "/mini-apps", icon: Zap, label: "Kalkulator & Mini Apps", desc: "Hitung jaminan, TKDN, anggaran proyek & tools konstruksi lainnya", color: "bg-teal-600" },
           { href: "/proyek", icon: FolderOpen, label: "Manajemen Proyek", desc: "Pantau progress proyek, fase pekerjaan & dokumen kontrak aktif", color: "bg-orange-600" },
-          { href: "/ai-chat", icon: Sparkles, label: "Konsultasi AI Dokumen", desc: "Tanya AI soal klausul kontrak, format dokumen & regulasi terbaru", color: "bg-indigo-600", badge: "AI" },
+          { href: "https://gustafta.my.id/klinik-konsultasi", icon: Sparkles, label: "Konsultasi AI Dokumen", desc: "Tanya AI soal klausul kontrak, format dokumen & regulasi terbaru", color: "bg-indigo-600", badge: "AI" },
         ]}
         nextStep={{ href: "/tender-generator", label: "Buka Generator Tender →", icon: FileText }}
       />

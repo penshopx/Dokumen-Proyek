@@ -1090,7 +1090,7 @@ Ketika diminta membuat draft, buatkan dokumen yang lengkap, profesional, dan sia
   });
 
   // Get all consultations (admin)
-  app.get("/api/consultations", isAuthenticated, async (req: any, res) => {
+  app.get("/api/consultations", isAuthenticated, isSuperAdmin, async (req: any, res) => {
     try {
       const { serviceType } = req.query;
       const list = serviceType ? await storage.getConsultationsByService(serviceType as string) : await storage.getConsultations();
@@ -1101,7 +1101,7 @@ Ketika diminta membuat draft, buatkan dokumen yang lengkap, profesional, dan sia
   });
 
   // Update consultation status
-  app.patch("/api/consultations/:id/status", isAuthenticated, async (req: any, res) => {
+  app.patch("/api/consultations/:id/status", isAuthenticated, isSuperAdmin, async (req: any, res) => {
     try {
       const id = parseInt(req.params.id);
       const { status, adminNotes } = req.body;
@@ -1129,8 +1129,10 @@ Ketika diminta membuat draft, buatkan dokumen yang lengkap, profesional, dan sia
 
   app.get("/api/generated-docs/:id", isAuthenticated, async (req: any, res) => {
     try {
+      const userId = getUserId(req);
       const doc = await storage.getGeneratedDocument(parseInt(req.params.id));
       if (!doc) return res.status(404).json({ message: "Dokumen tidak ditemukan" });
+      if (doc.userId !== userId) return res.status(403).json({ message: "Tidak diizinkan" });
       res.json(doc);
     } catch (err) {
       res.status(500).json({ message: "Gagal memuat dokumen" });

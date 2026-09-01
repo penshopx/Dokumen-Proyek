@@ -747,7 +747,7 @@ export default function SKKPage() {
             { href: "/sbu", icon: Award, label: "SBU Konstruksi", desc: "Sertifikasi badan usaha LPJK — wajib untuk semua tender pemerintah", color: "bg-amber-600", badge: "LPJK" },
             { href: "/iso-smk3", icon: Shield, label: "ISO / SMK3", desc: "Tunjukkan sistem manajemen K3 & mutu yang terakreditasi", color: "bg-emerald-600" },
             { href: "/tender-generator", icon: FileText, label: "Dokumen Tender", desc: "Siapkan dokumen penawaran lengkap setelah sertifikasi selesai", color: "bg-green-600" },
-            { href: "/ai-chat", icon: Cpu, label: "Tanya AI OpenClaw", desc: "Konsultasi jalur karir SKK, sub-klasifikasi, dan strategi naik jenjang", color: "bg-indigo-600", badge: "AI" },
+            { href: "https://gustafta.my.id/klinik-konsultasi", icon: Cpu, label: "Tanya AI Gustafta", desc: "Konsultasi jalur karir SKK, sub-klasifikasi, dan strategi naik jenjang", color: "bg-indigo-600", badge: "AI" },
           ]}
           nextStep={{ href: "/sbu", label: "Lengkapi SBU Perusahaan →", icon: Award }}
         />

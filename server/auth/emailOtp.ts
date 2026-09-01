@@ -3,21 +3,26 @@ import { authStorage } from "../replit_integrations/auth/storage";
 import { db } from "../db";
 import { users } from "../../shared/models/auth";
 import { eq } from "drizzle-orm";
+import { randomInt } from "node:crypto";
 
 // ─── In-memory OTP store ───────────────────────────────────────────────────
-// email → { otp, expires }
-const otpStore = new Map<string, { otp: string; expires: number }>();
+// email → { otp, expires, attempts }
+const otpStore = new Map<string, { otp: string; expires: number; attempts: number }>();
+const sendRateLimit = new Map<string, { count: number; reset: number }>();
 
 // Clean up expired entries every 15 minutes
 setInterval(() => {
   const now = Date.now();
-  for (const [email, entry] of otpStore) {
+  otpStore.forEach((entry, email) => {
     if (now > entry.expires) otpStore.delete(email);
-  }
+  });
+  sendRateLimit.forEach((entry, ip) => {
+    if (now > entry.reset) sendRateLimit.delete(ip);
+  });
 }, 15 * 60_000);
 
 function generateOTP(): string {
-  return Math.floor(100000 + Math.random() * 900000).toString();
+  return randomInt(100000, 1000000).toString();
 }
 
 /** Send via Resend API — no IP restrictions, no SMTP needed */
@@ -108,6 +113,17 @@ export function setupEmailOtp(app: Express) {
     }
 
     const normalised = email.trim().toLowerCase();
+    const ip = req.ip || req.socket.remoteAddress || "unknown";
+    const now = Date.now();
+    const ipLimit = sendRateLimit.get(ip);
+    if (ipLimit && now <= ipLimit.reset && ipLimit.count >= 5) {
+      return res.status(429).json({ error: "Terlalu banyak permintaan OTP. Coba lagi beberapa saat." });
+    }
+    if (!ipLimit || now > ipLimit.reset) {
+      sendRateLimit.set(ip, { count: 1, reset: now + 10 * 60_000 });
+    } else {
+      ipLimit.count++;
+    }
 
     // Rate-limit: only 1 OTP per minute per email
     const existing = otpStore.get(normalised);
@@ -116,7 +132,7 @@ export function setupEmailOtp(app: Express) {
     }
 
     const otp = generateOTP();
-    otpStore.set(normalised, { otp, expires: Date.now() + 10 * 60_000 });
+    otpStore.set(normalised, { otp, expires: Date.now() + 10 * 60_000, attempts: 0 });
 
     try {
       await sendOtpEmail(normalised, otp);
@@ -144,6 +160,11 @@ export function setupEmailOtp(app: Express) {
     }
 
     if (entry.otp !== String(otp).trim()) {
+      entry.attempts++;
+      if (entry.attempts >= 5) {
+        otpStore.delete(normalised);
+        return res.status(429).json({ error: "Terlalu banyak percobaan. Minta kode OTP baru." });
+      }
       return res.status(400).json({ error: "Kode OTP salah. Periksa kembali email Anda." });
     }
 
