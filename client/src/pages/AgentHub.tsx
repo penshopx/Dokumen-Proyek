@@ -76,8 +76,8 @@ const AGENTS: Agent[] = [
     color: "text-amber-600",
     bgColor: "bg-amber-50",
     borderColor: "border-amber-200",
-    description: "SBU LPJK untuk kontraktor dan konsultan — klasifikasi, kualifikasi, renewal, upgrade.",
-    capabilities: ["SBU Kontraktor (Sipil, ME, Arsitektur)", "SBU Konsultan Perencana & Pengawas", "Upgrade & perpanjangan SBU", "Integrasi data SIKI LPJK"],
+    description: "SBU LPJK untuk kontraktor dan konsultan — skema Kepdirjen 281/2026, klasifikasi, kualifikasi, renewal, dan upgrade.",
+    capabilities: ["Skema SBU Kepdirjen 281/2026", "SBU Kontraktor (Sipil, ME, Arsitektur)", "Upgrade & perpanjangan SBU", "Verifikasi data ke LSBU/LPJK"],
     status: "idle",
     pageLink: "/sbu",
   },
@@ -89,7 +89,7 @@ const AGENTS: Agent[] = [
     color: "text-purple-600",
     bgColor: "bg-purple-50",
     borderColor: "border-purple-200",
-    description: "SKK untuk tenaga ahli dan terampil sesuai SK Dirjen BK No. 114/2024 — uji kompetensi, resertifikasi, BNSP.",
+    description: "SKK untuk tenaga ahli dan terampil sesuai SK Dirjen BK No. 114/2024 — ketentuannya tidak digantikan Kepdirjen 281/2026, yang mengatur skema SBU.",
     capabilities: ["SKK Tenaga Ahli (jenjang 6–9)", "SKK Tenaga Terampil (jenjang 1–5)", "Uji kompetensi LSP/BNSP", "Perpanjangan & upgrade SKK"],
     status: "idle",
     pageLink: "/skk",
@@ -115,7 +115,7 @@ const AGENTS: Agent[] = [
     color: "text-orange-600",
     bgColor: "bg-orange-50",
     borderColor: "border-orange-200",
-    description: "Tender eligibility, compliance matrix, review administrasi/teknis/harga, pendampingan submit.",
+    description: "Tender eligibility, compliance matrix, review administrasi/teknis/harga, serta verifikasi SBU menurut Kepdirjen 281/2026.",
     capabilities: ["Go / No-Go Scoring", "Compliance Matrix Builder", "Review Adm, Teknis, Harga", "Final Submission Checklist"],
     status: "idle",
     pageLink: "/tendera-claw",
@@ -188,7 +188,7 @@ const AGENTS: Agent[] = [
 ];
 
 const QUICK_PROMPTS = [
-  { icon: Award, text: "Persyaratan SBU Kontraktor Kualifikasi Menengah terbaru?", agent: "sbu" },
+  { icon: Award, text: "Bagaimana Kepdirjen 281/2026 diterapkan untuk SBU saya dan apa yang perlu diverifikasi ke LSBU/LPJK?", agent: "sbu" },
   { icon: FileText, text: "Bantu analisis Go/No-Go untuk tender yang mau saya ikuti", agent: "tender" },
   { icon: GraduationCap, text: "Cara mengurus SKK Tenaga Ahli Sipil Madya — step by step", agent: "skk" },
   { icon: ShieldCheck, text: "Gap analysis ISO 9001:2015 untuk kontraktor konstruksi", agent: "iso" },
@@ -403,55 +403,36 @@ Apakah SBU Anda sudah terbit? Kalau belum, Agen SBU saya koordinasikan agar dipr
     },
   ],
   sbu: [
-    { role: "orchestrator", content: "Permintaan SBU diterima. Memuat regulasi terbaru PP No. 28/2025 & Permen PU No. 6/2025. Mendelegasikan ke Agen SBU untuk analisis persyaratan.", delay: 800 },
+    { role: "orchestrator", content: "Permintaan SBU diterima. Memuat PP No. 28/2025, Permen PU No. 6/2025, dan Kepdirjen Bina Konstruksi No. 281/KPTS/DK/2026. Mendelegasikan ke Agen SBU untuk analisis persyaratan.", delay: 800 },
     {
       role: "agent", agentId: "sbu",
-      content: `Saya bantu pengurusan SBU (Sertifikat Badan Usaha) Konstruksi dari LPJK, sesuai regulasi terbaru **PP No. 28 Tahun 2025** dan **Permen PU No. 6 Tahun 2025**.
+      content: `Saya bantu pengurusan SBU (Sertifikat Badan Usaha) Konstruksi dari LPJK dengan rujukan **PP No. 28 Tahun 2025**, **Permen PU No. 6 Tahun 2025**, dan standar skema terbaru **Kepdirjen Bina Konstruksi No. 281/KPTS/DK/2026**.
 
-**🆕 PERUBAHAN UTAMA PP 28/2025 & PERMEN PU 6/2025:**
-→ Seluruh proses SBU kini 100% digital via portal LPJK (tidak ada pengajuan manual)
-→ Verifikasi LPJK dipercepat: maks. 14 hari kerja (sebelumnya 30 hari)
-→ Laporan keuangan sederhana cukup untuk gred K1 dan K2 (tidak wajib audit KAP)
-→ Subklasifikasi baru: bidang EBT (Energi Baru Terbarukan) & infrastruktur digital
-→ Integrasi SIKI ↔ OSS-RBA ↔ SIPD otomatis & real-time
-→ Sanksi lebih tegas: beroperasi tanpa SBU = sanksi administratif + pidana
+**PEMBARUAN STANDAR SKEMA 2026:**
+→ Kepdirjen 281/KPTS/DK/2026 ditetapkan pada 26 Agustus 2026
+→ Kepdirjen 37/KPTS/DK/2025 dicabut dan dinyatakan tidak berlaku
+→ LSBU wajib menyesuaikan skema paling lambat 6 bulan sejak penetapan
+→ Penilaian mencakup kriteria kualifikasi, subklasifikasi, dan kriteria lainnya
+→ PJSKBU disesuaikan menjadi PJKBU (Penanggung Jawab Klasifikasi Badan Usaha)
+→ Kepdirjen 281 mengatur skema SBU/BUJK, tidak menggantikan ketentuan SKK; penerapan masa transisi dan data SBU perlu diverifikasi ke LSBU/LPJK
 
-**STRUKTUR KUALIFIKASI SBU KONSTRUKSI (PP 28/2025 & Permen PU 6/2025):**
-├─ Kecil 1 (K1) : s/d Rp 2 miliar
-├─ Kecil 2 (K2) : > Rp 2M s/d Rp 7,5 miliar
-├─ Kecil 3 (K3) : > Rp 7,5M s/d Rp 15 miliar
-├─ Menengah (M)  : > Rp 15M s/d Rp 50 miliar
-└─ Besar (B)     : di atas Rp 50 miliar
+**CHECKLIST PENILAIAN BERDASARKAN STANDAR SKEMA:**
+□ Kriteria kualifikasi: bukti penjualan tahunan dan kemampuan keuangan
+□ Kriteria subklasifikasi: ruang lingkup usaha, pengalaman, SDM, dan peralatan yang relevan
+□ PJBU, PJTBU, dan PJKBU beserta SKK yang sesuai
+□ Penerapan SMAP dan keanggotaan asosiasi yang tercatat sesuai ketentuan
+□ Pelaporan pemilik manfaat yang dapat diverifikasi
+□ Untuk perpanjangan: laporan kegiatan usaha tahunan dan pengembangan usaha berkelanjutan
+□ Bukti pemeliharaan sertifikasi melalui surveilans terjadwal atau tidak terjadwal
 
-**PERSYARATAN SBU KONTRAKTOR KUALIFIKASI MENENGAH (M) — 2025:**
+**ALUR PERSIAPAN YANG AMAN:**
+1. Tentukan kualifikasi, klasifikasi, dan subklasifikasi yang diajukan
+2. Cocokkan setiap persyaratan dengan skema LSBU yang telah disetujui
+3. Siapkan sumber bukti dan jejak verifikasi untuk setiap data
+4. Konfirmasi status implementasi masa transisi kepada LSBU/LPJK
+5. Ikuti proses, jadwal, dan biaya resmi yang diberikan LSBU terkait
 
-📋 Dokumen Badan Usaha:
-□ Akta PT + SK Kemenkumham + AD terbaru
-□ NIB aktif dengan KBLI konstruksi yang sesuai (terintegrasi OSS-RBA)
-□ NPWP Badan Usaha aktif (taat pajak)
-□ Laporan keuangan 2 tahun terakhir
-□ Modal disetor terverifikasi min. Rp 500 juta (M1, PP 28/2025)
-
-👷 Persyaratan SDM Bersertifikat SKK:
-□ Min. 1 Penanggung Jawab Teknis (PJT) — SKK jenjang 7 (Ahli Madya)
-□ Min. 1 Penanggung Jawab Bidang (PJB) — SKK jenjang 6
-□ Min. 2 Tenaga Teknis bersertifikat SKK sesuai bidang
-□ SKK harus MASIH BERLAKU & tidak boleh diklaim 2 perusahaan
-
-📊 Persyaratan Pengalaman & Peralatan:
-□ Referensi proyek selesai + Berita Acara Serah Terima (BAST)
-□ Daftar peralatan konstruksi (milik/sewa) + bukti kepemilikan
-
-**ALUR PROSES PORTAL LPJK (Permen PU 6/2025):**
-1. Registrasi akun portal LPJK (portal.lpjk.go.id)
-2. Pilih subklasifikasi & gred yang ditargetkan
-3. Daftar dan rekomendasi dari Asosiasi BUJK terakreditasi (max 7 hari)
-4. Upload semua dokumen persyaratan via portal
-5. Verifikasi LPJK — max 14 hari kerja
-6. Bayar PNBP via Simponi/bank persepsi
-7. SBU digital terbit & terintegrasi ke SIKI + OSS otomatis
-
-⏱️ Total estimasi: 14–21 hari kerja | Biaya PNBP: Rp 2–3,5 juta (M1)
+Saya tidak akan menetapkan kelayakan, waktu, atau biaya hanya dari data ringkas. Hasil akhir perlu diverifikasi terhadap dokumen badan usaha dan sumber resmi.
 
 📌 Lihat detail lengkap, checklist interaktif per gred, dan subklasifikasi di halaman SBU Platform (/sbu)
 
@@ -902,8 +883,8 @@ Saya adalah **Orchestrator** yang menganalisis intent Anda, memecah tugas, dan m
 **11 Agen Spesialis — Siap Bekerja Sekarang:**
 • 🏢 **Agen Legalitas** — Pendirian PT/CV, NIB OSS-RBA, KBLI, AHU, NPWP
 • 🛡️ **Agen Perizinan** — SIUJK, IUJK, izin lingkungan, AMDAL, OSS sektoral
-• 🏅 **Agen Sertifikasi SBU** — SBU LPJK (K1/K2/K3/Menengah/Besar/SP), Permen PU No. 6/2025
-• 🎓 **Agen Sertifikasi SKK** — Tenaga Ahli & Terampil, LSP/BNSP, semua jabatan kerja & jenjang (SK Dirjen BK 114/2024)
+• 🏅 **Agen Sertifikasi SBU** — SBU LPJK dan skema Kepdirjen 281/2026; hasil selalu perlu verifikasi LSBU/LPJK
+• 🎓 **Agen Sertifikasi SKK** — Tenaga Ahli & Terampil, LSP/BNSP, semua jabatan kerja & jenjang (SK Dirjen BK 114/2024; tidak digantikan Kepdirjen 281/2026)
 • 🔒 **Agen ISO & SMK3** — ISO 9001/14001/45001/37001, PP 50/2012, gap analysis
 • 📄 **Agen Tender** — Go/No-Go scoring, compliance matrix, Perpres 12/2021
 • 📁 **Agen Proyek** — Kontrak KKK, laporan, BAST, klaim, close-out

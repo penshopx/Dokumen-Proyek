@@ -24,12 +24,14 @@ const WELCOME_TEXT = `Halo! Saya OpenClaw — agen AI dari **Gustafta Framework*
 Saya bisa bantu Anda mengakses fitur-fitur AI Gustafta:
 
 🔍 **TenderaClaw** — analisis kelayakan & strategi tender
-🏗 **SBUClaw** — persiapan sertifikasi SBU 4 tahap
+🏗 **SBUClaw** — persiapan sertifikasi SBU dengan rujukan Kepdirjen 281/2026
 ⚡ **MultiClaw** — monitoring SBU/SKK/BUJK/Tender otomatis
 ⚖️ **LexCom Hukum** — konsultasi hukum konstruksi (FIDIC, Perpres, UUJK)
 🏢 **Workroom** — ruang kolaborasi proyek terstruktur
 🎓 **KompetensiHub** — gap analysis & roadmap SKK
 👨‍🏫 **ASKOM Coach** — panduan asesor BNSP
+
+Kepdirjen 281/2026 mengatur skema SBU/BUJK, bukan menggantikan ketentuan SKK; detail dan masa transisi perlu diverifikasi ke LSBU/LPJK.
 
 Tanya apa saja, atau saya arahkan ke fitur yang paling sesuai kebutuhan Anda.`;
 
@@ -41,7 +43,7 @@ const QUICK_QUESTIONS = [
   "Apa itu Workroom dan kegunaannya?",
   "Cara analisis gap kompetensi SKK?",
   "ASKOM Coach untuk asesor BNSP?",
-  "Syarat SBU Kontraktor terbaru?",
+  "Bagaimana Kepdirjen 281/2026 berlaku untuk skema SBU saya?",
   "Cara daftar tender LPSE?",
   "Perubahan Perpres 46/2025?",
 ];

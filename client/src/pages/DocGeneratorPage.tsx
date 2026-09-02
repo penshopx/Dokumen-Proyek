@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/use-auth";
 import { Link } from "wouter";
 import { RelatedServices } from "@/components/ServiceNav";
+import { Kepdirjen281Context } from "@/components/Kepdirjen281Context";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import {
   ArrowLeft, FileText, Download, Copy, CheckCircle2, RefreshCw,
@@ -1130,6 +1131,16 @@ export default function DocGeneratorPage() {
 
         {/* ── FORM + PREVIEW ── */}
         {selectedTemplate && (
+          <div className="space-y-4">
+            {(selectedTemplate.kategori === "tender" || selectedTemplate.kategori === "proyek") && (
+              <>
+                <Kepdirjen281Context domain={selectedTemplate.kategori === "tender" ? "tender" : "project"} compact />
+                <p className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-xs leading-relaxed text-amber-900">
+                  Template ini adalah alat bantu. Dokumen pemilihan untuk tender atau kontrak/dokumen proyek untuk pelaksanaan tetap mengendalikan persyaratan aktual.
+                  Kepdirjen 281/2026 tidak mengatur seluruh dokumen ini maupun SKK secara langsung; verifikasi keputusan masa transisi pada sumber resmi dan simpan bukti pemeriksaan.
+                </p>
+              </>
+            )}
           <div className="grid lg:grid-cols-2 gap-6">
             {/* Form */}
             <div className="space-y-4">
@@ -1216,6 +1227,7 @@ export default function DocGeneratorPage() {
                 </CardContent>
               </Card>
             </div>
+          </div>
           </div>
         )}
 

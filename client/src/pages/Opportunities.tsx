@@ -44,6 +44,7 @@ import {
 } from "lucide-react";
 import { Link } from "wouter";
 import type { Opportunity, UserProfile } from "@shared/schema";
+import { Kepdirjen281Context } from "@/components/Kepdirjen281Context";
 
 const categoryOptions = [
   { value: "tender", label: "Tender Proyek" },
@@ -279,7 +280,7 @@ export default function Opportunities() {
                 <div className="space-y-2">
                   <Label>Persyaratan (pisahkan dengan koma)</Label>
                   <Input
-                    placeholder="SBU, SKK, Pengalaman 5 tahun"
+                    placeholder="Untuk tender: salin persyaratan dokumen pemilihan (SBU status/kualifikasi/klasifikasi/subklasifikasi; PJTBU/PJKBU atau SKK bila ada)"
                     value={newOpp.requirements}
                     onChange={(e) => setNewOpp({ ...newOpp, requirements: e.target.value })}
                     data-testid="input-opp-requirements"
@@ -514,6 +515,14 @@ export default function Opportunities() {
                       </div>
                     </div>
                   )}
+                   {selectedOpp.category === "tender" && (
+                     <div className="space-y-3">
+                       <Kepdirjen281Context domain="tender" compact />
+                       <p className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs leading-relaxed text-amber-900">
+                         Persyaratan pada postingan ini bersifat informasi. Dokumen pemilihan mengendalikan persyaratan tender aktual; verifikasi sumber resmi dan keputusan masa transisi, lalu simpan bukti pemeriksaan.
+                       </p>
+                     </div>
+                   )}
                   
                   <div className="flex gap-3 pt-4 border-t">
                     <Button className="flex-1" data-testid="button-apply-opportunity">

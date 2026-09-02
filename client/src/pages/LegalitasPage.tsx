@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
+import { Kepdirjen281Context } from "@/components/Kepdirjen281Context";
 import {
   ArrowLeft, Building2, FileText, CheckCircle2, AlertCircle, Clock,
   ChevronRight, Copy, Info, Zap, AlertTriangle, BookOpen, ArrowRight,
@@ -338,6 +339,11 @@ export default function LegalitasPage() {
             </CardContent>
           </Card>
         </div>
+        <Kepdirjen281Context domain="licensing" />
+        <p className="text-xs text-slate-600 -mt-6">
+          <strong>Penegasan ruang lingkup:</strong> Kepdirjen 281/2026 mengatur skema sertifikasi SBU dan
+          tidak menggantikan aturan pendirian badan usaha, NIB, OSS-RBA, atau perizinan lainnya.
+        </p>
 
         {/* Regulasi Banner */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">

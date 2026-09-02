@@ -16,6 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Navbar } from "@/components/Navbar";
+import { Kepdirjen281Context } from "@/components/Kepdirjen281Context";
 
 const STAGES = [
   { id: 0, label: "Data Perusahaan", icon: Building2,  desc: "Profil & kualifikasi" },
@@ -205,8 +206,8 @@ export default function SBUClaw() {
               <span className="text-green-300 text-xs font-semibold tracking-wide uppercase">Pipeline AI · by Gustafta</span>
             </div>
             <h1 className="text-4xl sm:text-5xl font-extrabold mb-4 leading-tight">
-              SBU Kedaluwarsa<br />
-              <span className="text-green-400">= Gugur di Tender.</span>
+              Pastikan Status SBU<br />
+              <span className="text-green-400">Sesuai Persyaratan Tender.</span>
             </h1>
             <p className="text-slate-400 text-lg max-w-xl mx-auto mb-8">
               SBUClaw memandu pipeline 4-tahap persiapan SBU LPJK — dari cek kelengkapan
@@ -224,6 +225,9 @@ export default function SBUClaw() {
                 </Button>
               </Link>
             </div>
+          </div>
+          <div className="max-w-4xl mx-auto px-6 pb-8">
+            <Kepdirjen281Context domain="sbu" compact />
           </div>
         </div>
 
@@ -307,6 +311,7 @@ export default function SBUClaw() {
       </div>
 
       <div className="max-w-4xl mx-auto w-full p-4 flex flex-col gap-5">
+        <Kepdirjen281Context domain="sbu" compact />
         {/* History panel */}
         {showHistory && (
           <Card>
@@ -381,11 +386,11 @@ export default function SBUClaw() {
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
                     {[
-                      { v: "K1", l: "K1 — Kecil 1 (s.d. Rp 2M)" },
-                      { v: "K2", l: "K2 — Kecil 2 (s.d. Rp 7,5M)" },
-                      { v: "K3", l: "K3 — Kecil 3 (s.d. Rp 15M)" },
-                      { v: "M",  l: "Menengah (s.d. Rp 50M)" },
-                      { v: "B",  l: "Besar (di atas Rp 50M)" },
+                       { v: "K1", l: "K1 — Kecil 1" },
+                       { v: "K2", l: "K2 — Kecil 2" },
+                       { v: "K3", l: "K3 — Kecil 3" },
+                       { v: "M",  l: "Menengah" },
+                       { v: "B",  l: "Besar" },
                     ].map(k => <SelectItem key={k.v} value={k.v}>{k.l}</SelectItem>)}
                   </SelectContent>
                 </Select>

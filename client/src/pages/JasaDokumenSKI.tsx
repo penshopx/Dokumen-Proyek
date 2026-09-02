@@ -15,7 +15,7 @@ const wa = "https://wa.me/6281287941900";
 
 const services = [
   ["SBU Jasa Konstruksi", "K1 · K2 · K3 · Menengah · Besar", HardHat],
-  ["SKK Konstruksi", "PJTBU & PJSKBU", BadgeCheck],
+  ["SKK Konstruksi", "PJTBU & PJKBU", BadgeCheck],
   ["KTA Asosiasi", "Keanggotaan yang siap dipakai", UsersRound],
   ["SBU JPTL", "Jasa Penunjang Tenaga Listrik", Zap],
   ["ISO KAN & Non-KAN", "9001, 14001, 45001 dan lainnya", ShieldCheck],

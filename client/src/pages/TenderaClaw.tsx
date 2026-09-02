@@ -17,6 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Navbar } from "@/components/Navbar";
+import { Kepdirjen281Context } from "@/components/Kepdirjen281Context";
 
 const STAGES = [
   { id: 0, label: "Input Tender",   icon: FileSearch,   desc: "Data proyek & persyaratan" },
@@ -202,7 +203,7 @@ export default function TenderaClaw() {
   if (!user) {
     const WA = "https://wa.me/6281287941900?text=Halo%2C+saya+tertarik+dengan+TenderaClaw.+Bisa+info+lebih+lanjut%3F";
     const FEATURES = [
-      { icon: BarChart3,  label: "Analisis Kelayakan",   desc: "AI menilai go/no-go tender dalam hitungan detik — nilaiHPS, waktu, persyaratan." },
+      { icon: BarChart3,  label: "Analisis Kelayakan",   desc: "AI membantu menilai kelayakan tender berdasarkan nilai HPS, waktu, persyaratan, dan bukti yang tersedia." },
       { icon: Target,     label: "Strategi Penawaran",   desc: "Rekomendasi harga, posisi kompetitif, dan pendekatan untuk memenangkan tender." },
       { icon: FileText,   label: "Draft Dokumen Siap",   desc: "Metode pelaksanaan, jadwal, struktur organisasi — siap diedit dan disubmit." },
       { icon: TrendingUp, label: "Riwayat Pipeline",     desc: "Setiap sesi tersimpan otomatis — lanjut kapan saja, pantau progres per proyek." },
@@ -219,8 +220,8 @@ export default function TenderaClaw() {
               <span className="text-amber-300 text-xs font-semibold tracking-wide uppercase">Pipeline AI · by Gustafta</span>
             </div>
             <h1 className="text-4xl sm:text-5xl font-extrabold mb-4 leading-tight">
-              Analisis Tender Salah<br />
-              <span className="text-amber-400">= Rugi Miliaran.</span>
+              Analisis Tender Berbasis Bukti<br />
+              <span className="text-amber-400">untuk Keputusan yang Lebih Terukur.</span>
             </h1>
             <p className="text-slate-400 text-lg max-w-xl mx-auto mb-8">
               TenderaClaw menjalankan pipeline 4-tahap — kelayakan, strategi, hingga draft dokumen —
@@ -324,6 +325,11 @@ export default function TenderaClaw() {
       </div>
 
       <div className="max-w-5xl mx-auto w-full p-4 flex flex-col gap-6">
+        <Kepdirjen281Context domain="tender" compact />
+        <p className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-xs leading-relaxed text-amber-900">
+          <strong>Kontrol tender:</strong> dokumen pemilihan/paket tetap menentukan persyaratan aktual dan dasar evaluasi.
+          Selama masa transisi, jangan menetapkan lulus atau gugur otomatis; verifikasi sumber resmi serta bukti yang digunakan dan simpan jejak pemeriksaannya.
+        </p>
         {/* History panel */}
         {showHistory && (
           <Card>
@@ -420,7 +426,7 @@ export default function TenderaClaw() {
               </div>
               <div className="space-y-1.5">
                 <Label>Persyaratan & Kualifikasi (opsional)</Label>
-                <Textarea value={input.persyaratan} onChange={e => setInput(p => ({ ...p, persyaratan: e.target.value }))} placeholder="e.g. SBU GD 007, SKK Ahli Madya, Pengalaman min. 3 proyek sejenis, ISO 9001..." rows={3} />
+                <Textarea value={input.persyaratan} onChange={e => setInput(p => ({ ...p, persyaratan: e.target.value }))} placeholder="Contoh dari dokumen pemilihan: status/kualifikasi/klasifikasi/subklasifikasi SBU, PJTBU/PJKBU dan SKK bila dipersyaratkan..." rows={3} />
               </div>
               <div className="flex justify-end">
                 <Button onClick={() => callAI(1)} disabled={!canSubmit || loading} className="gap-2">

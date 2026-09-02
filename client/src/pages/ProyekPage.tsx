@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { RelatedServices } from "@/components/ServiceNav";
 import { ConsultationModal } from "@/components/ConsultationModal";
+import { Kepdirjen281Context } from "@/components/Kepdirjen281Context";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -281,6 +282,12 @@ const regulasiProyek = [
 
 // ─── Checklist Dokumen Proyek ─────────────────────────────────────────────
 const checklistProyek = [
+  { section: "Kepatuhan SBU Selama Proyek", items: [
+    { isi: "Bukti SBU dan ruang lingkupnya disimpan; status, kualifikasi, klasifikasi, dan subklasifikasi dibandingkan dengan kontrak/dokumen proyek", wajib: true },
+    { isi: "Bukti PJTBU/PJKBU dan SKK disimpan serta diperiksa bila dipersyaratkan kontrak atau penugasan; SKK bukan bukti tunggal kelayakan SBU", wajib: false },
+    { isi: "Perubahan PJTBU/PJKBU, status pemilik manfaat, laporan kegiatan usaha tahunan, dan surveilans sertifikasi dipantau bila relevan", wajib: false },
+    { isi: "Setiap pemeriksaan, sumber resmi, bukti, perubahan, dan tindak lanjut dicatat sebagai jejak audit proyek", wajib: true },
+  ]},
   { section: "Pra-Konstruksi", items: [
     { isi: "Kontrak Kerja Konstruksi sudah ditandatangani kedua pihak (PPK & Penyedia)", wajib: true },
     { isi: "SPMK (Surat Perintah Mulai Kerja) sudah diterima dari PPK", wajib: true },
@@ -451,6 +458,11 @@ export default function ProyekPage() {
             ))}
           </div>
         </div>
+        <Kepdirjen281Context domain="project" />
+        <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs leading-relaxed text-amber-900">
+          <strong>Batas rujukan:</strong> Kepdirjen 281/2026 mengatur skema sertifikasi BUJK, bukan seluruh dokumen proyek.
+          Kontrak dan dokumen proyek menentukan kewajiban aktual; pisahkan bukti dokumen proyek dari kesimpulan kepatuhan regulasi, verifikasi masa transisi pada sumber resmi, dan simpan jejak audit.
+        </p>
 
         {/* Main Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
@@ -647,7 +659,7 @@ export default function ProyekPage() {
               <CardContent className="py-4 flex flex-col sm:flex-row sm:items-center gap-4">
                 <div className="flex-1">
                   <div className="font-bold text-sm mb-0.5">Checklist Dokumen Proyek Konstruksi</div>
-                  <div className="text-xs text-muted-foreground">Centang dokumen yang sudah disiapkan/diselesaikan di setiap fase proyek.</div>
+                  <div className="text-xs text-muted-foreground">Centang dokumen/bukti yang sudah disiapkan dan catat sumber, tanggal pemeriksaan, serta tindak lanjutnya.</div>
                 </div>
                 <div className="flex items-center gap-3 flex-shrink-0">
                   <div className="text-right">

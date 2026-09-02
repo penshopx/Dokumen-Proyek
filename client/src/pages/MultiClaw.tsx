@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
+import { Kepdirjen281Context } from "@/components/Kepdirjen281Context";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface MonitoringSession {
@@ -558,9 +559,9 @@ export default function MultiClaw() {
   if (!user) {
     const WA = "https://wa.me/6281287941900?text=Halo%2C+saya+tertarik+dengan+MultiClaw.+Bisa+info+lebih+lanjut%3F";
     const MONITORS = [
-      { icon: Shield,    color: "text-blue-400",   border: "border-blue-500/20",   bg: "bg-blue-500/10",   label: "SBU / SKK Monitor",     desc: "Pantau status kedaluwarsa SBU dan SKK seluruh personel — notifikasi otomatis sebelum terlambat." },
-      { icon: Building2, color: "text-emerald-400", border: "border-emerald-500/20", bg: "bg-emerald-500/10", label: "BUJK Intelligence",      desc: "Monitor kualifikasi BUJK, perubahan regulasi, dan status badan usaha jasa konstruksi." },
-      { icon: FileSearch,color: "text-orange-400",  border: "border-orange-500/20",  bg: "bg-orange-500/10",  label: "Tender Watch",           desc: "Pantau paket tender aktif, deadline, dan peluang baru yang cocok dengan profil perusahaan." },
+      { icon: Shield,    color: "text-blue-400",   border: "border-blue-500/20",   bg: "bg-blue-500/10",   label: "SBU / SKK Monitor",     desc: "Pantau status, kualifikasi, klasifikasi/subklasifikasi, PJTBU/PJKBU dan bukti SKK bila relevan; hasil tetap perlu verifikasi resmi." },
+      { icon: Building2, color: "text-emerald-400", border: "border-emerald-500/20", bg: "bg-emerald-500/10", label: "BUJK Intelligence",      desc: "Monitor kualifikasi BUJK, pemilik manfaat, laporan tahunan, surveilans, dan perubahan regulasi dengan jejak sumber." },
+      { icon: FileSearch,color: "text-orange-400",  border: "border-orange-500/20",  bg: "bg-orange-500/10",  label: "Tender Watch",           desc: "Pantau paket dan tenggat; cocokkan bukti SBU/personel hanya terhadap dokumen pemilihan dan verifikasi resmi." },
       { icon: Users,     color: "text-purple-400",  border: "border-purple-500/20",  bg: "bg-purple-500/10",  label: "Freelance Network",      desc: "Monitor listing tenaga ahli dan subkontraktor — cocokkan kebutuhan proyek secara real-time." },
       { icon: Target,    color: "text-rose-400",    border: "border-rose-500/20",    bg: "bg-rose-500/10",    label: "Profil BUJK & ISO/K3",   desc: "Kumpulkan profil BUJK strategis, perusahaan konstruksi/ESDM/manufaktur yang mengurus atau punya ISO (masa berakhir), penerapan K3, dan peluang pemasaran layanan." },
     ];
@@ -770,6 +771,14 @@ export default function MultiClaw() {
             <TabsContent key={teamKey} value={teamKey}>
               {teams.find(t => t.team === teamKey) && (
                 <div className="space-y-4">
+                  {(teamKey === "sbu-skk" || teamKey === "tender") && (
+                    <>
+                      <Kepdirjen281Context domain={teamKey === "tender" ? "tender" : "sbu"} compact />
+                      <p className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-xs leading-relaxed text-amber-900">
+                        Hasil monitoring adalah temuan untuk ditinjau, bukan penetapan status. Verifikasi status SBU, ruang lingkup, PJTBU/PJKBU dan SKK bila diperlukan pada sumber resmi; untuk tender, dokumen pemilihan mengendalikan persyaratan. Simpan sumber, waktu, dan tindak lanjut sebagai jejak audit.
+                      </p>
+                    </>
+                  )}
                   <TeamPanel
                     ts={teams.find(t => t.team === teamKey)!}
                     onRun={handleRun}

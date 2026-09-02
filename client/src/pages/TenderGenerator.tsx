@@ -15,6 +15,7 @@ import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Link } from "wouter";
 import { RelatedServices } from "@/components/ServiceNav";
+import { Kepdirjen281Context } from "@/components/Kepdirjen281Context";
 import {
   Plus, FileText, ArrowLeft, Download, Eye, Calendar, Building2,
   MapPin, FileCheck, Loader2, Copy, CheckCircle2, BookOpen, Zap,
@@ -98,11 +99,11 @@ const dokumenTenderDetail = [
     items: [
       { nama: "Akta Pendirian + Perubahan Terakhir", ket: "Legalisir notaris — termasuk SK Kemenkumham", wajib: true },
       { nama: "NIB (Nomor Induk Berusaha)", ket: "Dari OSS-RBA — KBLI harus sesuai bidang pekerjaan", wajib: true },
-      { nama: "SBU Aktif (Sesuai Subklasifikasi)", ket: "SBU LPJK yang belum kedaluwarsa, gred sesuai nilai paket", wajib: true },
+      { nama: "SBU (Status dan Ruang Lingkup Sesuai Paket)", ket: "Verifikasi status, kualifikasi, klasifikasi, dan subklasifikasi terhadap dokumen pemilihan; simpan sumber dan waktu pemeriksaan", wajib: true },
       { nama: "NPWP Badan Usaha + IIKP", ket: "NPWP aktif + Informasi Identitas & Kapasitas Pajak", wajib: true },
       { nama: "Laporan Keuangan Audited", ket: "2 tahun terakhir — KAP berakreditasi (paket di atas ambang batas)", wajib: false },
       { nama: "Daftar Pengalaman Pekerjaan (5 Tahun)", ket: "Nama proyek, nilai, pemberi kerja, tahun, referensi BAP/BAST", wajib: true },
-      { nama: "Sertifikat SKK Personel Kunci (PJT/PM/K3)", ket: "SKK ahli sesuai jabatan: PM min. Jenjang 7, K3 min. Jenjang 6", wajib: true },
+      { nama: "Bukti PJTBU/PJKBU dan SKK Personel", ket: "Lampirkan/validasi bila dipersyaratkan dokumen pemilihan; nilai kesesuaian bukti terhadap peran dan ruang lingkup paket", wajib: false },
     ],
   },
 ];
@@ -222,8 +223,10 @@ const checklistKepatuhan = [
     { isi: "Surat Kuasa notarial (jika bukan direktur yang menandatangani)", wajib: false },
   ]},
   { section: "Kualifikasi Badan Usaha", items: [
-    { isi: "SBU aktif dan sesuai subklasifikasi pekerjaan yang ditenderkan", wajib: true },
-    { isi: "Kualifikasi SBU sesuai nilai HPS (K1/K2/K3/Menengah/Besar)", wajib: true },
+    { isi: "SBU diverifikasi pada sumber resmi: status, kualifikasi, klasifikasi, dan subklasifikasi sesuai paket", wajib: true },
+    { isi: "Bukti PJTBU/PJKBU dan SKK diperiksa bila dipersyaratkan dokumen pemilihan; tidak menyimpulkan kelayakan SBU dari SKK saja", wajib: false },
+    { isi: "Status pemilik manfaat, laporan kegiatan usaha tahunan (untuk perpanjangan), dan surveilans dicatat bila relevan dengan SBU/paket", wajib: false },
+    { isi: "Sumber resmi, tanggal pemeriksaan, dokumen pendukung, dan keputusan verifikasi dicatat sebagai jejak audit", wajib: true },
     { isi: "NIB aktif dengan KBLI sesuai pekerjaan", wajib: true },
     { isi: "NPWP aktif — tidak dalam status pembekuan", wajib: true },
     { isi: "Laporan Keuangan Audited 2 tahun (paket kualifikasi non-kecil)", wajib: false },
@@ -234,7 +237,7 @@ const checklistKepatuhan = [
     { isi: "RK3K (Rencana K3 Kontrak) mengacu Permen PUPR 10/2021", wajib: true },
     { isi: "Time Schedule realistis dan mencakup seluruh lingkup pekerjaan", wajib: true },
     { isi: "Struktur Organisasi Proyek dengan nama personel yang ditugaskan", wajib: true },
-    { isi: "SKK Personel Kunci (PM/SM/K3) masih aktif dan terlampir", wajib: true },
+    { isi: "SKK personel kunci masih aktif dan terlampir bila dipersyaratkan dokumen pemilihan", wajib: false },
     { isi: "Daftar Peralatan Utama dengan kepemilikan/sewa terdokumentasi", wajib: true },
   ]},
   { section: "Dokumen Harga", items: [
@@ -278,9 +281,9 @@ export default function TenderGenerator() {
   });
 
   const { data: profile } = useQuery<UserProfile>({ queryKey: ["/api/profile"] });
-  const { data: documents = [], isLoading } = useQuery<TenderDocument>({
+  const { data: documents = [], isLoading } = useQuery<TenderDocument[]>({
     queryKey: ["/api/tender-documents"],
-  }) as { data: TenderDocument[]; isLoading: boolean };
+  });
 
   const createMutation = useMutation({
     mutationFn: async (data: any) => {
@@ -446,6 +449,11 @@ export default function TenderGenerator() {
             ))}
           </div>
         </div>
+        <Kepdirjen281Context domain="tender" />
+        <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs leading-relaxed text-amber-900">
+          <strong>Catatan penerapan:</strong> dokumen pemilihan mengendalikan persyaratan tender yang benar-benar berlaku.
+          Kepdirjen 281/2026 menjadi rujukan skema sertifikasi BUJK, bukan keputusan otomatis lulus/gugur; keputusan pada masa transisi harus diverifikasi ke sumber resmi dan dicatat jejak auditnya.
+        </p>
 
         {/* Main Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
@@ -633,7 +641,7 @@ export default function TenderGenerator() {
               <CardContent className="py-4 flex flex-col sm:flex-row sm:items-center gap-4">
                 <div className="flex-1">
                   <div className="font-bold text-sm mb-0.5">Checklist Kepatuhan Tender — Perpres 46/2025 + Permen PUPR 14/2020</div>
-                  <div className="text-xs text-muted-foreground">Centang setiap item yang sudah disiapkan sebelum memasukkan dokumen penawaran.</div>
+                  <div className="text-xs text-muted-foreground">Centang setelah memeriksa bukti dan mencatat sumbernya; persyaratan aktual tetap mengikuti dokumen pemilihan.</div>
                 </div>
                 <div className="flex items-center gap-3 flex-shrink-0">
                   <div className="text-right">

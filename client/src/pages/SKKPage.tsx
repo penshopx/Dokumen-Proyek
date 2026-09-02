@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
+import { Kepdirjen281Context } from "@/components/Kepdirjen281Context";
 import {
   ArrowLeft, GraduationCap, Search, FileText, CheckCircle2, AlertCircle,
   Clock, ChevronRight, Copy, Info, Zap, AlertTriangle, BookOpen,
@@ -364,6 +365,11 @@ export default function SKKPage() {
             </CardContent>
           </Card>
         </div>
+        <Kepdirjen281Context domain="skk" />
+        <p className="text-xs text-slate-600 -mt-6">
+          <strong>Penegasan ruang lingkup:</strong> Kepdirjen 281/2026 hanya mengatur skema sertifikasi SBU
+          dan tidak menggantikan ketentuan sertifikasi SKK, skema kompetensi, maupun asesmen oleh LSP/BNSP.
+        </p>
 
         {/* Regulasi Banner */}
         <div className="grid md:grid-cols-3 gap-3">

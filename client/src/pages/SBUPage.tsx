@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
+import { Kepdirjen281Context } from "@/components/Kepdirjen281Context";
 import {
   ArrowLeft, Award, Search, FileText, CheckCircle2, AlertCircle,
   Clock, ChevronRight, Copy, Info, Building2, Zap, AlertTriangle,
@@ -24,7 +25,7 @@ import {
 const regulasiTerbaru = [
   {
     kode: "PP No. 28 Tahun 2025",
-    judul: "Peraturan Pelaksanaan Jasa Konstruksi",
+    judul: "Penyelenggaraan Perizinan Berusaha Berbasis Risiko",
     berlaku: "2025",
     menggantikan: "PP No. 22 Tahun 2020",
     ringkasan: "Peraturan Pemerintah terbaru yang memperbarui ketentuan penyelenggaraan jasa konstruksi, termasuk persyaratan kualifikasi BUJK, tata cara sertifikasi SBU, dan integrasi sistem data SIKI-OSS.",
@@ -41,7 +42,7 @@ const regulasiTerbaru = [
   },
   {
     kode: "Permen PU No. 6 Tahun 2025",
-    judul: "Tata Cara Sertifikasi Badan Usaha Jasa Konstruksi",
+    judul: "Standar Kegiatan Usaha dan Produk/Jasa Sektor Pekerjaan Umum",
     berlaku: "2025",
     menggantikan: "Permen PUPR No. 8 Tahun 2022",
     ringkasan: "Peraturan Menteri Pekerjaan Umum terbaru yang mengatur secara teknis tata cara pengajuan, verifikasi, penerbitan, dan perpanjangan Sertifikat Badan Usaha (SBU) konstruksi melalui LPJK.",
@@ -54,6 +55,21 @@ const regulasiTerbaru = [
       "Integrasi portal SBU dengan SIKI, OSS, dan SIPD (Sistem Informasi Pemerintah Daerah)",
       "Persyaratan laporan keuangan diperlunak untuk gred K1 dan K2 — cukup laporan sederhana",
       "Mekanisme SBU sementara/darurat untuk pekerjaan strategis nasional",
+    ],
+  },
+  {
+    kode: "Kepdirjen Bina Konstruksi No. 281/KPTS/DK/2026",
+    judul: "Penetapan Standar Skema Sertifikasi Badan Usaha Jasa Konstruksi",
+    berlaku: "26 Agustus 2026",
+    menggantikan: "Kepdirjen Bina Konstruksi No. 37/KPTS/DK/2025",
+    ringkasan: "Keputusan ini menetapkan standar skema sertifikasi BUJK sebagai acuan LSBU untuk menilai kelayakan persyaratan kualifikasi badan usaha, dalam pelaksanaan Pasal 5 ayat (9) Permen PU No. 6 Tahun 2025 dan kerangka PP No. 28 Tahun 2025.",
+    perubahan: [
+      "Kepdirjen No. 37/KPTS/DK/2025 dicabut dan dinyatakan tidak berlaku",
+      "LSBU wajib menyesuaikan dan mengimplementasikan skema paling lambat 6 bulan sejak penetapan",
+      "Kriteria sertifikasi dipisahkan menjadi kriteria kualifikasi, subklasifikasi, dan kriteria lainnya",
+       "Gunakan istilah PJKBU (Penanggung Jawab Klasifikasi Badan Usaha) dalam dokumen dan verifikasi SBU",
+      "Pemilik manfaat, pelaporan kegiatan usaha tahunan, keanggotaan asosiasi, dan pengembangan usaha berkelanjutan menjadi bagian kriteria lainnya sesuai ketentuan",
+      "Pemeliharaan sertifikasi menekankan kepatuhan berkelanjutan melalui surveilans",
     ],
   },
 ];
@@ -328,6 +344,16 @@ const dokumenChecklist: Record<GredKey, Array<{ nama: string; ket: string; wajib
   ],
 };
 
+const kepdirjen281Checklist = [
+  { nama: "Kesesuaian kualifikasi SBU", ket: "Pastikan kualifikasi yang diajukan dapat dibuktikan dan sesuai ruang lingkup badan usaha.", wajib: true },
+  { nama: "Klasifikasi dan subklasifikasi SBU", ket: "Cocokkan klasifikasi serta subklasifikasi dengan kegiatan usaha dan dokumen pendukung.", wajib: true },
+  { nama: "PJTBU/PJKBU dan SKK relevan", ket: "Siapkan bukti penanggung jawab yang sesuai dengan klasifikasi dan subklasifikasi yang diajukan.", wajib: true },
+  { nama: "Pelaporan pemilik manfaat", ket: "Siapkan data pemilik manfaat yang dapat diverifikasi sesuai ketentuan.", wajib: true },
+  { nama: "Laporan kegiatan usaha tahunan", ket: "Khusus perpanjangan SBU: siapkan apabila dipersyaratkan dalam penilaian.", wajib: false },
+  { nama: "Bukti pengembangan usaha berkelanjutan", ket: "Khusus perpanjangan SBU: simpan bukti yang relevan sesuai ketentuan.", wajib: false },
+  { nama: "Kesiapan surveilans sertifikasi", ket: "Untuk pemeliharaan SBU: simpan jejak bukti surveilans terjadwal/tidak terjadwal dan sertifikasi ulang.", wajib: false },
+] as const;
+
 interface CheckItem { nama: string; ket: string; wajib: boolean; checked: boolean; }
 
 export default function SBUPage() {
@@ -355,7 +381,7 @@ export default function SBUPage() {
 
   function openChecklist(gred: GredKey) {
     setChecklistGred(gred);
-    setChecklist(dokumenChecklist[gred].map(d => ({ ...d, checked: false })));
+    setChecklist([...dokumenChecklist[gred], ...kepdirjen281Checklist].map(d => ({ ...d, checked: false })));
     setShowChecklist(true);
   }
 
@@ -432,19 +458,19 @@ export default function SBUPage() {
               </Badge>
               <h1 className="text-3xl font-bold text-slate-900 mb-3 leading-tight">
                 SBU Konstruksi<br />
-                <span className="text-amber-600">PP 28/2025 & Permen PU 6/2025</span>
+                <span className="text-amber-600">PP 28/2025 · Permen PU 6/2025 · Kepdirjen 281/2026</span>
               </h1>
               <p className="text-slate-600 leading-relaxed mb-4">
-                SBU (Sertifikat Badan Usaha) adalah bukti pengakuan formal atas kemampuan dan kompetensi
-                badan usaha jasa konstruksi dari <strong>LPJK (Lembaga Pengembangan Jasa Konstruksi)</strong>.
-                Wajib dimiliki oleh seluruh BUJK untuk dapat mengikuti tender pemerintah dan swasta berdasarkan
-                <strong> PP No. 28 Tahun 2025</strong> dan <strong>Permen PU No. 6 Tahun 2025</strong>.
+                SBU (Sertifikat Badan Usaha) merupakan sertifikat kemampuan badan usaha jasa konstruksi.
+                Kepdirjen Bina Konstruksi No. 281/KPTS/DK/2026 menetapkan standar skema yang digunakan LSBU
+                untuk menilai kelayakan persyaratan BUJK. Kebutuhan SBU dalam tender tetap mengikuti
+                dokumen pemilihan atau kontrak serta hasil verifikasi pada sumber resmi.
               </p>
               <div className="flex flex-wrap gap-2">
                 <Badge variant="outline" className="text-xs gap-1"><CheckCircle2 className="w-3 h-3 text-green-500" /> 5 Kualifikasi SBU</Badge>
-                <Badge variant="outline" className="text-xs gap-1"><CheckCircle2 className="w-3 h-3 text-green-500" /> Digital via Portal LPJK</Badge>
+                <Badge variant="outline" className="text-xs gap-1"><CheckCircle2 className="w-3 h-3 text-green-500" /> Proses melalui LSBU</Badge>
                 <Badge variant="outline" className="text-xs gap-1"><CheckCircle2 className="w-3 h-3 text-green-500" /> Masa Berlaku 3 Tahun</Badge>
-                <Badge variant="outline" className="text-xs gap-1"><CheckCircle2 className="w-3 h-3 text-green-500" /> Terintegrasi SIKI & OSS</Badge>
+                <Badge variant="outline" className="text-xs gap-1"><CheckCircle2 className="w-3 h-3 text-green-500" /> Verifikasi Data Resmi</Badge>
               </div>
             </div>
 
@@ -483,7 +509,9 @@ export default function SBUPage() {
                 <div>
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-bold text-sm text-blue-900">{r.kode}</span>
-                    <Badge className="text-[10px] bg-blue-600 text-white h-4 px-1.5">BARU 2025</Badge>
+                    <Badge className="text-[10px] bg-blue-600 text-white h-4 px-1.5">
+                      {r.berlaku.includes("2026") ? "BARU 2026" : "BARU 2025"}
+                    </Badge>
                   </div>
                   <div className="text-xs text-blue-800 mt-0.5">{r.judul}</div>
                   <div className="text-[10px] text-blue-600 mt-1">Menggantikan: {r.menggantikan} → klik untuk detail perubahan</div>
@@ -492,6 +520,7 @@ export default function SBUPage() {
               </button>
             ))}
           </div>
+          <Kepdirjen281Context domain="sbu" />
         </div>
 
         {/* Detail Per Gred */}
@@ -573,6 +602,10 @@ export default function SBUPage() {
                             Tanpa SKK yang sesuai, SBU tidak dapat diterbitkan LPJK. SKK wajib sesuai subklasifikasi SBU yang diajukan.
                           </p>
                         </div>
+                        <p className="mt-3 text-xs text-amber-800">
+                          Dalam skema Kepdirjen 281/2026, kecocokan SKK dinilai bersama kualifikasi,
+                          klasifikasi, dan subklasifikasi SBU—bukan sebagai bukti tunggal kelayakan.
+                        </p>
                       </CardContent>
                     </Card>
 
@@ -602,7 +635,7 @@ export default function SBUPage() {
                       <CardTitle className="text-sm flex items-center gap-2">
                         <FileCheck className="w-4 h-4 text-primary" /> Daftar Dokumen Lengkap — Gred {gredKey}
                         <Badge variant="secondary" className="text-xs ml-auto">
-                          {dokumenChecklist[gredKey].filter(d => d.wajib).length} wajib · {dokumenChecklist[gredKey].filter(d => !d.wajib).length} kondisional
+                          {dokumenChecklist[gredKey].filter(d => d.wajib).length + kepdirjen281Checklist.filter(d => d.wajib).length} wajib · {dokumenChecklist[gredKey].filter(d => !d.wajib).length} kondisional
                         </Badge>
                       </CardTitle>
                     </CardHeader>
@@ -617,6 +650,16 @@ export default function SBUPage() {
                               <Badge variant={d.wajib ? "default" : "secondary"} className="text-[10px] mt-1 h-4 px-1">
                                 {d.wajib ? "Wajib" : "Kondisional"}
                               </Badge>
+                            </div>
+                          </div>
+                        ))}
+                        {kepdirjen281Checklist.map((d, i) => (
+                          <div key={`kepdirjen-${i}`} className="flex gap-2 p-3 rounded-lg border border-blue-200 bg-blue-50/70">
+                            <CheckCheck className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                            <div>
+                              <div className="text-sm font-medium">{d.nama}</div>
+                              <div className="text-xs text-muted-foreground mt-0.5">{d.ket}</div>
+                              <Badge className="text-[10px] mt-1 h-4 px-1 bg-blue-600">Kepdirjen 281/2026</Badge>
                             </div>
                           </div>
                         ))}

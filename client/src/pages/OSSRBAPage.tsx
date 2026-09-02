@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
+import { Kepdirjen281Context } from "@/components/Kepdirjen281Context";
 import {
   ArrowLeft, Shield, Search, FileText, CheckCircle2, AlertCircle,
   Clock, ChevronRight, Download, Copy, ExternalLink, Info,
@@ -345,6 +346,11 @@ export default function OSSRBAPage() {
             })}
           </div>
         </div>
+        <Kepdirjen281Context domain="licensing" />
+        <p className="text-xs text-slate-600 -mt-4">
+          <strong>Penegasan ruang lingkup:</strong> Kepdirjen 281/2026 hanya mengatur skema sertifikasi SBU;
+          ketentuan NIB, OSS-RBA, dan perizinan berbasis risiko tetap mengikuti regulasi perizinan yang berlaku.
+        </p>
 
         {/* Alur Proses OSS-RBA Overview */}
         <Card>

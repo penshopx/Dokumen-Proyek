@@ -31,7 +31,7 @@ interface ChatSessionSummary {
 
 const QUICK_PROMPTS = [
   { icon: FileText, text: "Buatkan draft Surat Penawaran Harga lengkap", color: "text-green-500" },
-  { icon: Award, text: "Langkah lengkap mengurus SBU Konstruksi LPJK", color: "text-amber-500" },
+  { icon: Award, text: "Bagaimana Kepdirjen 281/2026 memandu skema SBU dan apa yang perlu diverifikasi ke LSBU/LPJK?", color: "text-amber-500" },
   { icon: FolderOpen, text: "Cara daftar LPSE dan ikut tender pemerintah", color: "text-orange-500" },
   { icon: GraduationCap, text: "Cara urus SKK tenaga ahli dan terampil konstruksi", color: "text-purple-500" },
   { icon: BookMarked, text: "Apa itu TKDN dan cara memenuhi ambang batas?", color: "text-rose-500" },
@@ -50,6 +50,8 @@ const WELCOME_MESSAGE: Message = {
 Saya asisten AI dari **DokumenProyek.com**. Ada beberapa hal yang bisa saya bantu:
 
 - **Tanya jawab** seputar SBU, SKK, Legalitas, Perizinan, ISO/SMK3, Tender, dan Proyek konstruksi
+- **Kepdirjen 281/2026** untuk skema sertifikasi BUJK/SBU (dengan verifikasi LSBU/LPJK saat penerapan atau masa transisi belum jelas)
+- **SKK** tetap mengikuti ketentuan kompetensi yang berlaku; Kepdirjen 281 hanya relevan saat SKK dipakai dalam pemenuhan SBU
 - **Draft dokumen** siap pakai — surat penawaran, pakta integritas, RK3K, SPMK, berita acara, dan lainnya
 - **Saran dan strategi** mengikuti tender agar lebih kompetitif
 - **Meluruskan** jika ada informasi atau regulasi yang kurang tepat

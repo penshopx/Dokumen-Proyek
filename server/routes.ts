@@ -34,6 +34,7 @@ function isSuperAdmin(req: any, res: any, next: any) {
   return res.status(403).json({ error: "Akses dibatasi untuk superadmin.", errorCode: "forbidden" });
 }
 import { insertUserProfileSchema, insertOpportunitySchema, insertProductSchema, insertOrderSchema, insertTenderDocumentSchema, insertProjectSchema, insertProjectUpdateSchema, insertTransactionSchema, insertEquipmentSchema, insertEquipmentRentalSchema } from "@shared/schema";
+import { KEPDIRJEN_281_AI_CONTEXT } from "@shared/regulatoryFacts";
 import OpenAI from "openai";
 import multer from "multer";
 import { createRequire } from "module";
@@ -822,6 +823,16 @@ export async function registerRoutes(
   // ─── CHAT AI (OpenAI GPT-4o) ─────────────────────────────────────────────────
 
   const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  const withKepdirjen281Context = (prompt: string) => `${prompt}
+
+## Guardrail Kepdirjen 281/2026
+${KEPDIRJEN_281_AI_CONTEXT}
+
+- Bila membahas SBU atau kepatuhan tender terkait SBU, sebutkan sumber dan tanggal secara tepat: Kepdirjen Bina Konstruksi No. 281/KPTS/DK/2026, 26 Agustus 2026.
+- Tegaskan bahwa Kepdirjen 281 mengatur skema sertifikasi BUJK/SBU, bukan menggantikan ketentuan SKK, NIB, atau OSS-RBA.
+- Jelaskan masa transisi dan jangan mengasumsikan implementasi operasional tanpa verifikasi resmi.
+- Jangan menetapkan kelulusan, keguguran, atau status kepatuhan SBU secara otomatis; gunakan bahasa bersyarat dan minta verifikasi dokumen.
+- Jangan mengarang data, status, klasifikasi, subklasifikasi, atau persyaratan SBU. Jika tidak pasti, arahkan verifikasi kepada LSBU/LPJK atau sumber resmi.`;
 
   const CHAT_SYSTEM_PROMPT = `Anda adalah asisten AI dari **DokumenProyek.com** — platform layanan dokumen dan sertifikasi konstruksi Indonesia. Nama Anda adalah OpenClaw AI.
 
@@ -833,7 +844,7 @@ export async function registerRoutes(
 
 ## Spesialisasi Utama
 Anda sangat paham tentang:
-1. **SBU (Sertifikat Badan Usaha)** — 7 gred kualifikasi (K1–K3, M1–M2, B1–B2) sesuai Permen PU No. 6 Tahun 2025. Proses pengajuan via LSBU berlisensi LPJK, terintegrasi SIKI LPJK dan OSS.
+1. **SBU (Sertifikat Badan Usaha)** — kualifikasi Kecil (K1–K3), Menengah, dan Besar sesuai Permen PU No. 6 Tahun 2025, dengan standar skema sertifikasi terbaru berdasarkan Kepdirjen Bina Konstruksi No. 281/KPTS/DK/2026. Proses sertifikasi dilakukan melalui LSBU berlisensi LPJK.
 2. **SKK (Sertifikat Kompetensi Kerja)** — menggantikan SKA dan SKT per SK Dirjen Bina Konstruksi No. 114 Tahun 2024. Jenjang 1–5 (terampil), 6–9 (ahli). Uji via LSP berlisensi LPJK.
 3. **Legalitas Usaha** — Pendirian PT/CV, NIB via OSS-RBA (PP 28/2025), NPWP badan, akta notaris, pengesahan Kemenkumham.
 4. **Perizinan Usaha** — SIUJK, IUJK Konstruksi, OSS-RBA, izin sektoral, Persetujuan Lingkungan (menggantikan Izin Lingkungan sejak UU Cipta Kerja 2020 + PP 22/2021).
@@ -841,10 +852,11 @@ Anda sangat paham tentang:
 6. **Dokumen Tender** — administrasi penawaran, BOQ, RAB, spesifikasi teknis, evaluasi sistem gugur/merit point, TKDN, LPSE/SPSE.
 7. **Dokumen Proyek** — kontrak FIDIC/PUPR, addendum, force majeure, SPMK, berita acara kemajuan, as-built drawing, klaim.
 
-## Regulasi Kunci (2024–2025)
+## Regulasi Kunci (2024–2026)
 - **Perpres 46/2025** (berlaku April 2025): menggantikan Perpres 16/2018 dan Perpres 12/2021. Batas Pengadaan Langsung konstruksi naik ke Rp 400 juta (non-konstruksi tetap Rp 200 juta).
 - **Permen PU No. 6 Tahun 2025**: regulasi SBU terbaru, menggantikan Permen PUPR 8/2022.
 - **PP 28/2025**: OSS-RBA terbaru untuk NIB dan perizinan berusaha.
+- **Kepdirjen Bina Konstruksi No. 281/KPTS/DK/2026** (26 Agustus 2026): menetapkan Standar Skema Sertifikasi BUJK untuk melaksanakan Pasal 5 ayat (9) Permen PU No. 6 Tahun 2025; mencabut Kepdirjen No. 37/KPTS/DK/2025.
 - **SK Dirjen Bina Konstruksi No. 114/2024**: unifikasi SKA+SKT menjadi SKK.
 - **UU Cipta Kerja + PP 22/2021**: Persetujuan Lingkungan menggantikan Izin Lingkungan.
 
@@ -881,7 +893,7 @@ Ketika diminta membuat draft, buatkan dokumen yang lengkap, profesional, dan sia
       // Build message history for OpenAI (last 10 turns to stay within context)
       const recentHistory = Array.isArray(history) ? history.slice(-10) : [];
       const messages: OpenAI.Chat.ChatCompletionMessageParam[] = [
-        { role: "system", content: CHAT_SYSTEM_PROMPT },
+        { role: "system", content: withKepdirjen281Context(CHAT_SYSTEM_PROMPT) },
         ...recentHistory
           .filter((h: any) => h.role && h.content)
           .map((h: any) => ({
@@ -2604,7 +2616,7 @@ Buat draft yang lengkap, profesional, dan siap diadaptasi. Gunakan format yang s
 
       const completion = await openai.chat.completions.create({
         model: "gpt-4o",
-        messages: [{ role: "user", content: prompts[stage] }],
+        messages: [{ role: "user", content: withKepdirjen281Context(prompts[stage]) }],
         max_tokens: 1500,
         temperature: 0.4,
       });
@@ -2703,7 +2715,7 @@ Berikan panduan terstruktur, spesifik, dan actionable untuk tahap ini. Sertakan 
 
       const completion = await openai.chat.completions.create({
         model: "gpt-4o",
-        messages: [{ role: "user", content: prompt }],
+        messages: [{ role: "user", content: roomType === "sbu" || roomType === "tender" ? withKepdirjen281Context(prompt) : prompt }],
         max_tokens: 1000, temperature: 0.4,
       });
       res.json({ result: completion.choices[0]?.message?.content || "" });
@@ -2771,7 +2783,7 @@ Buat surat permohonan SBU yang resmi, lengkap sesuai format LPJK, siap diadaptas
 
       const completion = await openai.chat.completions.create({
         model: "gpt-4o",
-        messages: [{ role: "user", content: prompts[stage] }],
+        messages: [{ role: "user", content: withKepdirjen281Context(prompts[stage]) }],
         max_tokens: 1400, temperature: 0.4,
       });
       res.json({ result: completion.choices[0]?.message?.content || "" });
@@ -3376,7 +3388,7 @@ Tanggal hari ini: ${new Date().toLocaleDateString("id-ID", { day: "2-digit", mon
         const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
         const completion = await openai.chat.completions.create({
           model: "gpt-4o",
-          messages: [{ role: "system", content: cfg.systemPrompt }, { role: "user", content: "Jalankan monitoring sekarang dan berikan hasil terbaru dalam format JSON yang diminta." }],
+          messages: [{ role: "system", content: team === "sbu-skk" || team === "tender" ? withKepdirjen281Context(cfg.systemPrompt) : cfg.systemPrompt }, { role: "user", content: "Jalankan monitoring sekarang dan berikan hasil terbaru dalam format JSON yang diminta." }],
           response_format: { type: "json_object" },
           temperature: 0.7,
         });
@@ -3710,7 +3722,7 @@ Tanggal hari ini: ${new Date().toLocaleDateString("id-ID", { day: "2-digit", mon
       const completion = await openai.chat.completions.create({
         model: "gpt-4o",
         messages: [
-          { role: "system", content: cfg.systemPrompt },
+          { role: "system", content: team === "sbu-skk" || team === "tender" ? withKepdirjen281Context(cfg.systemPrompt) : cfg.systemPrompt },
           { role: "user", content: "Jalankan monitoring terjadwal harian dan berikan hasil terbaru dalam format JSON yang diminta." },
         ],
         response_format: { type: "json_object" },
