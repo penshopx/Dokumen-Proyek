@@ -49,3 +49,7 @@ SMTP_HOST = "smtp-relay.brevo.com"
 SMTP_PORT = "587"
 SMTP_SECURE = "false"
 SMTP_FROM = "noreply@gustafta.com"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
