@@ -4,22 +4,12 @@ import { db } from "../db";
 import { users } from "../../shared/models/auth";
 import { eq } from "drizzle-orm";
 import { randomInt } from "node:crypto";
-
-// ─── In-memory OTP store ───────────────────────────────────────────────────
-// email → { otp, expires, attempts }
-const otpStore = new Map<string, { otp: string; expires: number; attempts: number }>();
-const sendRateLimit = new Map<string, { count: number; reset: number }>();
-
-// Clean up expired entries every 15 minutes
-setInterval(() => {
-  const now = Date.now();
-  otpStore.forEach((entry, email) => {
-    if (now > entry.expires) otpStore.delete(email);
-  });
-  sendRateLimit.forEach((entry, ip) => {
-    if (now > entry.reset) sendRateLimit.delete(ip);
-  });
-}, 15 * 60_000);
+import {
+  consumeRateLimit,
+  issueOtpChallenge,
+  revokeOtpChallenge,
+  verifyOtpChallenge,
+} from "./sharedAuthState";
 
 function generateOTP(): string {
   return randomInt(100000, 1000000).toString();
@@ -102,9 +92,9 @@ export function setupEmailOtp(app: Express) {
 
   // POST /api/auth/email-otp/send
   app.post("/api/auth/email-otp/send", async (req, res) => {
-    const { email } = req.body as { email?: string };
+    const email = typeof req.body?.email === "string" ? req.body.email.trim() : "";
 
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+    if (!email || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return res.status(400).json({ error: "Format email tidak valid." });
     }
 
@@ -112,64 +102,46 @@ export function setupEmailOtp(app: Express) {
       return res.status(503).json({ error: "Email OTP belum dikonfigurasi di server." });
     }
 
-    const normalised = email.trim().toLowerCase();
+    const normalised = email.toLowerCase();
     const ip = req.ip || req.socket.remoteAddress || "unknown";
-    const now = Date.now();
-    const ipLimit = sendRateLimit.get(ip);
-    if (ipLimit && now <= ipLimit.reset && ipLimit.count >= 5) {
+    if (!(await consumeRateLimit(`otp-email-send:${ip}`, 5, 10 * 60_000))) {
       return res.status(429).json({ error: "Terlalu banyak permintaan OTP. Coba lagi beberapa saat." });
-    }
-    if (!ipLimit || now > ipLimit.reset) {
-      sendRateLimit.set(ip, { count: 1, reset: now + 10 * 60_000 });
-    } else {
-      ipLimit.count++;
-    }
-
-    // Rate-limit: only 1 OTP per minute per email
-    const existing = otpStore.get(normalised);
-    if (existing && existing.expires > Date.now() + 9 * 60_000) {
-      return res.status(429).json({ error: "OTP sudah dikirim. Tunggu 1 menit sebelum meminta ulang." });
     }
 
     const otp = generateOTP();
-    otpStore.set(normalised, { otp, expires: Date.now() + 10 * 60_000, attempts: 0 });
+    if (!(await issueOtpChallenge("email", normalised, otp))) {
+      return res.status(429).json({ error: "OTP sudah dikirim. Tunggu 1 menit sebelum meminta ulang." });
+    }
 
     try {
       await sendOtpEmail(normalised, otp);
       return res.json({ ok: true });
     } catch (err) {
       console.error("[EmailOTP] Failed to send:", err);
-      otpStore.delete(normalised);
+      await revokeOtpChallenge("email", normalised, otp);
       return res.status(500).json({ error: "Gagal mengirim email. Pastikan konfigurasi SMTP sudah benar." });
     }
   });
 
   // POST /api/auth/email-otp/verify
   app.post("/api/auth/email-otp/verify", async (req, res) => {
-    const { email, otp } = req.body as { email?: string; otp?: string };
+    const email = typeof req.body?.email === "string" ? req.body.email.trim() : "";
+    const otp = typeof req.body?.otp === "string" || typeof req.body?.otp === "number"
+      ? String(req.body.otp).trim()
+      : "";
 
-    if (!email || !otp) {
+    if (!email || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !/^\d{6}$/.test(otp)) {
       return res.status(400).json({ error: "Email dan kode OTP diperlukan." });
     }
 
-    const normalised = email.trim().toLowerCase();
-    const entry = otpStore.get(normalised);
-
-    if (!entry || Date.now() > entry.expires) {
+    const normalised = email.toLowerCase();
+    const verification = await verifyOtpChallenge("email", normalised, otp);
+    if (verification === "invalid") {
       return res.status(400).json({ error: "Kode OTP tidak valid atau sudah kedaluwarsa. Minta ulang kode baru." });
     }
-
-    if (entry.otp !== String(otp).trim()) {
-      entry.attempts++;
-      if (entry.attempts >= 5) {
-        otpStore.delete(normalised);
-        return res.status(429).json({ error: "Terlalu banyak percobaan. Minta kode OTP baru." });
-      }
-      return res.status(400).json({ error: "Kode OTP salah. Periksa kembali email Anda." });
+    if (verification === "too_many_attempts") {
+      return res.status(429).json({ error: "Terlalu banyak percobaan. Minta kode OTP baru." });
     }
-
-    // Correct — clear stored OTP
-    otpStore.delete(normalised);
 
     try {
       // Look up by email first (unified account regardless of login method)

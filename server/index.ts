@@ -6,6 +6,7 @@ import { setupAuth, registerAuthRoutes } from "./replit_integrations/auth";
 import { setupGoogleAuth } from "./auth/googleAuth";
 import { setupEmailOtp } from "./auth/emailOtp";
 import { setupFonnte } from "./auth/fonnte";
+import { consumeRateLimit, pruneExpiredAuthState } from "./auth/sharedAuthState";
 
 const app = express();
 const httpServer = createServer(app);
@@ -37,40 +38,35 @@ export function log(message: string, source = "express") {
   console.log(`${formattedTime} [${source}] ${message}`);
 }
 
-// ── Simple in-memory rate limiter for expensive AI POST endpoints ──
-// No extra package needed; resets per IP per 60-second window.
-const _rl = new Map<string, { n: number; reset: number }>();
+// Shared Postgres-backed limits apply across all autoscaled instances.
 const AI_PATHS = new Set([
   "/api/chat", "/api/konsultasi", "/api/tendera-claw/analyze",
   "/api/sbu-claw/analyze", "/api/ai-dokumen/ask", "/api/lexcom",
   "/api/askom-coach", "/api/bimtek-skk", "/api/multiclaw",
 ]);
-app.use((req, res, next) => {
-  if (req.method === "POST" && AI_PATHS.has(req.path)) {
-    const ip = (req.headers["x-forwarded-for"] as string)?.split(",")[0] ?? req.socket.remoteAddress ?? "?";
-    const key = `${ip}:${req.path}`;
-    const now = Date.now();
-    const entry = _rl.get(key);
-    if (!entry || now > entry.reset) {
-      _rl.set(key, { n: 1, reset: now + 60_000 });
-    } else if (entry.n >= 30) {
+app.use(async (req, res, next) => {
+  if (req.method !== "POST" || !AI_PATHS.has(req.path)) return next();
+
+  try {
+    const ip = req.ip || req.socket.remoteAddress || "unknown";
+    if (!(await consumeRateLimit(`ai:${ip}:${req.path}`, 30, 60_000))) {
       return res.status(429).json({
         error: "Terlalu banyak permintaan. Tunggu sebentar lalu coba lagi.",
         errorCode: "rate_limited",
       });
-    } else {
-      entry.n++;
     }
+    return next();
+  } catch (error) {
+    return next(error);
   }
-  next();
 });
-// Clean up stale rate-limit entries every 5 minutes
-setInterval(() => {
-  const now = Date.now();
-  _rl.forEach((entry, key) => {
-    if (now > entry.reset) _rl.delete(key);
+
+const authStateCleanupTimer = setInterval(() => {
+  void pruneExpiredAuthState().catch((error) => {
+    console.error("[AuthState] Failed to clean expired challenges and rate limits:", error);
   });
-}, 5 * 60_000);
+}, 15 * 60_000);
+authStateCleanupTimer.unref();
 
 app.use((req, res, next) => {
   const start = Date.now();

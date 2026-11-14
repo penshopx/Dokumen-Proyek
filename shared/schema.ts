@@ -1,4 +1,4 @@
-import { pgTable, text, serial, timestamp, boolean, integer, varchar } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, timestamp, boolean, integer, varchar, index } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -655,3 +655,29 @@ export const pipelineSessions = pgTable("pipeline_sessions", {
 export const insertPipelineSessionSchema = createInsertSchema(pipelineSessions).omit({ id: true, createdAt: true, updatedAt: true });
 export type InsertPipelineSession = z.infer<typeof insertPipelineSessionSchema>;
 export type PipelineSession = typeof pipelineSessions.$inferSelect;
+
+// Shared short-lived auth and rate-limit state for autoscaled server instances.
+export const authOtpChallenges = pgTable(
+  "auth_otp_challenges",
+  {
+    keyHash: varchar("key_hash", { length: 64 }).primaryKey(),
+    channel: text("channel").notNull(),
+    otpHash: varchar("otp_hash", { length: 64 }).notNull(),
+    attempts: integer("attempts").notNull().default(0),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    resendAt: timestamp("resend_at", { withTimezone: true }).notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [index("auth_otp_challenges_expires_at_idx").on(table.expiresAt)],
+);
+
+export const appRateLimitBuckets = pgTable(
+  "app_rate_limit_buckets",
+  {
+    keyHash: varchar("key_hash", { length: 64 }).primaryKey(),
+    count: integer("count").notNull().default(0),
+    resetAt: timestamp("reset_at", { withTimezone: true }).notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [index("app_rate_limit_buckets_reset_at_idx").on(table.resetAt)],
+);

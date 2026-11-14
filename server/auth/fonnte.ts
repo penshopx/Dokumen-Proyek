@@ -4,28 +4,20 @@ import { db } from "../db";
 import { users } from "../../shared/models/auth";
 import { eq } from "drizzle-orm";
 import { randomInt } from "node:crypto";
-
-// In-memory OTP store: phone → { otp, expires, attempts }
-const otpStore = new Map<string, { otp: string; expires: number; attempts: number }>();
-const sendRateLimit = new Map<string, { count: number; reset: number }>();
-
-setInterval(() => {
-  const now = Date.now();
-  otpStore.forEach((entry, key) => {
-    if (now > entry.expires) otpStore.delete(key);
-  });
-  sendRateLimit.forEach((entry, ip) => {
-    if (now > entry.reset) sendRateLimit.delete(ip);
-  });
-}, 15 * 60_000);
+import {
+  consumeRateLimit,
+  issueOtpChallenge,
+  revokeOtpChallenge,
+  verifyOtpChallenge,
+} from "./sharedAuthState";
 
 function generateOTP(): string {
   return randomInt(100000, 1000000).toString();
 }
 
 function normalisePhone(raw: string): string {
-  // Strip spaces/dashes, convert 08xx → 628xx
-  let p = raw.replace(/[\s\-().]/g, "");
+  // Strip formatting and a leading +, convert 08xx → 628xx.
+  let p = raw.replace(/\D/g, "");
   if (p.startsWith("0")) p = "62" + p.slice(1);
   if (!p.startsWith("62")) p = "62" + p;
   return p;
@@ -62,70 +54,61 @@ export function setupFonnte(app: Express) {
 
   // POST /api/auth/wa-otp/send
   app.post("/api/auth/wa-otp/send", async (req, res) => {
-    const { phone } = req.body as { phone?: string };
+    const phone = typeof req.body?.phone === "string" ? req.body.phone.trim() : "";
 
-    if (!phone || phone.trim().length < 9) {
+    if (!phone || phone.length > 32) {
       return res.status(400).json({ error: "Nomor WhatsApp tidak valid." });
     }
     if (!process.env.FONNTE_TOKEN) {
       return res.status(503).json({ error: "WhatsApp OTP belum dikonfigurasi." });
     }
 
-    const normalised = normalisePhone(phone.trim());
+    const normalised = normalisePhone(phone);
+    if (!/^62\d{8,13}$/.test(normalised)) {
+      return res.status(400).json({ error: "Nomor WhatsApp tidak valid." });
+    }
     const ip = req.ip || req.socket.remoteAddress || "unknown";
-    const now = Date.now();
-    const ipLimit = sendRateLimit.get(ip);
-    if (ipLimit && now <= ipLimit.reset && ipLimit.count >= 5) {
+    if (!(await consumeRateLimit(`otp-whatsapp-send:${ip}`, 5, 10 * 60_000))) {
       return res.status(429).json({ error: "Terlalu banyak permintaan OTP. Coba lagi beberapa saat." });
-    }
-    if (!ipLimit || now > ipLimit.reset) {
-      sendRateLimit.set(ip, { count: 1, reset: now + 10 * 60_000 });
-    } else {
-      ipLimit.count++;
-    }
-
-    const existing = otpStore.get(normalised);
-    if (existing && existing.expires > Date.now() + 9 * 60_000) {
-      return res.status(429).json({ error: "OTP sudah dikirim. Tunggu 1 menit sebelum meminta ulang." });
     }
 
     const otp = generateOTP();
-    otpStore.set(normalised, { otp, expires: Date.now() + 10 * 60_000, attempts: 0 });
+    if (!(await issueOtpChallenge("whatsapp", normalised, otp))) {
+      return res.status(429).json({ error: "OTP sudah dikirim. Tunggu 1 menit sebelum meminta ulang." });
+    }
 
     try {
       await sendWaOtp(normalised, otp);
       return res.json({ ok: true });
     } catch (err) {
       console.error("[WA OTP] Send error:", err);
-      otpStore.delete(normalised);
+      await revokeOtpChallenge("whatsapp", normalised, otp);
       return res.status(500).json({ error: "Gagal mengirim pesan WhatsApp. Cek konfigurasi Fonnte." });
     }
   });
 
   // POST /api/auth/wa-otp/verify
   app.post("/api/auth/wa-otp/verify", async (req, res) => {
-    const { phone, otp } = req.body as { phone?: string; otp?: string };
+    const phone = typeof req.body?.phone === "string" ? req.body.phone.trim() : "";
+    const otp = typeof req.body?.otp === "string" || typeof req.body?.otp === "number"
+      ? String(req.body.otp).trim()
+      : "";
 
-    if (!phone || !otp) {
+    if (!phone || phone.length > 32 || !/^\d{6}$/.test(otp)) {
       return res.status(400).json({ error: "Nomor WA dan kode OTP diperlukan." });
     }
 
-    const normalised = normalisePhone(phone.trim());
-    const entry = otpStore.get(normalised);
-
-    if (!entry || Date.now() > entry.expires) {
+    const normalised = normalisePhone(phone);
+    if (!/^62\d{8,13}$/.test(normalised)) {
+      return res.status(400).json({ error: "Nomor WhatsApp tidak valid." });
+    }
+    const verification = await verifyOtpChallenge("whatsapp", normalised, otp);
+    if (verification === "invalid") {
       return res.status(400).json({ error: "Kode OTP tidak valid atau sudah kedaluwarsa." });
     }
-    if (entry.otp !== String(otp).trim()) {
-      entry.attempts++;
-      if (entry.attempts >= 5) {
-        otpStore.delete(normalised);
-        return res.status(429).json({ error: "Terlalu banyak percobaan. Minta kode OTP baru." });
-      }
-      return res.status(400).json({ error: "Kode OTP salah. Periksa kembali pesan WhatsApp Anda." });
+    if (verification === "too_many_attempts") {
+      return res.status(429).json({ error: "Terlalu banyak percobaan. Minta kode OTP baru." });
     }
-
-    otpStore.delete(normalised);
 
     try {
       // Look up or create user by phone (stored as pseudo-email)
