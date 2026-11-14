@@ -1,51 +1,53 @@
+import { lazy, Suspense } from "react";
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import LandingPage from "@/pages/LandingPage";
-import OSSRBAPage from "@/pages/OSSRBAPage";
-import SBUPage from "@/pages/SBUPage";
-import SKKPage from "@/pages/SKKPage";
-import ISOSMKPage from "@/pages/ISOSMKPage";
-import LegalitasPage from "@/pages/LegalitasPage";
-import ProyekPage from "@/pages/ProyekPage";
-import MiniAppsPage from "@/pages/MiniAppsPage";
-import DocGeneratorPage from "@/pages/DocGeneratorPage";
-import AIDokumen from "@/pages/AIDokumen";
-import KlinikKonsultasi from "@/pages/KlinikKonsultasi";
-import BrainProject from "@/pages/BrainProject";
-import EkosistemKompetensi from "@/pages/EkosistemKompetensi";
-import BimtekSKK from "@/pages/BimtekSKK";
-import TenderaClaw from "@/pages/TenderaClaw";
-import LexComHukum from "@/pages/LexComHukum";
-import Workroom from "@/pages/Workroom";
-import SBUClaw from "@/pages/SBUClaw";
-import KompetensiHub from "@/pages/KompetensiHub";
-import ASKOMCoach from "@/pages/ASKOMCoach";
-import MultiClaw from "@/pages/MultiClaw";
-import BusinessMemory from "@/pages/BusinessMemory";
-import NotFound from "@/pages/not-found";
 import { FloatingChatButton } from "@/components/FloatingChatButton";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
-import JasaDokumenSKI from "@/pages/JasaDokumenSKI";
-import LayananSKI from "@/pages/LayananSKI";
-import Toko from "@/pages/Toko";
-import LKPMPage from "@/pages/LKPMPage";
-import LKUTPage from "@/pages/LKUTPage";
-import ISOManajemenPage from "@/pages/ISOManajemenPage";
-import SMAPPancekPage from "@/pages/SMAPPancekPage";
-import EksekutifSummaryPage from "@/pages/EksekutifSummaryPage";
-import KonstruksiAIPage from "@/pages/KonstruksiAIPage";
-import KeuanganPajakPage from "@/pages/KeuanganPajakPage";
-import GaiaStorePage from "@/pages/GaiaStorePage";
-import GaiaSIAPPage from "@/pages/GaiaSIAPPage";
-import PUBLKUTPage from "@/pages/PUBLKUTPage";
-import LKUTSimulatorPage from "@/pages/LKUTSimulatorPage";
-import DocumentVerification from "@/pages/DocumentVerification";
-import EquipmentRental from "@/pages/EquipmentRental";
-import AgentHub from "@/pages/AgentHub";
-import TenderReadiness from "@/pages/TenderReadiness";
+
+const LandingPage = lazy(() => import("@/pages/LandingPage"));
+const OSSRBAPage = lazy(() => import("@/pages/OSSRBAPage"));
+const SBUPage = lazy(() => import("@/pages/SBUPage"));
+const SKKPage = lazy(() => import("@/pages/SKKPage"));
+const ISOSMKPage = lazy(() => import("@/pages/ISOSMKPage"));
+const LegalitasPage = lazy(() => import("@/pages/LegalitasPage"));
+const ProyekPage = lazy(() => import("@/pages/ProyekPage"));
+const MiniAppsPage = lazy(() => import("@/pages/MiniAppsPage"));
+const DocGeneratorPage = lazy(() => import("@/pages/DocGeneratorPage"));
+const AIDokumen = lazy(() => import("@/pages/AIDokumen"));
+const KlinikKonsultasi = lazy(() => import("@/pages/KlinikKonsultasi"));
+const BrainProject = lazy(() => import("@/pages/BrainProject"));
+const EkosistemKompetensi = lazy(() => import("@/pages/EkosistemKompetensi"));
+const BimtekSKK = lazy(() => import("@/pages/BimtekSKK"));
+const TenderaClaw = lazy(() => import("@/pages/TenderaClaw"));
+const LexComHukum = lazy(() => import("@/pages/LexComHukum"));
+const Workroom = lazy(() => import("@/pages/Workroom"));
+const SBUClaw = lazy(() => import("@/pages/SBUClaw"));
+const KompetensiHub = lazy(() => import("@/pages/KompetensiHub"));
+const ASKOMCoach = lazy(() => import("@/pages/ASKOMCoach"));
+const MultiClaw = lazy(() => import("@/pages/MultiClaw"));
+const BusinessMemory = lazy(() => import("@/pages/BusinessMemory"));
+const NotFound = lazy(() => import("@/pages/not-found"));
+const JasaDokumenSKI = lazy(() => import("@/pages/JasaDokumenSKI"));
+const LayananSKI = lazy(() => import("@/pages/LayananSKI"));
+const Toko = lazy(() => import("@/pages/Toko"));
+const LKPMPage = lazy(() => import("@/pages/LKPMPage"));
+const LKUTPage = lazy(() => import("@/pages/LKUTPage"));
+const ISOManajemenPage = lazy(() => import("@/pages/ISOManajemenPage"));
+const SMAPPancekPage = lazy(() => import("@/pages/SMAPPancekPage"));
+const EksekutifSummaryPage = lazy(() => import("@/pages/EksekutifSummaryPage"));
+const KonstruksiAIPage = lazy(() => import("@/pages/KonstruksiAIPage"));
+const KeuanganPajakPage = lazy(() => import("@/pages/KeuanganPajakPage"));
+const GaiaStorePage = lazy(() => import("@/pages/GaiaStorePage"));
+const GaiaSIAPPage = lazy(() => import("@/pages/GaiaSIAPPage"));
+const PUBLKUTPage = lazy(() => import("@/pages/PUBLKUTPage"));
+const LKUTSimulatorPage = lazy(() => import("@/pages/LKUTSimulatorPage"));
+const DocumentVerification = lazy(() => import("@/pages/DocumentVerification"));
+const EquipmentRental = lazy(() => import("@/pages/EquipmentRental"));
+const AgentHub = lazy(() => import("@/pages/AgentHub"));
+const TenderReadiness = lazy(() => import("@/pages/TenderReadiness"));
 
 /**
  * dokumenproyek.com — pure marketing showcase.
@@ -55,9 +57,20 @@ import TenderReadiness from "@/pages/TenderReadiness";
  */
 function AppRouter() {
   return (
-    <Switch>
-      {/* ── Landing ── */}
-      <Route path="/" component={LandingPage} />
+    <Suspense
+      fallback={
+        <main
+          className="grid min-h-screen place-items-center bg-slate-950 text-slate-300"
+          role="status"
+          aria-live="polite"
+        >
+          Memuat halaman…
+        </main>
+      }
+    >
+      <Switch>
+        {/* ── Landing ── */}
+        <Route path="/" component={LandingPage} />
 
       {/* ── Human-delivered services (core product) ── */}
       <Route path="/sbu" component={SBUPage} />
@@ -106,8 +119,9 @@ function AppRouter() {
       <Route path="/proyek" component={ProyekPage} />
       <Route path="/equipment" component={EquipmentRental} />
 
-      <Route component={NotFound} />
-    </Switch>
+        <Route component={NotFound} />
+      </Switch>
+    </Suspense>
   );
 }
 
