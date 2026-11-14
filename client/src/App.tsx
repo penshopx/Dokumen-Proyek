@@ -30,6 +30,7 @@ const ASKOMCoach = lazy(() => import("@/pages/ASKOMCoach"));
 const MultiClaw = lazy(() => import("@/pages/MultiClaw"));
 const BusinessMemory = lazy(() => import("@/pages/BusinessMemory"));
 const NotFound = lazy(() => import("@/pages/not-found"));
+const LoginPage = lazy(() => import("@/pages/LoginPage"));
 const JasaDokumenSKI = lazy(() => import("@/pages/JasaDokumenSKI"));
 const LayananSKI = lazy(() => import("@/pages/LayananSKI"));
 const Toko = lazy(() => import("@/pages/Toko"));
@@ -50,10 +51,9 @@ const AgentHub = lazy(() => import("@/pages/AgentHub"));
 const TenderReadiness = lazy(() => import("@/pages/TenderReadiness"));
 
 /**
- * dokumenproyek.com — pure marketing showcase.
- * No login, no customer database, no auth gating.
- * All AI/digital products link out to gustafta.my.id.
- * Only human-delivered document services are sold here (WhatsApp CTA).
+ * DokumenProyek.com is a public services site with authenticated AI workflows.
+ * Human-delivered services use WhatsApp; pipeline sessions require an account.
+ * AI products hosted by Gustafta are linked from the relevant showcase pages.
  */
 function AppRouter() {
   return (
@@ -71,6 +71,9 @@ function AppRouter() {
       <Switch>
         {/* ── Landing ── */}
         <Route path="/" component={LandingPage} />
+        <Route path="/login" component={LoginPage} />
+        {/* Backward-compatible path used by older service and product links. */}
+        <Route path="/auth" component={LoginPage} />
 
       {/* ── Human-delivered services (core product) ── */}
       <Route path="/sbu" component={SBUPage} />

@@ -2758,7 +2758,7 @@ export default function LandingPage() {
 
           <div className="border-t border-slate-800 pt-8">
             <div className="grid md:grid-cols-2 gap-4 items-center">
-              <p className="text-sm text-slate-600">DokumenProyek.com dikelola Gustafta bersama beberapa mitra, termasuk PT SKI.</p>
+              <p className="text-sm text-slate-600">DokumenProyek.com dikelola Gustafta. PT SKI adalah salah satu dari beberapa mitra kerja.</p>
               <div className="flex items-center gap-2 md:justify-end">
                 <Cpu className="w-3.5 h-3.5 text-amber-500" />
                 <span className="text-xs text-slate-500">Teknologi oleh <span className="text-amber-400 font-semibold">Gustafta</span> · OpenClaw AI (GPT-4o)</span>
