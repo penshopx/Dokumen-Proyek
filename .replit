@@ -53,7 +53,3 @@ SMTP_FROM = "noreply@gustafta.com"
 [[ports]]
 localPort = 5000
 externalPort = 80
-
-[[ports]]
-localPort = 8123
-externalPort = 3000
