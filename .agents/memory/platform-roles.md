@@ -1,12 +1,12 @@
 ---
 name: Peran pengelola dan teknologi
-description: Pembagian peran PT SKI, DokumenProyek.com, dan Gustafta dalam ekosistem komersial.
+description: Pembagian peran DokumenProyek.com, Gustafta, PT SKI, dan mitra lainnya.
 ---
 
-PT Sarana Kompetensi Indonesia (SKI) adalah operator komersial dan pengelola layanan DokumenProyek.com. DokumenProyek.com berfungsi sebagai platform komersial dan kanal pelanggan. Gustafta adalah mesin teknologi yang menyediakan AI, aplikasi, Business Memory, dan otomasi.
+DokumenProyek.com dikelola oleh Gustafta. PT Sarana Kompetensi Indonesia (SKI) adalah salah satu mitra kerja, bukan pengelola. Platform dapat memiliki beberapa mitra kerja. Gustafta juga menyediakan teknologi seperti AI, aplikasi, Business Memory, dan otomasi.
 
-Jangan menyebut DokumenProyek.com “by Gustafta” sebagai identitas pengelola, dan jangan menyatakan SKI sebagai pemilik platform tanpa dasar terpisah. Atribusi produk AI “Powered by Gustafta” tetap sesuai untuk menjelaskan sumber teknologinya.
+Nyatakan Gustafta sebagai pengelola DokumenProyek.com. Jangan menyebut PT SKI sebagai pengelola atau pemilik platform; sebut sebagai salah satu mitra kerja. Jangan menyiratkan bahwa PT SKI adalah satu-satunya mitra.
 
-**Why:** Proposal Bisnis PT SKI 2027–2032 membedakan pengelolaan komersial SKI, kepemilikan aset platform yang tetap terpisah, dan peran teknologi Gustafta.
+**Why:** Pengguna mengoreksi bahwa Gustafta mengelola DokumenProyek.com dan PT SKI hanyalah salah satu dari beberapa mitra kerja.
 
-**How to apply:** Pada footer, metadata, halaman layanan, navigasi, dan materi penjualan, nyatakan “Dikelola PT SKI” untuk operator dan “Teknologi oleh Gustafta” untuk mesin teknologi.
+**How to apply:** Pada video, footer, metadata, halaman layanan, navigasi, dan materi penjualan, nyatakan Gustafta sebagai pengelola dan PT SKI sebagai salah satu mitra.
