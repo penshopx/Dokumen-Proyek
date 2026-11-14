@@ -41,7 +41,7 @@ export default function SMAPPancekPage() {
         "KAN (Komite Akreditasi Nasional)",
         "Panduan Pancek KPK",
       ]}
-      ctaPrimary={{ label: "Mulai Implementasi SMAP", href: "/auth", whatsapp: false }}
+      ctaPrimary={{ label: "Mulai Implementasi SMAP", href: "/login", whatsapp: false }}
       ctaSecondary={{ label: "Tanya via WhatsApp", href: "https://wa.me/6281287941900" }}
       footer="Implementasi SMAP & Pancek melindungi perusahaan dari sanksi hukum dan mendukung tata kelola yang baik."
     />

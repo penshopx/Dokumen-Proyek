@@ -41,7 +41,7 @@ export default function ISOManajemenPage() {
         "PP No. 50/2012 (SMK3)",
         "Permen PUPR No. 21/2019",
       ]}
-      ctaPrimary={{ label: "Konsultasi ISO Gratis", href: "/auth", whatsapp: false }}
+      ctaPrimary={{ label: "Konsultasi ISO Gratis", href: "/login", whatsapp: false }}
       ctaSecondary={{ label: "Lihat Layanan ISO", href: "/iso-smk3" }}
       footer="Tersedia untuk sektor konstruksi, ESDM, manufaktur, dan layanan profesional."
     />

@@ -119,7 +119,7 @@ export function setupEmailOtp(app: Express) {
     } catch (err) {
       console.error("[EmailOTP] Failed to send:", err);
       await revokeOtpChallenge("email", normalised, otp);
-      return res.status(500).json({ error: "Gagal mengirim email. Pastikan konfigurasi SMTP sudah benar." });
+      return res.status(500).json({ error: "Gagal mengirim email. Periksa konfigurasi Resend." });
     }
   });
 

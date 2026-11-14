@@ -41,7 +41,7 @@ export default function KeuanganPajakPage() {
         "PSAK 34 (Kontrak Konstruksi)",
         "Coretax DJP 2025",
       ]}
-      ctaPrimary={{ label: "Daftar Akses Awal", href: "/auth", whatsapp: false }}
+      ctaPrimary={{ label: "Daftar Akses Awal", href: "/login", whatsapp: false }}
       ctaSecondary={{ label: "Lihat Keuangan Proyek", href: "/financial" }}
       footer="Terintegrasi dengan sistem akuntansi dan DJP Coretax 2025 — pajak konstruksi jadi lebih mudah."
     />

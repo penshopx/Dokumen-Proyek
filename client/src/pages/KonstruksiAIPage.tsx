@@ -42,7 +42,7 @@ export default function KonstruksiAIPage() {
         "Media Konstruksi Nasional",
         "Gustafta AI Engine",
       ]}
-      ctaPrimary={{ label: "Daftar Akses Awal", href: "/auth", whatsapp: false }}
+      ctaPrimary={{ label: "Daftar Akses Awal", href: "/login", whatsapp: false }}
       ctaSecondary={{ label: "Lihat Agent Hub", href: "/agent-hub" }}
       footer="KonstruksiAI akan tersedia sebagai portal publik terpisah di subdomain konstruksi.dokumenproyek.com"
     />

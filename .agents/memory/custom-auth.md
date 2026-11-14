@@ -4,7 +4,7 @@ description: DokumenProyek uses custom auth (Email OTP + WhatsApp OTP + Google O
 ---
 
 ## Auth methods
-- **Email OTP** via Brevo SMTP — `server/auth/emailOtp.ts` — requires SMTP_USER, SMTP_PASS, SMTP_FROM, SMTP_HOST=smtp-relay.brevo.com, SMTP_PORT=587
+- **Email OTP** via Resend API — `server/auth/emailOtp.ts` — requires `RESEND_API_KEY`; sender uses `RESEND_SENDER_EMAIL` or the configured default.
 - **WhatsApp OTP** via Fonnte — `server/auth/fonnte.ts` — requires FONNTE_TOKEN
 - **Google OAuth** via passport-google-oauth20 — `server/auth/googleAuth.ts` — requires GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET (currently disabled)
 

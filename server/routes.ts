@@ -19,6 +19,10 @@ function getUserUsername(req: any): string {
   return req.user?.firstName ?? req.user?.claims?.username ?? req.user?.claims?.first_name ?? "";
 }
 
+const PIPELINE_TYPES = new Set(["tendera", "sbu"]);
+const isPipelineStage = (value: unknown): value is number =>
+  typeof value === "number" && Number.isInteger(value) && value >= 0 && value <= 3;
+
 // ── SuperAdmin guard ──────────────────────────────────────────────────────────
 // Set env var SUPERADMIN_EMAILS as comma-separated email addresses.
 // Example: SUPERADMIN_EMAILS=admin@perusahaan.com,owner@dokumenproyek.com
@@ -2802,6 +2806,9 @@ Buat surat permohonan SBU yang resmi, lengkap sesuai format LPJK, siap diadaptas
     try {
       const userId = getUserId(req);
       const { type } = req.query;
+      if (type !== undefined && (typeof type !== "string" || !PIPELINE_TYPES.has(type))) {
+        return res.status(400).json({ message: "Jenis pipeline tidak valid." });
+      }
       const sessions = await storage.getPipelineSessionsByUser(userId, type as string | undefined);
       res.json(sessions);
     } catch {
@@ -2828,19 +2835,36 @@ Buat surat permohonan SBU yang resmi, lengkap sesuai format LPJK, siap diadaptas
   app.post("/api/pipeline-sessions", isAuthenticated, async (req: any, res) => {
     try {
       const userId = getUserId(req);
+      if (!req.body || typeof req.body !== "object" || Array.isArray(req.body)) {
+        return res.status(400).json({ message: "Isi sesi tidak valid." });
+      }
       const { pipelineType, title, stage, inputData, results, draftType } = req.body;
-      if (!pipelineType || !title) return res.status(400).json({ message: "pipelineType dan title wajib diisi" });
+      if (typeof pipelineType !== "string" || !PIPELINE_TYPES.has(pipelineType)) {
+        return res.status(400).json({ message: "Jenis pipeline tidak valid." });
+      }
+      if (typeof title !== "string" || !title.trim() || title.length > 180) {
+        return res.status(400).json({ message: "Judul sesi wajib diisi dan maksimal 180 karakter." });
+      }
+      if (stage !== undefined && !isPipelineStage(stage)) {
+        return res.status(400).json({ message: "Tahap pipeline harus berupa angka 0–3." });
+      }
       const session = await storage.createPipelineSession({
         userId,
         pipelineType,
-        title,
+        title: title.trim(),
         stage: stage ?? 0,
         inputData: typeof inputData === "string" ? inputData : JSON.stringify(inputData ?? {}),
         results: typeof results === "string" ? results : JSON.stringify(results ?? {}),
         draftType: draftType || null,
       });
       // Prune old sessions — keep only the 10 most recent per user + pipeline type
-      await storage.prunePipelineSessions(userId, pipelineType, 10);
+      try {
+        await storage.prunePipelineSessions(userId, pipelineType, 10);
+      } catch (error) {
+        // The new session is already saved; do not return a false save failure
+        // that would make the client retry as a second create.
+        console.error("[Pipeline] Session saved, but pruning old sessions failed.", error);
+      }
       res.status(201).json(session);
     } catch {
       res.status(500).json({ message: "Gagal menyimpan sesi" });
@@ -2856,14 +2880,24 @@ Buat surat permohonan SBU yang resmi, lengkap sesuai format LPJK, siap diadaptas
       const session = await storage.getPipelineSession(id);
       if (!session) return res.status(404).json({ message: "Sesi tidak ditemukan" });
       if (session.userId !== userId) return res.status(403).json({ message: "Tidak diizinkan" });
+      if (!req.body || typeof req.body !== "object" || Array.isArray(req.body)) {
+        return res.status(400).json({ message: "Isi sesi tidak valid." });
+      }
       const { stage, inputData, results, draftType, title } = req.body;
+      if (stage !== undefined && !isPipelineStage(stage)) {
+        return res.status(400).json({ message: "Tahap pipeline harus berupa angka 0–3." });
+      }
+      if (title !== undefined && (typeof title !== "string" || !title.trim() || title.length > 180)) {
+        return res.status(400).json({ message: "Judul sesi wajib diisi dan maksimal 180 karakter." });
+      }
       const updated = await storage.updatePipelineSession(id, {
-        ...(title !== undefined ? { title } : {}),
+        ...(title !== undefined ? { title: title.trim() } : {}),
         ...(stage !== undefined ? { stage } : {}),
         ...(draftType !== undefined ? { draftType } : {}),
         ...(inputData !== undefined ? { inputData: typeof inputData === "string" ? inputData : JSON.stringify(inputData) } : {}),
         ...(results !== undefined ? { results: typeof results === "string" ? results : JSON.stringify(results) } : {}),
       });
+      if (!updated) return res.status(404).json({ message: "Sesi tidak ditemukan" });
       res.json(updated);
     } catch {
       res.status(500).json({ message: "Gagal memperbarui sesi" });

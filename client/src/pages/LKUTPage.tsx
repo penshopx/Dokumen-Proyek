@@ -40,7 +40,7 @@ export default function LKUTPage() {
         "PP No. 14/2021",
         "Permen PUPR No. 8/2022",
       ]}
-      ctaPrimary={{ label: "Daftar Akses Awal", href: "/auth", whatsapp: false }}
+      ctaPrimary={{ label: "Daftar Akses Awal", href: "/login", whatsapp: false }}
       ctaSecondary={{ label: "Hubungi Tim Kami", href: "/layanan-ski" }}
       footer="Integrasi langsung dengan SIJK LPJK — data terkirim aman dan tercatat resmi."
     />

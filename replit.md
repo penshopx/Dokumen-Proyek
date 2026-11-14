@@ -1,7 +1,7 @@
 # DokumenProyek.com - Platform Konstruksi Terintegrasi
 
 ## Overview
-DokumenProyek.com adalah platform digital terpadu untuk layanan legalitas, perizinan, sertifikasi, tender, dan proyek di Indonesia. Platform ditenagai oleh **OpenClaw AI** (GPT-4o + OpenAI Agents SDK + RAG) dengan **11 agen spesialis**, melayani multi-sektor: Konstruksi, Ketenagalistrikan, EBT, Mineral & Pertambangan, Lingkungan, dan Engineering Services.
+DokumenProyek.com dikelola oleh **Gustafta** dan bekerja dengan beberapa mitra. PT Sarana Kompetensi Indonesia (SKI) adalah salah satu mitra kerja, bukan pengelola platform. Situs ini menyajikan layanan legalitas, perizinan, sertifikasi, tender, dan dokumen proyek, serta alur AI yang memerlukan akun.
 
 ## Project Goals
 - Platform jasa dokumen & konsultasi usaha #1 Indonesia — multi-sektor
@@ -22,83 +22,51 @@ DokumenProyek.com adalah platform digital terpadu untuk layanan legalitas, periz
 - **OpenClaw AI**: diferensiator kompetitif — 11 agen spesialis termasuk Document Review, Sales & Intake, Document Generator
 
 ## Current State
-- Landing page dengan informasi lengkap tentang modul platform (multi-sektor, bundling, 3-pilar sertifikasi)
-- Sistem autentikasi terintegrasi (Replit Auth) — terhubung ke Navbar (login/logout/avatar), Dashboard, ProfileSetup
-- **Integrasi Lengkap (sinkronisasi terbaru)**:
-  - **Navbar** (`Navbar.tsx`): Menampilkan status login — tombol "Masuk/Daftar" untuk tamu; avatar + "Dashboard" + tombol logout untuk user terautentikasi; mobile menu responsif dengan profil user
-  - **NotificationCenter** (`NotificationCenter.tsx`): Terhubung ke backend `/api/notifications` (bukan mock data); mendukung mark-read, mark-all-read, delete; auto-refresh setiap 30 detik
-  - **Dashboard** (`Dashboard.tsx`): Module tiles + Aksi Cepat mencakup Mini Apps & Generator Dokumen; tombol "Lengkapi Profil" terhubung ke `/setup`; semua moduleLinks lengkap; section "Konsultasi Saya" menampilkan riwayat konsultasi dari database
-  - **ProfileSetup** (`ProfileSetup.tsx`): Redirect ke "/" setelah setup selesai (routing ke Dashboard secara otomatis)
-  - **ConsultationModal**: Terpasang di 6 halaman layanan (Legalitas, OSS-RBA, SBU, SKK, ISO-SMK3, Proyek) — tersimpan ke `/api/consultations`
-- Dashboard dinamis: case tracker real-time, statistik akun, modal "Ajukan Layanan Baru" (POST /api/projects)
-- **OSSRBAPage** (`/oss-rba`): Halaman lengkap OSS-RBA — 4 level risiko (Rendah/MR/MT/Tinggi) dengan persyaratan, tahapan, dokumen wajib per level; KBLI lookup (20 KBLI konstruksi terfilter); Checklist Interaktif dokumen dengan progress bar & salin clipboard; Alur OSS-RBA 6-langkah visual; Dasar hukum per level; akses publik & login
-- **SBUPage** (`/sbu`): Halaman SBU komprehensif per PP 28/2025 & Permen PU 6/2025 — 6 gred kualifikasi (K1/K2/M1/M2/B1/B2) dengan persyaratan SDM SKK, dokumen, modal, PNBP; Checklist interaktif per gred; Subklasifikasi lookup (20 subklasifikasi: Gedung/Sipil/ME/Spesialis/Konsultan); Alur 8 tahap digital LPJK; Dialog detail perubahan regulasi PP 28/2025 & Permen PU 6/2025; AgentHub flow SBU diperbarui dengan regulasi 2025
-- **ProjectDashboard**: Milestone/history dialog (timeline icon per update-type), tombol "Riwayat" per kartu proyek, update dialog — terhubung ke `/api/projects` dan `/api/project-updates`
-- **FinancialModule**: Bar chart bulanan (Recharts) pemasukan vs pengeluaran, fallback sample data 6 bulan
-- **AgentHub**: 11 agent OpenClaw dengan chat flows dan contoh prompt per spesialisasi; sekarang terhubung ke `/api/agent-sessions` untuk persistensi sesi chat (untuk user terautentikasi)
-- **AIChat** (`/ai-chat`): Full chat UI dibangun ulang — memanggil `/api/chat` backend endpoint dengan knowledge base 16 topik (SBU gred/proses/dokumen, SKK, Legalitas, Perizinan, ISO/SMK3, Tender, Proyek, Mini Apps, Generator Dokumen, AgentHub, Harga, Regulasi, dll); quick prompts; copy pesan; clear chat; animasi typing
-- **Chat Backend** (`/api/chat`): Knowledge base rule-based dengan 16+ topik konstruksi Indonesia; algoritma scoring dengan exact phrase match (5×weight) + partial match; deteksi greeting otomatis
-- **Per-gred/kategori ConsultationModal**: SBUPage (per K1/K2/M1/M2/B1/B2), SKKPage (per kategori), OSSRBAPage (per level risiko) — semua tersambung ke `/api/consultations`
-- **MiniAppsPage SaveButton**: Tombol "Simpan Kalkulasi" di AppJaminan dan AppDenda — tersambung ke `/api/saved-calculations` (hanya untuk user terautentikasi)
-- **TenderDocument**: Generator 13 section dokumen tender (BOQ, AHSP, RENCANA K3, dll) dengan template profesional per tipe proyek
-- Database PostgreSQL untuk penyimpanan data (projects, projectUpdates, tenderDocuments, transactions, userProfiles)
+- Landing page layanan publik, halaman layanan dan regulasi, halaman produk AI, serta alat kesiapan tender.
+- Login memakai OTP email/WhatsApp dan Google OAuth bila kredensial tersedia; rute `/login` adalah URL utama. `/auth` dipertahankan sebagai alias lama.
+- TenderaClaw dan SBUClaw memakai empat tahap pipeline. Tahap, input, hasil, dan riwayat disimpan per pengguna di PostgreSQL melalui `/api/pipeline-sessions`.
+- API pipeline memvalidasi jenis dan tahap, memeriksa kepemilikan sesi, dan membatasi riwayat ke 10 sesi terbaru per jenis.
+- UI pipeline menampilkan kegagalan sinkronisasi serta menyediakan pengiriman ulang tanpa menjalankan ulang analisis AI.
+- Fitur AI eksternal di-host oleh Gustafta; halaman lokal yang memakai iframe harus memberi tahu pengguna bila konten tidak dapat dimuat.
+- Nyatakan Gustafta sebagai pengelola platform. PT SKI adalah salah satu dari beberapa mitra kerja.
 
 ## Tech Stack
 - **Frontend**: React, Vite, TailwindCSS, shadcn/ui, Framer Motion
 - **Backend**: Express.js, Node.js
-- **Database**: PostgreSQL dengan Drizzle ORM
-- **Authentication**: Replit Auth (OpenID Connect)
+- **Database**: PostgreSQL dengan Drizzle ORM (`shared/schema.ts` sebagai sumber skema)
+- **Authentication**: sesi Express dan Passport, OTP email/WhatsApp, serta Google OAuth opsional; Replit OIDC hanya kompatibilitas lama.
+
+## Build, Data & Release Workflow
+- Preview memakai workflow `Start application` dengan `npm run dev` pada port 5000.
+- Pemeriksaan lokal: `npm run check`, `npm test`, `npm run test:e2e`, dan `npm run build`.
+- Deploy menjalankan `npm run build`, lalu `npm run start` dari `dist/index.cjs`.
+- Skema Drizzle di `shared/schema.ts` adalah sumber kebenaran. `npm run db:push` dan skrip post-merge hanya menyelaraskan database development.
+- Untuk Replit PostgreSQL terkelola, perubahan skema production diterapkan lewat Publish UI; jangan menjalankan DDL production dari proses build atau startup.
 
 ## Project Architecture
 ```
 client/
-├── src/
-│   ├── pages/
-│   │   ├── LandingPage.tsx     # Landing page untuk visitor
-│   │   ├── Dashboard.tsx       # Dashboard untuk user login (stakeholder-specific)
-│   │   ├── ProfileSetup.tsx    # Profile completion for new users
-│   │   ├── Opportunities.tsx   # Opportunity matching & browsing
-│   │   ├── Marketplace.tsx     # Material marketplace with escrow
-│   │   ├── TenderGenerator.tsx # Auto-generate tender documents
-│   │   ├── ProjectDashboard.tsx # Project monitoring
-│   │   ├── FinancialModule.tsx # Financial management
-│   │   ├── EquipmentRental.tsx # Equipment rental marketplace
-│   │   ├── AIChat.tsx          # AI Chat iframe integration
-│   │   ├── Analytics.tsx       # Business analytics dashboard
-│   │   ├── DocumentVerification.tsx # QR verification (public)
-│   │   └── not-found.tsx
-│   ├── components/
-│   │   ├── ui/                 # shadcn components
-│   │   ├── Navbar.tsx          # Public navbar with verification
-│   │   ├── FeatureCard.tsx
-│   │   ├── ContactForm.tsx
-│   │   ├── Chatbot.tsx         # Platform knowledge chatbot
-│   │   ├── SmartSearch.tsx     # Cmd+K global search
-│   │   ├── NotificationCenter.tsx # Notification panel
-│   │   ├── ActivityTimeline.tsx # User activity log
-│   │   └── FloatingChatButton.tsx # AI Chat floating button
-│   ├── hooks/
-│   │   ├── use-auth.ts         # Auth hook
-│   │   └── use-contact.ts
-│   └── lib/
-│       ├── queryClient.ts
-│       └── auth-utils.ts
+└── src/
+    ├── App.tsx                 # Route and lazy page loading
+    ├── pages/                  # Public services, AI tools, login, utilities
+    ├── components/             # Shared UI, navigation and service embeds
+    ├── hooks/                  # Auth, contact and UI hooks
+    └── lib/
+        ├── pipeline-api.ts     # Shared TenderaClaw/SBUClaw persistence client
+        └── queryClient.ts
 server/
-├── index.ts                    # Express server entry
-├── routes.ts                   # API routes
-├── storage.ts                  # Database operations
-├── db.ts                       # Database connection
-└── replit_integrations/
-    └── auth/                   # Replit Auth module
+├── index.ts                    # Express server and workflow startup
+├── routes.ts                   # Authenticated API and pipeline endpoints
+├── storage.ts                  # Drizzle persistence
+├── db.ts                       # PostgreSQL connection
+└── auth/                       # Email/WhatsApp OTP and Google OAuth
 shared/
-├── schema.ts                   # Drizzle schema
-├── routes.ts                   # API route definitions
-└── models/
-    └── auth.ts                 # Auth schema (users, sessions)
+├── schema.ts                   # Drizzle source of truth
+└── models/auth.ts              # User and session models
 ```
 
 ## Database Schema
-- **users** - User accounts (from Replit Auth)
+- **users** - User accounts for OTP, Google OAuth, and legacy OIDC sessions
 - **sessions** - Session storage
 - **user_profiles** - Extended user info with stakeholder type
 - **contact_messages** - Contact form submissions
@@ -109,6 +77,8 @@ shared/
 - **cta_content** - Call-to-action section
 - **opportunities** - Tender/project opportunities
 - **products** - Marketplace products
+- **pipeline_sessions** - TenderaClaw and SBUClaw workflow state per user
+- **auth_otp_challenges / app_rate_limit_buckets** - OTP verification and shared rate-limit state
 
 ## Stakeholder Types
 1. **Kontraktor** - Construction contractors
@@ -132,27 +102,8 @@ shared/
 11. Safety Ready - K3/Safety compliance
 12. Ekonomi Sirkular - Circular economy
 
-## Recent Changes
-- 2026-01-29: Added Replit Auth integration
-- 2026-01-29: Created Dashboard for logged-in users
-- 2026-01-29: Added user_profiles, opportunities, products schemas
-- 2026-01-29: Implemented API routes for profile, opportunities, products
-- 2026-01-29: Added ProfileSetup page for new user onboarding with stakeholder selection
-- 2026-01-29: Made Dashboard content dynamic based on stakeholder type
-- 2026-01-29: Created Opportunities page with matching, filtering, and creation features
-- 2026-01-29: Built Marketplace Pasok with escrow payment flow (escrow → shipped → delivered → completed)
-- 2026-01-29: Implemented Tender Generator with template-based document auto-generation
-- 2026-01-29: Created Project Dashboard for real-time project monitoring
-- 2026-01-29: Added Financial Module for transaction tracking and cash flow reporting
-- 2026-01-29: Built Equipment Rental Marketplace for construction equipment with booking system
-- 2026-01-29: Added AI Chat integration (chat.dokumenproyek.com) with floating button and dashboard card
-- 2026-01-29: Added Dashboard Analytics with business data visualization
-- 2026-01-29: Implemented QR Code Document Verification (/verify) - public access
-- 2026-01-29: Added Activity Timeline for user accountability
-- 2026-01-29: Built Notification Center with read/unread states
-- 2026-01-29: Created Smart Search with Cmd+K shortcut for quick navigation
-- 2026-01-29: Integrated Chatbot with comprehensive platform knowledge
-- 2026-01-29: Added verification button to public navbar for document verification
+## Documentation Note
+Use the current route map in `client/src/App.tsx`, `shared/schema.ts`, and the workflow commands above as the source of truth. Earlier implementation notes were removed because they no longer matched the active app.
 
 ## External Integrations
 - **AI Chat**: https://chat.dokumenproyek.com - AI assistant for tender documents, project analysis, construction consultation

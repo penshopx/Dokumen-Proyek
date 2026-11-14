@@ -40,7 +40,7 @@ export default function LKPMPage() {
         "PP No. 5/2021",
         "Perka BKPM No. 5/2021",
       ]}
-      ctaPrimary={{ label: "Daftar Akses Awal", href: "/auth", whatsapp: false }}
+      ctaPrimary={{ label: "Daftar Akses Awal", href: "/login", whatsapp: false }}
       ctaSecondary={{ label: "Hubungi Tim Kami", href: "/layanan-ski" }}
       footer="Layanan LKPM DokumenProyek.com akan terintegrasi penuh dengan sistem OSS BKPM resmi."
     />

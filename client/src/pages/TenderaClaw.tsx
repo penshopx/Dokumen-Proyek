@@ -6,7 +6,7 @@ import {
   ChevronLeft, Loader2, ChevronRight, CheckCircle2,
   FileSearch, Target, Lightbulb, FileText, Zap,
   Lock, AlertCircle, BarChart3, ArrowRight, History, Trash2, Plus,
-  MessageCircle, Shield, TrendingUp,
+  MessageCircle, Shield, TrendingUp, RefreshCw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,6 +18,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { Navbar } from "@/components/Navbar";
 import { Kepdirjen281Context } from "@/components/Kepdirjen281Context";
+import { deletePipelineSession, listPipelineSessions, savePipelineSession, type PipelineSession } from "@/lib/pipeline-api";
 
 const STAGES = [
   { id: 0, label: "Input Tender",   icon: FileSearch,   desc: "Data proyek & persyaratan" },
@@ -29,16 +30,6 @@ const STAGES = [
 interface TenderInput {
   namaProyek: string; nilaiHPS: string; batasWaktu: string;
   jenisTender: string; instansi: string; persyaratan: string;
-}
-
-interface PipelineSession {
-  id: number;
-  title: string;
-  stage: number;
-  inputData: string;
-  results: string;
-  draftType: string | null;
-  updatedAt: string;
 }
 
 const DEFAULT_INPUT: TenderInput = {
@@ -56,6 +47,8 @@ export default function TenderaClaw() {
   const [showHistory, setShowHistory] = useState(false);
   const [sessions, setSessions]   = useState<PipelineSession[]>([]);
   const [sessionsLoading, setSessionsLoading] = useState(false);
+  const [sessionsError, setSessionsError] = useState<string | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const [sessionId, setSessionId] = useState<number | null>(null);
 
   const [input, setInput] = useState<TenderInput>(DEFAULT_INPUT);
@@ -65,6 +58,13 @@ export default function TenderaClaw() {
   // Auto-save ref to avoid stale closures
   const sessionIdRef = useRef<number | null>(null);
   sessionIdRef.current = sessionId;
+  const pendingSaveRef = useRef<{
+    stage: number;
+    results: Record<number, string>;
+    input: TenderInput;
+    draftType: string;
+    sessionId: number | null;
+  } | null>(null);
 
   // Load session list on mount
   useEffect(() => {
@@ -75,8 +75,12 @@ export default function TenderaClaw() {
   const loadSessions = async () => {
     setSessionsLoading(true);
     try {
-      const res = await fetch("/api/pipeline-sessions?type=tendera", { credentials: "include" });
-      if (res.ok) setSessions(await res.json());
+      setSessions(await listPipelineSessions("tendera"));
+      setSessionsError(null);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Gagal memuat riwayat sesi.";
+      setSessionsError(message);
+      toast({ title: "Riwayat belum tersinkron", description: message, variant: "destructive" });
     } finally {
       setSessionsLoading(false);
     }
@@ -89,41 +93,43 @@ export default function TenderaClaw() {
     newDraftType: string,
     currentSessionId: number | null
   ) => {
+    pendingSaveRef.current = {
+      stage: newStage,
+      results: newResults,
+      input: newInput,
+      draftType: newDraftType,
+      sessionId: currentSessionId,
+    };
+    setSaveError(null);
     setSaving(true);
     try {
-      const title = newInput.namaProyek || "TenderaClaw Baru";
-      const payload = {
+      const saved = await savePipelineSession("tendera", {
         stage: newStage,
         inputData: JSON.stringify(newInput),
         results: JSON.stringify(newResults),
         draftType: newDraftType,
-        title,
-      };
-
-      if (currentSessionId) {
-        await fetch(`/api/pipeline-sessions/${currentSessionId}`, {
-          method: "PATCH", credentials: "include",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-      } else {
-        const res = await fetch("/api/pipeline-sessions", {
-          method: "POST", credentials: "include",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ pipelineType: "tendera", ...payload }),
-        });
-        if (res.ok) {
-          const data = await res.json();
-          setSessionId(data.id);
-          sessionIdRef.current = data.id;
-        }
-      }
-      await loadSessions();
-    } catch {
-      // silent — saving is best-effort
+        title: newInput.namaProyek || "TenderaClaw Baru",
+      }, currentSessionId);
+      setSessionId(saved.id);
+      sessionIdRef.current = saved.id;
+      setSessions((current) => [saved, ...current.filter((session) => session.id !== saved.id)].slice(0, 10));
+      pendingSaveRef.current = null;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Periksa koneksi lalu coba lagi.";
+      setSaveError(message);
+      toast({
+        title: "Hasil analisis belum tersimpan",
+        description: `${message} Gunakan “Coba sinkronkan” untuk mengirim ulang tanpa mengulang analisis AI.`,
+        variant: "destructive",
+      });
     } finally {
       setSaving(false);
     }
+  };
+
+  const retrySave = () => {
+    const pending = pendingSaveRef.current;
+    if (pending) void saveProgress(pending.stage, pending.results, pending.input, pending.draftType, pending.sessionId);
   };
 
   const loadSession = (s: PipelineSession) => {
@@ -149,12 +155,16 @@ export default function TenderaClaw() {
   const deleteSession = async (id: number, e: React.MouseEvent) => {
     e.stopPropagation();
     try {
-      await fetch(`/api/pipeline-sessions/${id}`, { method: "DELETE", credentials: "include" });
+      await deletePipelineSession(id);
       if (sessionId === id) startNew();
-      await loadSessions();
+      setSessions((current) => current.filter((session) => session.id !== id));
       toast({ title: "Sesi dihapus" });
-    } catch {
-      toast({ title: "Gagal menghapus sesi", variant: "destructive" });
+    } catch (err) {
+      toast({
+        title: "Gagal menghapus sesi",
+        description: err instanceof Error ? err.message : undefined,
+        variant: "destructive",
+      });
     }
   };
 
@@ -233,7 +243,7 @@ export default function TenderaClaw() {
                   <MessageCircle className="w-4 h-4" />Hubungi via WhatsApp
                 </Button>
               </a>
-              <Link href="/auth">
+              <Link href="/login">
                 <Button size="lg" variant="outline" className="border-amber-500/40 text-amber-300 hover:bg-amber-500/10 font-semibold gap-2 w-full sm:w-auto h-12 px-8">
                   <Zap className="w-4 h-4" />Daftar &amp; Coba Gratis
                 </Button>
@@ -282,7 +292,7 @@ export default function TenderaClaw() {
                   <MessageCircle className="w-4 h-4" />Tanya via WhatsApp
                 </Button>
               </a>
-              <Link href="/auth">
+              <Link href="/login">
                 <Button variant="outline" className="border-amber-500/40 text-amber-300 hover:bg-amber-500/10 gap-2 h-11 px-7">
                   <ArrowRight className="w-4 h-4" />Masuk / Daftar
                 </Button>
@@ -313,6 +323,7 @@ export default function TenderaClaw() {
           </div>
           <div className="flex items-center gap-2">
             {saving && <span className="text-xs text-muted-foreground flex items-center gap-1"><Loader2 className="w-3 h-3 animate-spin" />Menyimpan...</span>}
+            {saveError && <Button variant="outline" size="sm" className="gap-1 text-xs" onClick={retrySave} disabled={saving}><RefreshCw className="w-3 h-3" />Coba sinkronkan</Button>}
             <Button variant="outline" size="sm" className="gap-1 text-xs" onClick={() => setShowHistory(v => !v)}>
               <History className="w-3.5 h-3.5" />{showHistory ? "Tutup" : "Riwayat"}
             </Button>
@@ -337,6 +348,11 @@ export default function TenderaClaw() {
               <h3 className="text-sm font-semibold mb-3 flex items-center gap-2"><History className="w-4 h-4" />Riwayat Analisis</h3>
               {sessionsLoading ? (
                 <div className="flex items-center justify-center py-4"><Loader2 className="w-4 h-4 animate-spin" /></div>
+              ) : sessionsError ? (
+                <div className="py-4 text-center">
+                  <p className="text-sm text-destructive">{sessionsError}</p>
+                  <Button variant="outline" size="sm" className="mt-3 gap-1" onClick={() => void loadSessions()}><RefreshCw className="w-3 h-3" />Muat ulang riwayat</Button>
+                </div>
               ) : sessions.length === 0 ? (
                 <p className="text-sm text-muted-foreground text-center py-4">Belum ada riwayat analisis.</p>
               ) : (

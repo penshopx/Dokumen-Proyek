@@ -590,7 +590,7 @@ export default function MultiClaw() {
                   <MessageCircle className="w-4 h-4" />Hubungi via WhatsApp
                 </Button>
               </a>
-              <Link href="/auth">
+              <Link href="/login">
                 <Button size="lg" variant="outline" className="border-primary/40 text-primary hover:bg-primary/10 font-semibold gap-2 w-full sm:w-auto h-12 px-8">
                   <Zap className="w-4 h-4" />Daftar &amp; Coba Gratis
                 </Button>
@@ -640,7 +640,7 @@ export default function MultiClaw() {
                   <MessageCircle className="w-4 h-4" />Tanya via WhatsApp
                 </Button>
               </a>
-              <Link href="/auth">
+              <Link href="/login">
                 <Button variant="outline" className="border-primary/40 text-primary hover:bg-primary/10 gap-2 h-11 px-7">
                   <ArrowRight className="w-4 h-4" />Masuk / Daftar
                 </Button>

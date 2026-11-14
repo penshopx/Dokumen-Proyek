@@ -10,6 +10,7 @@ export default defineConfig({
   use: {
     baseURL: "http://localhost:5000",
     headless: true,
+    serviceWorkers: "block",
     // Simulate a touch-screen phone so .tap() and pointer events work.
     hasTouch: true,
     // Use the NixOS system-provided Chromium so no extra libs are needed.
@@ -23,4 +24,10 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"] },
     },
   ],
+  webServer: {
+    command: "npm run dev",
+    url: "http://127.0.0.1:5000",
+    reuseExistingServer: !process.env.CI,
+    timeout: 120_000,
+  },
 });
