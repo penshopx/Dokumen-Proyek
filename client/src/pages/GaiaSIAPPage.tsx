@@ -158,7 +158,7 @@ export default function GaiaSIAPPage() {
             </a>
           </motion.div>
           <p className="text-center text-slate-600 text-xs mt-6">
-            Produk dikelola oleh Gustafta AI OS · gustafta.my.id
+            Platform layanan dikelola oleh PT Sarana Kompetensi Indonesia (SKI) · Teknologi oleh Gustafta
           </p>
         </div>
       </section>

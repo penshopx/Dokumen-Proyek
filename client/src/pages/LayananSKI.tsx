@@ -260,7 +260,7 @@ export default function LayananSKI() {
           <div className="inline-flex items-center gap-2.5 bg-slate-800 border border-slate-700 rounded-full px-4 py-2 mb-6">
             <img src="/ski-logo.png" alt="" className="w-5 h-5 rounded object-cover hidden" onError={e => (e.currentTarget.style.display = "none")} />
             <Building2 className="w-4 h-4 text-amber-400" />
-            <span className="text-slate-300 text-xs font-semibold">by Gustafta</span>
+            <span className="text-slate-300 text-xs font-semibold">Dikelola PT SKI</span>
             <span className="text-slate-600">·</span>
             <span className="text-amber-400 text-xs font-semibold flex items-center gap-1">
               <Zap className="w-3 h-3" />AI by Gustafta
@@ -274,9 +274,8 @@ export default function LayananSKI() {
           </h1>
 
           <p className="text-slate-400 text-lg max-w-2xl mx-auto mb-10">
-            Dari SBU LPJK, SKK ESDM, hingga ISO dan analisis tender — Gustafta
-            menyelesaikan urusan sertifikasi dan administrasi konstruksi Anda
-            dengan tim pendamping dan dukungan AI Gustafta.
+            Dari SBU LPJK, SKK ESDM, hingga ISO dan analisis tender — PT Sarana Kompetensi Indonesia (SKI)
+            mengelola layanan sertifikasi dan administrasi konstruksi dengan dukungan teknologi AI dari Gustafta.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -315,19 +314,18 @@ export default function LayananSKI() {
       <div className="max-w-5xl mx-auto px-6 py-16">
         <div className="grid md:grid-cols-2 gap-10 items-center">
           <div>
-            <div className="text-amber-400 text-xs font-bold uppercase tracking-widest mb-3">Tentang Gustafta</div>
+            <div className="text-amber-400 text-xs font-bold uppercase tracking-widest mb-3">Pengelola Layanan</div>
             <h2 className="text-2xl sm:text-3xl font-extrabold mb-4 leading-snug">
               Mitra Kebutuhan Dokumen BUJK<br />di Seluruh Indonesia
             </h2>
             <p className="text-slate-400 leading-relaxed mb-4">
-              Gustafta menghadirkan layanan konsultasi
+              PT Sarana Kompetensi Indonesia (SKI) mengelola layanan konsultasi
               dan pengurusan administrasi di bidang konstruksi, energi, dan sistem manajemen.
-              Kami membantu kontraktor, konsultan, dan BUJK menyelesaikan kebutuhan
+              SKI membantu kontraktor, konsultan, dan BUJK memenuhi kebutuhan
               sertifikasi, dokumen tender, dan kepatuhan regulasi secara efisien.
             </p>
             <p className="text-slate-400 leading-relaxed">
-              Bermitra dengan platform AI <strong className="text-white">Gustafta</strong>,
-              setiap layanan kini dipercepat dengan teknologi analisis dokumen,
+              Teknologi <strong className="text-white">Gustafta</strong> mendukung analisis dokumen,
               pipeline sertifikasi, dan chatbot spesialis industri konstruksi.
             </p>
           </div>
@@ -491,7 +489,7 @@ export default function LayananSKI() {
         <div className="max-w-5xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <Building2 className="w-4 h-4 text-amber-400" />
-            <span className="text-slate-400 text-sm font-semibold">by Gustafta</span>
+            <span className="text-slate-400 text-sm font-semibold">Dikelola PT Sarana Kompetensi Indonesia (SKI)</span>
           </div>
           <div className="flex items-center gap-1.5 text-slate-500 text-xs">
             <Zap className="w-3 h-3 text-amber-400" />

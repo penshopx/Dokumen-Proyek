@@ -25,7 +25,7 @@ const WA_KONSULTASI = "https://wa.me/6282299417818?text=Halo%2C+saya+ingin+konsu
 
 /* ── Menu data ────────────────────────────────── */
 const layananLinks = [
-  { icon: Building2,     label: "Semua Layanan",       href: "/layanan-ski",       desc: "SBU, SKK, ISO, tender & keuangan — by Gustafta", ext: false },
+  { icon: Building2,     label: "Semua Layanan",       href: "/layanan-ski",       desc: "Layanan profesional dikelola PT Sarana Kompetensi Indonesia", ext: false },
   { icon: ShoppingBag,   label: "Toko Digital",         href: "/toko",              desc: "eBook, template, kursus & paket produk digital",                     ext: false },
   { icon: Award,         label: "SBU Konstruksi",       href: "/sbu",               desc: "Sertifikat Badan Usaha Jasa Konstruksi",                             ext: false },
   { icon: GraduationCap, label: "SKK & Kompetensi",     href: "/skk",               desc: "Sertifikat Kompetensi Kerja tenaga ahli",                            ext: false },
@@ -36,7 +36,7 @@ const layananLinks = [
   { icon: FileCheck,     label: "LKPM",                  href: "/lkpm",              desc: "Laporan Kegiatan Penanaman Modal — triwulan, semesteran, tahunan",   ext: false },
   { icon: BookOpen,      label: "LKUT",                  href: "/lkut",              desc: "Laporan Kegiatan Usaha Tahunan BUJK — deadline 30 April",            ext: false },
   { icon: ShieldCheck,   label: "SMAP & Pancek",         href: "/smap-pancek",       desc: "Sistem Manajemen Anti Penyuapan — ISO 37001 & Panduan KPK",         ext: false },
-  { icon: Briefcase,     label: "Jasa Dokumen",          href: "/jasa-dokumen",      desc: "Layanan dokumen profesional by Gustafta",                            ext: false },
+  { icon: Briefcase,     label: "Jasa Dokumen",          href: "/jasa-dokumen",      desc: "Layanan dokumen PT Sarana Kompetensi Indonesia",                   ext: false },
 ];
 
 const gustaaftaGroups = [
@@ -92,11 +92,11 @@ const toolkitLinks = [
 ];
 
 const mitraLinks = [
-  { icon: ShoppingBag,   label: "Gaia Store",             href: "/gaia-store",           desc: "Produk digital konstruksi by Gustafta",              ext: false },
-  { icon: FolderOpen,    label: "Gaia SIAP",              href: "/gaia-siap",            desc: "Workspace & klinik konsultasi by Gustafta",          ext: false },
+  { icon: ShoppingBag,   label: "Gaia Store",             href: "/gaia-store",           desc: "Produk digital SKI dengan teknologi Gustafta",       ext: false },
+  { icon: FolderOpen,    label: "Gaia SIAP",              href: "/gaia-siap",            desc: "Workspace layanan SKI berbasis teknologi Gustafta", ext: false },
   { icon: Users,         label: "Ekosistem Kompetensi",   href: "/ekosistem-kompetensi", desc: "Jaringan pelatihan & sertifikasi konstruksi",        ext: false },
   { icon: Zap,           label: "KonstruksiAI Portal",    href: "/konstruksi-ai",        desc: "Portal informasi & berita konstruksi berbasis AI",   ext: false },
-  { icon: Briefcase,     label: "Layanan Profesional",    href: "/layanan-ski",          desc: "Semua layanan profesional by Gustafta",              ext: false },
+  { icon: Briefcase,     label: "Layanan Profesional",    href: "/layanan-ski",          desc: "Layanan profesional dikelola PT Sarana Kompetensi Indonesia", ext: false },
   { icon: Handshake,     label: "Platform Gustafta",      href: "https://gustafta.my.id",desc: "Platform AI lengkap untuk konstruksi Indonesia",     ext: true  },
 ];
 
@@ -182,7 +182,7 @@ export function Navbar() {
               isScrolled
                 ? "text-amber-600 border-amber-300 bg-amber-50"
                 : "text-amber-300 border-amber-500/40 bg-amber-500/10"
-            )}>BY GUSTAFTA</span>
+            )}>DIKELOLA SKI</span>
           </Link>
 
           {/* Desktop: utility buttons row 1 */}

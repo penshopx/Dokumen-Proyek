@@ -49,7 +49,7 @@ export default function GaiaStorePage() {
             </h1>
             <p className="text-slate-300 text-lg max-w-2xl mx-auto leading-relaxed">
               Toko produk digital konstruksi — template dokumen, ebook regulasi, kursus online, dan paket bundling
-              untuk BUJK, kontraktor, dan tenaga ahli. Semua tersedia di Gaia Store by Gustafta.
+              untuk BUJK, kontraktor, dan tenaga ahli. Gaia Store dikelola oleh PT Sarana Kompetensi Indonesia (SKI) dengan dukungan teknologi Gustafta.
             </p>
 
             {/* CTA */}
@@ -139,7 +139,7 @@ export default function GaiaStorePage() {
               </Button>
             </a>
             <p className="text-slate-600 text-xs mt-6">
-              Produk dikelola oleh Gustafta AI OS · gustafta.my.id
+              Kanal komersial dikelola oleh PT Sarana Kompetensi Indonesia (SKI) · Teknologi oleh Gustafta
             </p>
           </motion.div>
         </div>

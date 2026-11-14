@@ -292,18 +292,20 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ─── LAYANAN BY GUSTAFTA ─── */}
-      <LandingSection title="Layanan Profesional — by Gustafta" subtitle="Layanan profesional di balik DokumenProyek.com" defaultOpen>
+      {/* ─── LAYANAN PROFESIONAL PT SKI ─── */}
+      <LandingSection title="Layanan Profesional — dikelola PT SKI" subtitle="Operator layanan DokumenProyek.com" defaultOpen>
       <section className="py-20 bg-white">
         <div className="container">
           <div className="text-center max-w-3xl mx-auto mb-14">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-50 border border-amber-200 text-amber-700 font-semibold text-xs mb-4">
               <Building2 className="w-3.5 h-3.5" />
-                by Gustafta
+                Dikelola PT Sarana Kompetensi Indonesia (SKI)
             </div>
             <h2 className="mt-2 mb-4">Siapa di Balik Platform Ini?</h2>
             <p className="text-muted-foreground leading-relaxed">
-                DokumenProyek.com dikembangkan untuk membantu kebutuhan dokumen konstruksi melalui layanan <strong>by Gustafta</strong> dan dukungan teknologi AI.
+                DokumenProyek.com adalah platform komersial yang dikelola oleh <strong>PT Sarana Kompetensi Indonesia (SKI)</strong>.
+                SKI mengelola pelanggan, pemasaran, penjualan, layanan, kontrak, dan mitra; <strong>Gustafta menjadi mesin teknologi</strong>
+                yang menyediakan AI, aplikasi, dan otomasi.
             </p>
           </div>
 
@@ -2751,10 +2753,10 @@ export default function LandingPage() {
 
           <div className="border-t border-slate-800 pt-8">
             <div className="grid md:grid-cols-2 gap-4 items-center">
-              <p className="text-sm text-slate-600">© 2025 DokumenProyek.com. Hak cipta dilindungi undang-undang.</p>
+              <p className="text-sm text-slate-600">DokumenProyek.com dikelola oleh PT Sarana Kompetensi Indonesia (SKI).</p>
               <div className="flex items-center gap-2 md:justify-end">
                 <Cpu className="w-3.5 h-3.5 text-amber-500" />
-                <span className="text-xs text-slate-500">Powered by <span className="text-amber-400 font-semibold">Gustafta Framework</span> · OpenClaw AI (GPT-4o)</span>
+                <span className="text-xs text-slate-500">Teknologi oleh <span className="text-amber-400 font-semibold">Gustafta</span> · OpenClaw AI (GPT-4o)</span>
               </div>
             </div>
           </div>
