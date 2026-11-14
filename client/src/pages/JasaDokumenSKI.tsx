@@ -46,7 +46,7 @@ export default function JasaDokumenSKI() {
         <div className="container relative grid items-center gap-14 lg:grid-cols-[1.1fr_.9fr]">
           <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: .1 } } }} className="max-w-3xl">
             <motion.div variants={reveal} className="mb-6 flex flex-wrap gap-2">
-              <Badge className="border border-[#d9aa42]/40 bg-[#d9aa42]/10 px-3 py-1.5 text-[#f0c867]">Dikelola PT SKI</Badge>
+              <Badge className="border border-[#d9aa42]/40 bg-[#d9aa42]/10 px-3 py-1.5 text-[#f0c867]">PT SKI · Mitra kerja</Badge>
               <Badge className="border border-cyan-300/30 bg-cyan-300/10 px-3 py-1.5 text-cyan-200"><Sparkles className="mr-1.5 h-3.5 w-3.5" />Powered by Gustafta AI</Badge>
             </motion.div>
             <motion.p variants={reveal} className="mb-5 font-mono text-xs uppercase tracking-[.26em] text-[#d9aa42]">JASA DOKUMEN KONSTRUKSI · INDONESIA</motion.p>

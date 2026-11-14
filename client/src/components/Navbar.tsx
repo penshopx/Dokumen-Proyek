@@ -25,7 +25,7 @@ const WA_KONSULTASI = "https://wa.me/6282299417818?text=Halo%2C+saya+ingin+konsu
 
 /* ── Menu data ────────────────────────────────── */
 const layananLinks = [
-  { icon: Building2,     label: "Semua Layanan",       href: "/layanan-ski",       desc: "Layanan profesional dikelola PT Sarana Kompetensi Indonesia", ext: false },
+  { icon: Building2,     label: "Semua Layanan",       href: "/layanan-ski",       desc: "Layanan DokumenProyek.com bersama mitra kerja", ext: false },
   { icon: ShoppingBag,   label: "Toko Digital",         href: "/toko",              desc: "eBook, template, kursus & paket produk digital",                     ext: false },
   { icon: Award,         label: "SBU Konstruksi",       href: "/sbu",               desc: "Sertifikat Badan Usaha Jasa Konstruksi",                             ext: false },
   { icon: GraduationCap, label: "SKK & Kompetensi",     href: "/skk",               desc: "Sertifikat Kompetensi Kerja tenaga ahli",                            ext: false },
@@ -96,7 +96,7 @@ const mitraLinks = [
   { icon: FolderOpen,    label: "Gaia SIAP",              href: "/gaia-siap",            desc: "Workspace layanan SKI berbasis teknologi Gustafta", ext: false },
   { icon: Users,         label: "Ekosistem Kompetensi",   href: "/ekosistem-kompetensi", desc: "Jaringan pelatihan & sertifikasi konstruksi",        ext: false },
   { icon: Zap,           label: "KonstruksiAI Portal",    href: "/konstruksi-ai",        desc: "Portal informasi & berita konstruksi berbasis AI",   ext: false },
-  { icon: Briefcase,     label: "Layanan Profesional",    href: "/layanan-ski",          desc: "Layanan profesional dikelola PT Sarana Kompetensi Indonesia", ext: false },
+  { icon: Briefcase,     label: "Layanan Profesional",    href: "/layanan-ski",          desc: "Layanan profesional bersama mitra kerja, termasuk PT SKI", ext: false },
   { icon: Handshake,     label: "Platform Gustafta",      href: "https://gustafta.my.id",desc: "Platform AI lengkap untuk konstruksi Indonesia",     ext: true  },
 ];
 
@@ -182,7 +182,7 @@ export function Navbar() {
               isScrolled
                 ? "text-amber-600 border-amber-300 bg-amber-50"
                 : "text-amber-300 border-amber-500/40 bg-amber-500/10"
-            )}>DIKELOLA SKI</span>
+            )}>DIKELOLA GUSTAFTA</span>
           </Link>
 
           {/* Desktop: utility buttons row 1 */}

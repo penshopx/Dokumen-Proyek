@@ -45,6 +45,7 @@ import LKUTSimulatorPage from "@/pages/LKUTSimulatorPage";
 import DocumentVerification from "@/pages/DocumentVerification";
 import EquipmentRental from "@/pages/EquipmentRental";
 import AgentHub from "@/pages/AgentHub";
+import TenderReadiness from "@/pages/TenderReadiness";
 
 /**
  * dokumenproyek.com — pure marketing showcase.
@@ -80,6 +81,7 @@ function AppRouter() {
 
       {/* ── Gustafta AI product showcase (marketing pages) ── */}
       <Route path="/agent-hub" component={AgentHub} />
+      <Route path="/cek-kesiapan-tender" component={TenderReadiness} />
       <Route path="/tendera-claw" component={TenderaClaw} />
       <Route path="/sbu-claw" component={SBUClaw} />
       <Route path="/lexcom-hukum" component={LexComHukum} />

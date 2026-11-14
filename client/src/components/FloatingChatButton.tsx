@@ -7,7 +7,7 @@ export function FloatingChatButton() {
   const [showTooltip, setShowTooltip] = useState(true);
   const [location] = useLocation();
 
-  if (location === "/ai-chat") {
+  if (location === "/ai-chat" || location === "/cek-kesiapan-tender") {
     return null;
   }
 

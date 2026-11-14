@@ -292,20 +292,20 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ─── LAYANAN PROFESIONAL PT SKI ─── */}
-      <LandingSection title="Layanan Profesional — dikelola PT SKI" subtitle="Operator layanan DokumenProyek.com" defaultOpen>
+      {/* ─── LAYANAN PROFESIONAL & MITRA ─── */}
+      <LandingSection title="Layanan Profesional & Mitra Kerja" subtitle="Dikelola Gustafta bersama para mitra" defaultOpen>
       <section className="py-20 bg-white">
         <div className="container">
           <div className="text-center max-w-3xl mx-auto mb-14">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-50 border border-amber-200 text-amber-700 font-semibold text-xs mb-4">
               <Building2 className="w-3.5 h-3.5" />
-                Dikelola PT Sarana Kompetensi Indonesia (SKI)
+                Dikelola Gustafta · Terbuka untuk beberapa mitra
             </div>
             <h2 className="mt-2 mb-4">Siapa di Balik Platform Ini?</h2>
             <p className="text-muted-foreground leading-relaxed">
-                DokumenProyek.com adalah platform komersial yang dikelola oleh <strong>PT Sarana Kompetensi Indonesia (SKI)</strong>.
-                SKI mengelola pelanggan, pemasaran, penjualan, layanan, kontrak, dan mitra; <strong>Gustafta menjadi mesin teknologi</strong>
-                yang menyediakan AI, aplikasi, dan otomasi.
+                DokumenProyek.com dikelola oleh <strong>Gustafta</strong> bersama beberapa mitra kerja.
+                <strong> PT Sarana Kompetensi Indonesia (SKI) adalah salah satu mitra</strong>, bukan pengelola tunggal.
+                Gustafta menyediakan teknologi AI, aplikasi, dan otomasi platform.
             </p>
           </div>
 
@@ -973,6 +973,11 @@ export default function LandingPage() {
                       </li>
                     ))}
                   </ul>
+                  {feat.title === "Tender Intelligence Center" && (
+                    <Link href="/cek-kesiapan-tender" className="mt-5 inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-bold text-white transition hover:bg-blue-700">
+                      Cek kesiapan tender <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  )}
                 </motion.div>
               );
             })}
@@ -2753,7 +2758,7 @@ export default function LandingPage() {
 
           <div className="border-t border-slate-800 pt-8">
             <div className="grid md:grid-cols-2 gap-4 items-center">
-              <p className="text-sm text-slate-600">DokumenProyek.com dikelola oleh PT Sarana Kompetensi Indonesia (SKI).</p>
+              <p className="text-sm text-slate-600">DokumenProyek.com dikelola Gustafta bersama beberapa mitra, termasuk PT SKI.</p>
               <div className="flex items-center gap-2 md:justify-end">
                 <Cpu className="w-3.5 h-3.5 text-amber-500" />
                 <span className="text-xs text-slate-500">Teknologi oleh <span className="text-amber-400 font-semibold">Gustafta</span> · OpenClaw AI (GPT-4o)</span>
