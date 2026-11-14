@@ -43,3 +43,17 @@ mtime_ms = 1794648994742
 storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:07152a28-0694-4778-be32-e515de9a3e38/6625139b-5f11-4ca5-9697-29fb1845f0ee/2fc3a0c2-0e29-4664-b6d8-412af36927d8"
 storage_version_token = "1794649018174410"
 content_type = "video/mp4"
+
+[[outputs]]
+id = "Gf1kJVDygIQ_fNQYAqjzj"
+uri = "file://attached_assets/generated_videos/dokumenproyek-platform-overview-vertical.mp4"
+type = "video"
+title = "Video vertikal DokumenProyek.com"
+description = "Motion graphics 8 detik, 9:16 720p, disusun ulang untuk layar ponsel dan menampilkan Gustafta sebagai pengelola serta PT SKI sebagai salah satu mitra."
+logical_id = "34107540-94e6-4cea-be67-38f3e10caac9"
+content_hash = "sha256:36c4dc706a682ee74faca93a80ee217bec8df095f8dffc18009ffb91e90435a7"
+size = 678156
+mtime_ms = 1794649491290
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:07152a28-0694-4778-be32-e515de9a3e38/34107540-94e6-4cea-be67-38f3e10caac9/cdeaba2c-0ed9-4b2d-9917-161b16672f23"
+storage_version_token = "1794649514166881"
+content_type = "video/mp4"
