@@ -113,7 +113,7 @@ export default function DocumentVerification() {
   }
 
   const result = displayResult;
-  const statusCfg = result ? (STATUS_CONFIG[result.status] ?? STATUS_CONFIG.pending) : null;
+  const statusCfg = result ? (STATUS_CONFIG[result.status ?? "pending"] ?? STATUS_CONFIG.pending) : null;
   const StatusIcon = statusCfg?.icon ?? Clock;
 
   return (
@@ -288,7 +288,7 @@ export default function DocumentVerification() {
             </CardHeader>
             <CardContent className="space-y-3">
               {history.slice(0, 5).map(item => {
-                const cfg = STATUS_CONFIG[item.status] ?? STATUS_CONFIG.pending;
+                const cfg = STATUS_CONFIG[item.status ?? "pending"] ?? STATUS_CONFIG.pending;
                 const Ico = cfg.icon;
                 return (
                   <div key={item.id} className="flex items-center gap-3 p-3 rounded-lg border bg-white dark:bg-slate-800">

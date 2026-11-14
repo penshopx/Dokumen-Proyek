@@ -65,6 +65,11 @@ function formatCurrency(amount: number): string {
   return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(amount);
 }
 
+function toChartDate(value: unknown): string | null {
+  if (value instanceof Date) return value.toISOString();
+  return typeof value === "string" ? value : null;
+}
+
 export default function FinancialModule() {
   const { toast } = useToast();
   const [showAddDialog, setShowAddDialog] = useState(false);
@@ -168,7 +173,12 @@ export default function FinancialModule() {
   }, [transactions]);
 
   const monthlyChartData = useMemo(
-    () => buildMonthlyChartData(transactions),
+    () => buildMonthlyChartData(transactions.map((transaction) => ({
+      type: transaction.type,
+      amount: transaction.amount,
+      date: toChartDate(transaction.date),
+      createdAt: toChartDate(transaction.createdAt),
+    }))),
     [transactions],
   );
 

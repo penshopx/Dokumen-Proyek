@@ -1,7 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const SYSTEM_CHROMIUM =
-  "/nix/store/qa9cnw4v5xkxyip6mb9kxqfq1z4b2dx1-chromium-138.0.7204.100/bin/chromium";
+const SYSTEM_CHROMIUM = "/repl/tools/bin/chromium";
 
 export default defineConfig({
   testDir: "./e2e",
@@ -15,7 +14,7 @@ export default defineConfig({
     hasTouch: true,
     // Use the NixOS system-provided Chromium so no extra libs are needed.
     launchOptions: {
-      executablePath: "/nix/store/qa9cnw4v5xkxyip6mb9kxqfq1z4x2dx1-chromium-138.0.7204.100/bin/chromium",
+      executablePath: SYSTEM_CHROMIUM,
     },
   },
   projects: [

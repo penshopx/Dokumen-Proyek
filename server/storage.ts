@@ -979,9 +979,20 @@ export class DatabaseStorage implements IStorage {
 
   // ─── Project Documents (AI Query) ────────────────────────────────────────────
 
-  async getProjectDocumentsByUser(userId: string): Promise<ProjectDocument[]> {
+  async getProjectDocumentsByUser(userId: string): Promise<Array<Pick<
+    ProjectDocument,
+    "id" | "userId" | "name" | "originalFilename" | "mimeType" | "fileSize" | "createdAt"
+  >>> {
     return await db
-      .select({ id: projectDocuments.id, userId: projectDocuments.userId, name: projectDocuments.name, originalFilename: projectDocuments.originalFilename, mimeType: projectDocuments.mimeType, fileSize: projectDocuments.fileSize, createdAt: projectDocuments.createdAt } as any)
+      .select({
+        id: projectDocuments.id,
+        userId: projectDocuments.userId,
+        name: projectDocuments.name,
+        originalFilename: projectDocuments.originalFilename,
+        mimeType: projectDocuments.mimeType,
+        fileSize: projectDocuments.fileSize,
+        createdAt: projectDocuments.createdAt,
+      })
       .from(projectDocuments)
       .where(eq(projectDocuments.userId, userId))
       .orderBy(desc(projectDocuments.createdAt));

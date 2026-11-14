@@ -2489,7 +2489,7 @@ ${updates.slice(-5).map(u => `- [${u.updateType}] ${u.title}: ${u.description ||
         context = `
 DOKUMEN: ${doc.name}
 File: ${doc.originalFilename} | Tipe: ${doc.mimeType}
-Tanggal Upload: ${new Date(doc.createdAt).toLocaleDateString("id-ID")}
+ Tanggal Upload: ${doc.createdAt ? new Date(doc.createdAt).toLocaleDateString("id-ID") : "Tidak tersedia"}
 
 ISI DOKUMEN (ringkasan awal):
 ${content}`.trim();
@@ -3927,6 +3927,16 @@ Atas perhatian dan kerjasamanya kami ucapkan terima kasih.
 
 function generateSectionContent(section: string, doc: any): string {
   const today = new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+  const projectTypeLabels: Record<string, string> = {
+    gedung: "Konstruksi Bangunan Gedung",
+    infrastruktur: "Konstruksi Infrastruktur",
+    sipil: "Pekerjaan Sipil",
+    mekanikal: "MEP",
+    elektrikal: "Elektrikal",
+  };
+  const projectTypeName = typeof doc.projectType === "string"
+    ? projectTypeLabels[doc.projectType] ?? doc.projectType
+    : "Konstruksi";
   const projectTypeMethods: Record<string, string> = {
     gedung: `
 A. PEKERJAAN PERSIAPAN
@@ -4402,7 +4412,7 @@ Monitoring & Kontrol:
     "SPESIFIKASI TEKNIS": `
 SPESIFIKASI TEKNIS PEKERJAAN
 Nama Proyek : ${doc.projectName}
-Jenis       : ${doc.projectType ? ({"gedung":"Konstruksi Bangunan Gedung","infrastruktur":"Konstruksi Infrastruktur","sipil":"Pekerjaan Sipil","mekanikal":"MEP","elektrikal":"Elektrikal"}[doc.projectType] || doc.projectType) : "Konstruksi"}
+ Jenis       : ${projectTypeName}
 
 A. STANDAR REFERENSI TEKNIS
    - SNI (Standar Nasional Indonesia) yang berlaku untuk setiap jenis pekerjaan

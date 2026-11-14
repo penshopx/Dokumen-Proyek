@@ -622,7 +622,8 @@ export default function Dashboard() {
                         completed: { label: "Selesai", color: "bg-green-100 text-green-700" },
                         cancelled: { label: "Dibatalkan", color: "bg-red-100 text-red-700" },
                       };
-                      const statusInfo = statusMap[proj.status] || { label: proj.status, color: "bg-slate-100 text-slate-700" };
+                      const projectStatus = proj.status ?? "planning";
+                      const statusInfo = statusMap[projectStatus] || { label: projectStatus, color: "bg-slate-100 text-slate-700" };
                       const progress = proj.progress ?? (proj.status === "completed" ? 100 : proj.status === "ongoing" ? 50 : 10);
                       return (
                         <div key={proj.id} className="p-4 rounded-xl border bg-white hover:shadow-md transition-shadow" data-testid={`card-case-${proj.id}`}>
@@ -938,7 +939,8 @@ export default function Dashboard() {
                       completed: { label: "Selesai", color: "bg-green-100 text-green-700" },
                       cancelled: { label: "Dibatalkan", color: "bg-red-100 text-red-700" },
                     };
-                    const statusInfo = statusMap[c.status] || { label: c.status, color: "bg-slate-100 text-slate-700" };
+                    const consultationStatus = c.status ?? "pending";
+                    const statusInfo = statusMap[consultationStatus] || { label: consultationStatus, color: "bg-slate-100 text-slate-700" };
                     const svcColor = serviceColorMap[c.serviceType] || "bg-teal-100 text-teal-700";
                     return (
                       <div key={c.id} className="flex items-start gap-3 p-3 rounded-xl border bg-white hover:shadow-sm transition-shadow" data-testid={`card-consultation-${c.id}`}>
@@ -957,7 +959,9 @@ export default function Dashboard() {
                             <p className="text-xs text-muted-foreground mt-1 line-clamp-1">{c.message}</p>
                           )}
                           <p className="text-[10px] text-slate-400 mt-1">
-                            {new Date(c.createdAt).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}
+                            {c.createdAt
+                              ? new Date(c.createdAt).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })
+                              : "Tanggal belum tersedia"}
                           </p>
                         </div>
                       </div>

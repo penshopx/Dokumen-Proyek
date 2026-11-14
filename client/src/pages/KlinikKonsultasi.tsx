@@ -691,7 +691,12 @@ export default function KlinikKonsultasi() {
                         </Button>
                         <button
                           className="text-violet-400 hover:text-violet-600 dark:hover:text-violet-300 flex-shrink-0 p-0.5"
-                          onClick={() => setDismissedSuggestions(prev => new Set([...prev, msg.id]))}
+                          onClick={() => setDismissedSuggestions(prev => {
+                            const next = new Set<number>();
+                            prev.forEach(id => next.add(id));
+                            next.add(msg.id);
+                            return next;
+                          })}
                           title="Abaikan"
                         >
                           <X className="w-3.5 h-3.5" />

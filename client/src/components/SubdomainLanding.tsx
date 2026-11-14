@@ -27,7 +27,7 @@ interface SubdomainLandingProps {
   sources?: string[];            // Sumber regulasi / integrasi
   highlights?: { value: string; label: string }[];
   ctaPrimary?: { label: string; href: string; whatsapp?: boolean };
-  ctaSecondary?: { label: string; href: string };
+  ctaSecondary?: { label: string; href: string; whatsapp?: boolean };
   footer?: string;               // small note at bottom
 }
 
@@ -118,7 +118,14 @@ export function SubdomainLanding({
                 </Link>
               ) : null}
               {ctaSecondary && (
-                <Link href={ctaSecondary.href}>
+                ctaSecondary.whatsapp ? (
+                  <a href={ctaSecondary.href} target="_blank" rel="noopener noreferrer">
+                    <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 h-12 px-8 gap-2 text-base">
+                      <MessageCircle className="w-4 h-4" />
+                      {ctaSecondary.label}
+                    </Button>
+                  </a>
+                ) : <Link href={ctaSecondary.href}>
                   <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 h-12 px-8 gap-2 text-base">
                     {ctaSecondary.label}
                   </Button>

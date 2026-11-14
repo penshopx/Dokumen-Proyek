@@ -445,6 +445,9 @@ describe("AIChat – history panel sync after sending in loaded session", () => 
     );
     expect(saveCalls).toHaveLength(2);
     for (const [, opts] of saveCalls) {
+      if (!opts || typeof opts.body !== "string") {
+        throw new Error("Expected chat history POST to have a JSON request body");
+      }
       const body = JSON.parse(opts.body);
       expect(body.sessionId).toBe(SESSION_A.id);
     }

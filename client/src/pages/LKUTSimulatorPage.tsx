@@ -40,7 +40,7 @@ function getStatus(score: number) {
   return { label: "Belum Siap ❌", color: "text-red-400", bg: "bg-red-900/30 border-red-700/50", icon: XCircle, desc: "BUJK perlu melengkapi banyak data penting. Hubungi tim kami untuk bantuan." };
 }
 
-const SECTIONS = [...new Set(QUESTIONS.map(q => q.section))];
+const SECTIONS = Array.from(new Set(QUESTIONS.map(q => q.section)));
 
 export default function LKUTSimulatorPage() {
   const [answers, setAnswers] = useState<Record<string, Answer>>({});
